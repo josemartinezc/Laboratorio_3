@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Laboratorio_3.X
+PROJECTNAME=Laboratorio_3
 
 # Active Configuration
 DEFAULTCONF=default

@@ -48,17 +48,7 @@
 #include <stdbool.h>
 #include <xc.h> 
 
-#include "mcc_generated_files/system.h"
-#include "mcc_generated_files/pin_manager.h"
-#include "mcc_generated_files/clock.h"
-#include "mcc_generated_files/exceptions.h"
-#include "mcc_generated_files/interrupt_manager.h"
 #include "mcc_generated_files/mcc.h"
-#include "mcc_generated_files/tmr2.h"
-#include "mcc_generated_files/watchdog.h"
-
-
-  
 
 
 /*
@@ -83,7 +73,6 @@ int main(void)
     // initialize the device
 
     
-    
     while (1)
     {
         if (button2On==true){
@@ -95,14 +84,15 @@ int main(void)
         }
         
         if(button3On==true){
+            if (UT_delayDs()==1){
+            button3On=false;
+            LEDB_SetLow();
+            }
+            else{
                 LEDB_SetHigh();
             }
-            else
-            {
-                LEDB_SetLow();
-            }
-        
-    } 
+        }
+    }
 }
 /**
  End of File

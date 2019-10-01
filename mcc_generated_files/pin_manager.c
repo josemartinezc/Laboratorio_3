@@ -50,9 +50,10 @@
 */
 
 #include <xc.h>
+
 #include "pin_manager.h"
 #include "system.h"
-
+#include "../utils/utils.h"
 /**
  Section: Driver Interface Function Definitions
 */
@@ -106,10 +107,13 @@ void PIN_MANAGER_Initialize (void)
     /****************************************************************************
      * Interrupt On Change: any
      ***************************************************************************/
-    CNEN0Abits.CNIE0A13 = 1;    //Pin : RA13
     CNEN0Bbits.CNIE0B15 = 1;    //Pin : RB15
-    CNEN1Abits.CNIE1A13 = 1;    //Pin : RA13
     CNEN1Bbits.CNIE1B15 = 1;    //Pin : RB15
+    
+    /****************************************************************************
+     * Interrupt On Change: positive
+     ***************************************************************************/
+    CNEN0Abits.CNIE0A13 = 1;    //Pin : RA13
     
     /****************************************************************************
      * Interrupt On Change: flag
@@ -143,12 +147,10 @@ void __attribute__ ((vector(_CHANGE_NOTICE_A_VECTOR), interrupt(IPL2SOFT))) _CHA
         
         if (CNFAbits.CNFA13==1) {
             CNFAbits.CNFA13=0;
-            if (button3On==true){
-                button3On=false;
-            }      
-            else {
+            if (button3On==false){
                 button3On=true;
-            }
+                counter=20;
+            }      
         }
     }
 }

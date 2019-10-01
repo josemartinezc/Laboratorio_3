@@ -18,7 +18,9 @@
 #ifndef _UTILS_H    /* Guard against multiple inclusion */
 #define _UTILS_H
 
+#include <xc.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 
 /* Provide C++ Compatibility */
@@ -26,11 +28,9 @@
 extern "C" {
 #endif
 
-#define EXAMPLE_CONSTANT 0
-#define UT_DELAY_CYCLES 500000   
+volatile uint32_t counter;
 
-    
-        
+
     typedef enum
     {
         UT_TMR_DELAY_INIT,
@@ -44,11 +44,7 @@ extern "C" {
     }ut_tmrDelay_t;
 
     
-    
-bool UT_delayDs(ut_tmrDelay_t* p_timer, uint32_t p_ds)
-{
-       
-}
+
     
     
     
