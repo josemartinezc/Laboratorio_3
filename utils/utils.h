@@ -28,7 +28,8 @@
 extern "C" {
 #endif
 
-volatile uint32_t counter;
+volatile bool button2On;
+volatile bool button3On;
 
 
     typedef enum

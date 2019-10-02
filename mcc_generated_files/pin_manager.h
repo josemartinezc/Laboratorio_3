@@ -55,9 +55,6 @@
     Section: Device Pin Macros
 */
 
-volatile bool button2On;
-volatile bool button3On;
-
 
 #define BTN3_SetHigh()          ( LATASET = (1 << 13) )
 /**

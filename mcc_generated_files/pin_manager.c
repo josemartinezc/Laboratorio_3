@@ -149,7 +149,6 @@ void __attribute__ ((vector(_CHANGE_NOTICE_A_VECTOR), interrupt(IPL2SOFT))) _CHA
             CNFAbits.CNFA13=0;
             if (button3On==false){
                 button3On=true;
-                counter=20;
             }      
         }
     }

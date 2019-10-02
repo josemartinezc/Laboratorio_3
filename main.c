@@ -47,7 +47,7 @@
 */
 #include <stdbool.h>
 #include <xc.h> 
-
+#include "utils/utils.h"
 #include "mcc_generated_files/mcc.h"
 
 
@@ -84,16 +84,12 @@ int main(void)
         }
         
         if(button3On==true){
-            if (UT_delayDs()==1){
-            button3On=false;
+            LEDB_SetHigh ();
+            UT_delayDs (20);  
             LEDB_SetLow();
-            }
-            else{
-                LEDB_SetHigh();
-            }
+            button3On = false;
+           
         }
-    }
-}
 /**
  End of File
 */
