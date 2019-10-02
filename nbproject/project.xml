@@ -14,7 +14,6 @@
             <make-dep-projects/>
             <sourceRootList>
                 <sourceRootElem>../Lab.1</sourceRootElem>
-                <sourceRootElem>utils</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

@@ -27,12 +27,11 @@
 #include "utils.h"
 #include "../mcc_generated_files/tmr2.h"
 
-bool UT_delayDs()
-{
-    while (counter>0){
+void UT_delayDs ( int i ){
+    int t;
+    t = TMR2_SoftwareCounterGet ();
+    while ( t < t + i);
     }
-     return 1;
-}
 
 //uint8_t *var1, var2;
 //uint8_t *var1, *var2; 
