@@ -49,7 +49,6 @@
 
 #include <stdio.h>
 #include "tmr2.h"
-#include "../utils/utils.h"
 
 /**
  Section: File specific functions
@@ -116,10 +115,6 @@ void __attribute__ ((vector(_TIMER_3_VECTOR), interrupt(IPL7SOFT))) TMR3ISR()
     /* Check if the Timer Interrupt/Status is set */
 
     //***User Area Begin
-  if (counter>0)
-    {
-      counter--;
-    }
   
     // ticker function call;
     // ticker is 1 -> Callback function gets called everytime this ISR executes

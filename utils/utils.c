@@ -33,6 +33,9 @@ bool UT_delayDs()
     }
      return 1;
 }
+
+//uint8_t *var1, var2;
+//uint8_t *var1, *var2; 
     
 //bool UT_delayDs(ut_tmrDelay_t* p_timer, uint32_t p_ds)
 //{
