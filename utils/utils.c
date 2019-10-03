@@ -30,7 +30,7 @@
 void UT_delayDs ( int i ){
     int t;
     t = TMR2_SoftwareCounterGet ();
-    while ( t < t + i);
+    while ( TMR2_SoftwareCounterGet () < t + i);
     }
 
 //uint8_t *var1, var2;

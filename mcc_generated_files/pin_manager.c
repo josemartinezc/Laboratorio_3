@@ -143,13 +143,16 @@ void __attribute__ ((vector(_CHANGE_NOTICE_A_VECTOR), interrupt(IPL2SOFT))) _CHA
 {
     if(IFS0bits.CNAIF==1){
         IFS0bits.CNAIF = 0;
-        IFS0=1<<_IFS0_CNBIF_POSITION; //NO LO ENTENDI
+        //IFS0CLR=1<<_IFS0_CNAIF_POSITION; //NO LO ENTENDI
         
         if (CNFAbits.CNFA13==1) {
             CNFAbits.CNFA13=0;
             if (button3On==false){
                 button3On=true;
             }      
+            else {
+                button3On=false;
+        }
         }
     }
 }
@@ -158,16 +161,13 @@ void __attribute__ ((vector(_CHANGE_NOTICE_B_VECTOR), interrupt(IPL2SOFT))) _CHA
 {
     if(IFS0bits.CNBIF==1){
         IFS0bits.CNBIF = 0;
-        IFS0=1<<_IFS0_CNBIF_POSITION; //NO LO ENTENDI
+        //IFS0CLR=1<<_IFS0_CNBIF_POSITION; //NO LO ENTENDI
         
         if (CNFBbits.CNFB15==1) {
             CNFBbits.CNFB15=0;
-            if (button2On==true){
-                button2On=false;
-            }      
-            else {
+            if (button2On==false){
                 button2On=true;
             }
-        }
+    }
     }
 }

@@ -62,6 +62,9 @@ int main(void)
     LEDA_SetLow();
     LEDB_SetLow();
     
+    button2On=false;
+    button3On=false;
+    
     // initialize the device
 
     

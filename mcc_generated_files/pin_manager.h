@@ -420,7 +420,7 @@ inline static void LEDA_SetValue(bool value)
     </code>
 
 */
-#define LEDB_SetHigh()          ( LATBSET = (1 << 14) )
+#define LEDB_SetHigh()          ( LATBbits.LATB14 = 1 )
 /**
   @Summary
     Sets the GPIO pin, RB14, low using LATB14.
