@@ -78,7 +78,7 @@ typedef struct _TMR_OBJ_STRUCT
     /* Timer Elapsed */
     volatile bool           timerElapsed;
     /*Software Counter value*/
-    volatile uint8_t        count;
+    volatile uint32_t        count;
 
 } TMR_OBJ;
 
@@ -90,27 +90,26 @@ static TMR_OBJ tmr2_obj;
 
 void TMR2_Initialize (void)
 {
-    // Period = 0.1 s; Frequency = 24000000 Hz; PR2 37855; 
-    PR2 = 0x93DF;
-    // PR3 4; 
-    PR3= 0x04 ;     
-    //  TCKPS 1:8; T32 32 Bit; TCS PBCLK; SIDL disabled; TGATE disabled; ON enabled; 
-    T2CON = 0x8038;    
+    // Period = 0.1 s; Frequency = 24000000 Hz; PR2 37499; 
+    PR2 = 0x927B;
+    //  TCKPS 1:64; T32 16 Bit; TCS PBCLK; SIDL disabled; TGATE disabled; ON enabled; 
+    T2CON = 0x8060;    
 
     if(TMR2_InterruptHandler == NULL)
     {
         TMR2_SetInterruptHandler(&TMR2_CallBack);
     }
 
-    IFS0CLR = _IFS0_T3IF_MASK;
-    IEC0SET = _IEC0_T3IE_MASK;
+    IFS0CLR = _IFS0_T2IF_MASK;
+    IEC0SET = _IEC0_T2IE_MASK;
 
     tmr2_obj.timerElapsed = false;
 
 }
 
 
-void __attribute__ ((vector(_TIMER_3_VECTOR), interrupt(IPL7SOFT))) TMR3ISR()
+
+void __attribute__ ((vector(_TIMER_2_VECTOR), interrupt(IPL1SOFT))) TMR2_ISR()
 {
     /* Check if the Timer Interrupt/Status is set */
 
@@ -127,56 +126,34 @@ void __attribute__ ((vector(_TIMER_3_VECTOR), interrupt(IPL7SOFT))) TMR3ISR()
 
     tmr2_obj.count++;
     tmr2_obj.timerElapsed = true;
-    IFS0CLR = _IFS0_T3IF_MASK;  
+    IFS0CLR = _IFS0_T2IF_MASK;
 }
 
-
-
-void TMR2_Period32BitSet( uint32_t value )
-{
-
-    /* Load PR2 and PR3 register with 32bit value */
-    PR2=(value & 0xFFFFFFFF); 
-}
-
-uint32_t TMR2_Period32BitGet( void )
-{
-    uint32_t periodVal = 0xFFFFFFFF;
-
-    /* get the timer period value and return it */
-    periodVal = (((uint32_t)PR3 <<16) | PR2);
-
-    return( periodVal );
-
-}
-
-void TMR2_Counter32BitSet( uint32_t value )
+void TMR2_Period16BitSet( uint16_t value )
 {
     /* Update the counter values */
-   
-       
-    TMR2 = (value & 0x0000FFFF);
-    TMR3 = ((value & 0xFFFF0000)>>16);
-       
-    
+    PR2 = value;
+    /* Reset the status information */
+    tmr2_obj.timerElapsed = false;
 }
 
-uint32_t TMR2_Counter32BitGet( void )
+uint16_t TMR2_Period16BitGet( void )
 {
-    uint32_t countVal = 0xFFFFFFFF;
-    uint16_t countValUpper;
-    uint16_t countValLower;
-
-    countValLower = TMR2;
-    countValUpper = TMR3;
-
-    /* get the current counter value and return it */
-    countVal = (((uint32_t)countValUpper<<16)| countValLower );
-
-    return( countVal );
-
+    return( PR2 );
 }
 
+void TMR2_Counter16BitSet ( uint16_t value )
+{
+    /* Update the counter values */
+    TMR2 = value;
+    /* Reset the status information */
+    tmr2_obj.timerElapsed = false;
+}
+
+uint16_t TMR2_Counter16BitGet( void )
+{
+    return( TMR2 );
+}
 
 
 void __attribute__ ((weak)) TMR2_CallBack(void)
@@ -186,9 +163,9 @@ void __attribute__ ((weak)) TMR2_CallBack(void)
 
 void  TMR2_SetInterruptHandler(void (* InterruptHandler)(void))
 { 
-    IEC0CLR = _IEC0_T3IE_MASK;
+    IEC0bits.T2IE = false;
     TMR2_InterruptHandler = InterruptHandler; 
-    IEC0SET = _IEC0_T3IE_MASK;
+    IEC0bits.T2IE = true;
 }
 
 void TMR2_Start( void )
@@ -197,11 +174,8 @@ void TMR2_Start( void )
     tmr2_obj.timerElapsed = false;
 
     /*Enable the interrupt*/
-    IEC0SET = _IEC0_T3IE_MASK;
-    /* IPC Settings */
+    IEC0SET = _IEC0_T2IE_MASK;
      
-    
-
     /* Start the Timer */
     T2CONSET = _T2CON_ON_MASK;
 }
@@ -212,7 +186,7 @@ void TMR2_Stop( void )
     T2CONCLR = _T2CON_ON_MASK;
 
     /*Disable the interrupt*/
-    IEC0CLR = _IEC0_T3IE_MASK;
+    IEC0CLR = _IEC0_T2IE_MASK;
 }
 
 bool TMR2_GetElapsedThenClear(void)
@@ -237,8 +211,6 @@ void TMR2_SoftwareCounterClear(void)
 {
     tmr2_obj.count = 0; 
 }
-
-
 
 /**
  End of File

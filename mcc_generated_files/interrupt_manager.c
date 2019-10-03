@@ -75,9 +75,4 @@ void INTERRUPT_Initialize (void)
         IPC4bits.T2IP = 1;
     //    Sub Priority: 0
         IPC4bits.T2IS = 0;
-    //    TNI: Timer 3
-    //    Priority: 1
-        IPC4bits.T3IP = 1;
-    //    Sub Priority: 0
-        IPC4bits.T3IS = 0;
 }

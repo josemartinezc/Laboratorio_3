@@ -48,6 +48,7 @@
 #include <stdbool.h>
 #include <xc.h> 
 #include "utils/utils.h"
+
 #include "mcc_generated_files/mcc.h"
 
 
@@ -57,18 +58,9 @@
 int main(void)
 {
     SYSTEM_Initialize();
-      
-    LEDA_SetHigh();
-    LEDB_SetHigh();
     
     LEDA_SetLow();
     LEDB_SetLow();
-    
-    BTN2_SetDigitalInput() ;
-    BTN3_SetDigitalInput() ;    
-    
-    BTN2_GetValue();
-    BTN3_GetValue();
     
     // initialize the device
 
@@ -87,10 +79,10 @@ int main(void)
             LEDB_SetHigh ();
             UT_delayDs (20);  
             LEDB_SetLow();
-            button3On = false;
-           
+            button3On = false; 
         }
+    }
+}
 /**
  End of File
 */
-

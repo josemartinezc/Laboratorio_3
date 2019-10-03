@@ -31,7 +31,6 @@ extern "C" {
 volatile bool button2On;
 volatile bool button3On;
 
-
     typedef enum
     {
         UT_TMR_DELAY_INIT,
