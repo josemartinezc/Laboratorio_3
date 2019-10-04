@@ -150,9 +150,6 @@ void __attribute__ ((vector(_CHANGE_NOTICE_A_VECTOR), interrupt(IPL2SOFT))) _CHA
             if (button3On==false){
                 button3On=true;
             }      
-            else {
-                button3On=false;
-        }
         }
     }
 }
@@ -165,9 +162,7 @@ void __attribute__ ((vector(_CHANGE_NOTICE_B_VECTOR), interrupt(IPL2SOFT))) _CHA
         
         if (CNFBbits.CNFB15==1) {
             CNFBbits.CNFB15=0;
-            if (button2On==false){
-                button2On=true;
-            }
+            button2On=BTN2_GetValue();
     }
-    }
+}
 }
