@@ -148,7 +148,7 @@ void __attribute__ ((vector(_CHANGE_NOTICE_A_VECTOR), interrupt(IPL2SOFT))) _CHA
         if (CNFAbits.CNFA13==1) {
             CNFAbits.CNFA13=0;
             if (button3On==false){
-                button3On=true;
+                button3On=BTN3_GetValue();
             }      
         }
     }
