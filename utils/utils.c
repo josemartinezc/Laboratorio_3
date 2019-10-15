@@ -27,11 +27,6 @@
 #include "utils.h"
 #include "../mcc_generated_files/tmr2.h"
 
- typedef struct
-    {
-        uint32_t startValue;
-        UT_TMR_DELAY_STATE state;
-    }ut_tmrDelay_t;
 
     
 bool UT_delayDs(ut_tmrDelay_t* p_timer, uint32_t p_ds){
