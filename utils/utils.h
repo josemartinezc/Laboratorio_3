@@ -37,11 +37,14 @@ volatile bool button3On;
         UT_TMR_DELAY_WAIT
     }UT_TMR_DELAY_STATE;
     
-    typedef struct
+  /* typedef struct
     {
         uint32_t startValue;
         UT_TMR_DELAY_STATE state;
-    }ut_tmrDelay_t;
+    }ut_tmrDelay_t; */
+    
+    
+    
 
     
 
