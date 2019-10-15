@@ -48,44 +48,65 @@
 #include <stdbool.h>
 #include <xc.h> 
 #include "utils/utils.h"
-
 #include "mcc_generated_files/mcc.h"
+#include "Platform/HardwareProfile.h"
+
+#define ARRAY_SIZE 10
+int exampleData;
+char exampleArray[ARRAY_SIZE];
+int boton2;
+int boton3;
 
 
-/*
-                         Main application
- */
-int main(void)
-{
-    SYSTEM_Initialize();
+int main( void ){
+    //declaro entradas y salidas
+    LEDA_SetDigitalOutput();
+    LEDB_SetDigitalOutput();
+    BTN2_SetDigitalInput();
+    BTN3_SetDigitalInput();       
+   
+    //botones con pull down
+    BTN2_SetPullDown();
+    BTN3_SetPullDown();
     
+    //inicializo leds
     LEDA_SetLow();
     LEDB_SetLow();
     
-    button2On=false;
-    button3On=false;
-    
-    // initialize the device
-
-    
-    while (1)
-    {
-        if (button2On==true){
-         LEDA_SetHigh();
-        }
-         else 
-        {
-        LEDA_SetLow();    
-        }
+    uint32_t ptimer = 0;
+    while(1){
+        //obtengo valores de hardware
+        //boton2 = BTN2_getValue();
+        //UT_delay();
+        //boton3 = BTN3_getValue();
+        //UT_delay();
         
-        if(button3On==true){
-            LEDB_SetHigh ();
-            UT_delayDs (20);  
-            LEDB_SetLow();
-            button3On = false; 
-        }
-    }
-}
+        //if (boton2 == 1) 
+            //LEDA_SetHigh();
+          //LEDA_Toggle();
+          
+        
+        //else
+        //LEDA_SetLow();
+       
+        //if (boton3 == 1) 
+            //LEDB_SetHigh();
+            //LEDB_Toggle();
+        //UT_delay();
+    
+        //else
+        //LEDB_SetLow();
+        
+        switch (UT_delayDs(ptimer,400))
+           case (true):
+               
+               LEDA_Toggle();
+               
+            UT_delayDs (ptimer, 400);
+           case (false):
+            LEDA_SetLow();
+            UT_delayDs (p, 800);
+        
 /**
  End of File
 */
