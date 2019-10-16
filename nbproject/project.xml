@@ -15,6 +15,7 @@
             <sourceRootList>
                 <sourceRootElem>../Lab.1</sourceRootElem>
                 <sourceRootElem>utils</sourceRootElem>
+                <sourceRootElem>mcc_generated_files/usb</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

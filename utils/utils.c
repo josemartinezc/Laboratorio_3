@@ -27,20 +27,27 @@
 #include "utils.h"
 #include "../mcc_generated_files/tmr2.h"
 
-void UT_delayDs ( int i ){
+/*void UT_delayDs ( int i ){
     int t;
     t = TMR2_SoftwareCounterGet ();
     while ( TMR2_SoftwareCounterGet () < t + i);
+    }*/
+
+bool UT_delayDs(ut_tmrDelay_t* p_timer, uint32_t p_ds){
+    switch ( p_timer->state ) {
+        case (0):
+            p_timer -> startValue = TMR2_SoftwareCounterGet ();
+            p_timer -> state = 1;
+            return false;
+        case (1): 
+            if (TMR2_SoftwareCounterGet () < p_timer->startValue + p_ds)
+                return false;
+            else {
+                p_timer->state = 0;
+                return true;
+            }
     }
-
-//uint8_t *var1, var2;
-//uint8_t *var1, *var2; 
-    
-//bool UT_delayDs(ut_tmrDelay_t* p_timer, uint32_t p_ds)
-//{
-// 
-//}
-
+}
 
 
 /** 

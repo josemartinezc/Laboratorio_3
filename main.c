@@ -56,33 +56,46 @@
                          Main application
  */
 int main(void)
-{
+{ 
+    ut_tmrDelay_t timer;
+    ut_tmrDelay_t *ptimer;
+    uint8_t i=0;
+    ptimer = &timer;
+    ptimer->state = 0;
+
+    button2On=false;
+    button3On=false;
+    
     SYSTEM_Initialize();
     
     LEDA_SetLow();
     LEDB_SetLow();
-    
-    button2On=false;
-    button3On=false;
-    
-    // initialize the device
+
 
     
     while (1)
-    {
-        if (button2On==true){
-         LEDA_SetHigh();
-        }
-         else 
-        {
-        LEDA_SetLow();    
-        }
-        
-        if(button3On==true){
-            LEDB_SetHigh ();
+    { 
+        /*if(button3On==true){
+            LEDA_SetHigh ();
             UT_delayDs (20);  
-            LEDB_SetLow();
+            LEDA_SetLow();
             button3On = false; 
+        }*/
+        
+         if (UT_delayDs(ptimer,40) == true) {
+            switch (i){
+                case (0):
+                    LEDA_SetHigh();
+                    i++;
+                    break;
+                case (1):
+                    LEDA_SetLow();
+                    i++;
+                    break;
+                case (2):
+                    i = 0;
+                    break;
+            }
         }
     }
 }

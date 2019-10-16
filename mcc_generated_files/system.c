@@ -45,10 +45,10 @@
 #include "pin_manager.h"
 #include "clock.h"
 #include "system.h"
-#include "usb/usb.h"
 #include "interrupt_manager.h"
 #include "exceptions.h"
 #include "rtcc.h"
+#include "usb/usb.h"
 #include "tmr2.h"
 
 void SYSTEM_Initialize(void)
