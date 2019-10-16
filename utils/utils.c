@@ -31,13 +31,12 @@
     
 bool UT_delayDs(ut_tmrDelay_t* p_timer, uint32_t p_ds){
     switch ( p_timer->state ) {
-        case 0:
-            p_timer -> startValue = TMR2_SoftwareCounterGet ();
+        case (0):
+            p_timer -> startValue = TMR2_SoftwareCounterGet();
             p_timer -> state = 1;
             return false;
-
-        case 1: 
-            if (TMR2_SoftwareCounterGet () < p_timer->startValue + p_ds)
+        case (1): 
+            if (TMR2_SoftwareCounterGet() < p_timer->startValue + p_ds)
                 return false;
             else {
                 p_timer->state = 0;
