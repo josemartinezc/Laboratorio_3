@@ -50,10 +50,9 @@
 */
 
 #include <xc.h>
-
 #include "pin_manager.h"
 #include "system.h"
-#include "../utils/utils.h"
+
 /**
  Section: Driver Interface Function Definitions
 */
@@ -72,7 +71,7 @@ void PIN_MANAGER_Initialize (void)
      ***************************************************************************/
     TRISA = 0xFF77;
     TRISB = 0xAFFF;
-    TRISC = 0xFFFF;
+    TRISC = 0xEFFF;
     TRISD = 0x001F;
 
     /****************************************************************************
