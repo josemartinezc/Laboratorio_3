@@ -48,6 +48,7 @@
 #include <stdbool.h>
 #include <xc.h> 
 #include "utils/utils.h"
+#include "User Interface/UI.h"
 
 #include "mcc_generated_files/mcc.h"
 
@@ -56,10 +57,10 @@
                          Main application
  */
 int main(void)
-{ 
+{   
     ut_tmrDelay_t timer;
     ut_tmrDelay_t *ptimer;
-    uint8_t i=0;
+    uint8_t i=0; 
     ptimer = &timer;
     ptimer->state = 0;
 
@@ -97,6 +98,9 @@ int main(void)
                     break;
             }
         }
+         if ((USBGetDeviceState() >= CONFIGURED_STATE)&&( USBIsDeviceSuspended()== false)){
+             UI_menu();
+         }
     }
 }
 /**

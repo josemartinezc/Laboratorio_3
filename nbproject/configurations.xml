@@ -29,6 +29,8 @@
         <itemPath>mcc_generated_files/rtcc.h</itemPath>
       </logicalFolder>
       <itemPath>utils/utils.h</itemPath>
+      <itemPath>User Interface/UI.h</itemPath>
+      <itemPath>LEDs_RGB/leds.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -45,7 +47,7 @@
           <itemPath>mcc_generated_files/usb/usb_device.c</itemPath>
           <itemPath>mcc_generated_files/usb/usb_descriptors.c</itemPath>
           <itemPath>mcc_generated_files/usb/usb_device_cdc.c</itemPath>
-          <itemPath>mcc_generated_files/usb/example_mcc_usb_cdc.c</itemPath>
+          <itemPath>mcc_generated_files/usb/usb_Example.c</itemPath>
         </logicalFolder>
         <itemPath>mcc_generated_files/system.c</itemPath>
         <itemPath>mcc_generated_files/clock.c</itemPath>
@@ -58,6 +60,8 @@
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>utils/utils.c</itemPath>
+      <itemPath>User Interface/UI.c</itemPath>
+      <itemPath>LEDs_RGB/leds.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -70,6 +74,8 @@
     <Elem>../Lab.1</Elem>
     <Elem>utils</Elem>
     <Elem>mcc_generated_files/usb</Elem>
+    <Elem>LEDs_RGB</Elem>
+    <Elem>User Interface</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

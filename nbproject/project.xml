@@ -16,6 +16,8 @@
                 <sourceRootElem>../Lab.1</sourceRootElem>
                 <sourceRootElem>utils</sourceRootElem>
                 <sourceRootElem>mcc_generated_files/usb</sourceRootElem>
+                <sourceRootElem>LEDs_RGB</sourceRootElem>
+                <sourceRootElem>User Interface</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

@@ -50,7 +50,6 @@
 */
 
 #include <xc.h>
-
 #include "pin_manager.h"
 #include "system.h"
 #include "../utils/utils.h"
@@ -70,7 +69,7 @@ void PIN_MANAGER_Initialize (void)
     /****************************************************************************
      * Setting the GPIO Direction SFR(s)
      ***************************************************************************/
-    TRISA = 0xFF77;
+    TRISA = 0xFB77;
     TRISB = 0xAFFF;
     TRISC = 0xFFFF;
     TRISD = 0x001F;
@@ -78,7 +77,7 @@ void PIN_MANAGER_Initialize (void)
     /****************************************************************************
      * Setting the Weak Pull Up and Weak Pull Down SFR(s)
      ***************************************************************************/
-    CNPDA = 0x2000;
+    CNPDA = 0x2400;
     CNPDB = 0x8000;
     CNPDC = 0x0000;
     CNPDD = 0x0000;
