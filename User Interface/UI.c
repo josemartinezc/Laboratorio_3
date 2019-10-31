@@ -25,6 +25,10 @@
 #include "../mcc_generated_files/rtcc.h"
 #include "UI.h"
 #include "../mcc_generated_files/usb/usb.h"
+#include "../utils/utils.h"
+
+
+static UI_STATE state_UI=INIT;    
 
 //funcion que devuelve lo que hay en el usb, transformando el ascii a decimales
 int leer_USB_int(void){
@@ -38,75 +42,102 @@ int leer_USB_int(void){
     }
 }
 
-void configurar_hora();
-void dar_hora();
-void agregar_evento();
-void consultar_eventos();
+void seleccionar_opcion();
+bool configurar_hora();
+bool dar_hora();
+//void agregar_evento();
+//void consultar_eventos();
 
 
 void UI_menu(){
-    static UI_STATE state_UI=INIT;
-    uint8_t opcion[8];
-    uint8_t opcion_int;
+    static ut_tmrDelay_t timer;
+    static ut_tmrDelay_t *ptimer;
+    static uint8_t ini[16];
     
-    calendar_time.tm_mday=0;
+    uint8_t i=0; 
+    ptimer = &timer;
     
     switch (state_UI){
         case INIT:
-            putUSBUSART("BIENVENIDO A SU CALENDARIO/n", sizeof("BIENVENIDO A SU CALENDARIO/n"));
-            putUSBUSART("Ingrese una opcion del 1-4/n", sizeof("Ingrese una opcion del 1-4/n"));
+            calendar_time.tm_mday=0;
+            if(getsUSBUSART(ini, sizeof(ini))>0){
+            putUSBUSART("\n\n\nBIENVENIDO A SU CALENDARIO\n", strlen("\n\n\nBIENVENIDO A SU CALENDARIO\n"));
+            state_UI=MENU;
+            }
+            break;
+        case MENU:
+            putUSBUSART("\nIngrese una opcion del 1-4\n", strlen("\nIngrese una opcion del 1-4\n")); 
+            //me falla en la linea de arriba, vi que cd_trf_state en este punto es distinto de ready y por eso
+            //putUSBUSART no entra al if en donde guarda lo que tiene que pasar al usb
+            //pero no se donde es que esa variable cambia, y si la chequeo en el main nunca entra a UI.C
+            //me hago una funcion mandar_daros? que tenga un dela incluido y el putusbusart?no tiene sentido.
             state_UI=ESPERA;
             break;
         case ESPERA:
-            opcion_int=leer_USB_int();
-            switch(opcion_int){
-                case 0:
-                    state_UI=ESPERA;
-                    break;
-                case 1:
-                    state_UI=CONFIGURAR;
-                    break;
-                case 2:
-                    state_UI=DAR_HORA;
-                    break;
-                case 3:
-                    state_UI=AGREGAR_EVENTO;
-                    break;
-                case 4:
-                    state_UI=CONSULTAR_EVENTOS;
-                    break;
-                default:
-                    putUSBUSART("INGRESAR UN NUMERO DEL 1 AL 4", sizeof("INGRESAR UN NUMERO DEL 1 AL 4"));
-                    break;
-            }
+            seleccionar_opcion();
             break;
         case CONFIGURAR:
             configurar_hora();
-            state_UI=ESPERA;
+            if (configurar_hora()==true){
+                state_UI=MENU;   
+            }
             break;
         case DAR_HORA:
             dar_hora();
-            state_UI=ESPERA;
+            if(dar_hora()==true){
+                state_UI=MENU;
+            }
             break;
         case AGREGAR_EVENTO:
-            agregar_evento();
-            state_UI=ESPERA;  
+            //agregar_evento();
+            state_UI=MENU;  
             break;
         case CONSULTAR_EVENTOS:
-            state_UI=ESPERA;  
+            //consultar_eventos();
+            state_UI=MENU;  
             break;
         default:
+            state_UI=MENU;
             break;
     }
 }
 
-
-void configurar_hora(void){
-    static int state_config=0;
+void seleccionar_opcion(void){
+    uint8_t opcion_int;
     
+    if (leer_USB_int()>0){
+        opcion_int=leer_USB_int();
+        switch(opcion_int){
+            case 0:
+                state_UI=ESPERA;
+                break;
+            case 1:
+                state_UI=CONFIGURAR;
+                break;
+            case 2:
+                state_UI=DAR_HORA;
+                break;
+            case 3:
+                state_UI=AGREGAR_EVENTO;
+                break;
+            case 4:
+                state_UI=CONSULTAR_EVENTOS;
+                break;
+            default:
+                state_UI=MENU;
+                break;
+        }
+    }
+}       
+
+
+bool configurar_hora(void){
+    static int state_config=0;
+
     switch(state_config){
         case 0:
-            putUSBUSART("Ingrese el dia (00 a 31)", strlen("Ingrese el dia (00 a 31)"));
+            
+            putUSBUSART("Ingriese el dia (00 a 31)", strlen("Ingrese el dia (00 a 31)"));
             if (leer_USB_int()>0){
                 if(leer_USB_int()<32){
                     calendar_time.tm_mday=leer_USB_int();
@@ -116,6 +147,7 @@ void configurar_hora(void){
                 putUSBUSART("Ingrese un dia valido", strlen("Ingrese un dia valido"));
                 }
             }
+            return false;
             break;
             
         case 1:
@@ -129,6 +161,7 @@ void configurar_hora(void){
                 putUSBUSART("Ingrese un mes valido", strlen("Ingrese un mes valido"));
                 }
             }
+            return false;
             break;
             
         case 2:
@@ -142,6 +175,7 @@ void configurar_hora(void){
                 putUSBUSART("Ingrese un ano valido", strlen("Ingrese un ano valido"));
                 }
             }
+            return false;
             break;
             
         case 3:
@@ -155,6 +189,7 @@ void configurar_hora(void){
                 putUSBUSART("Ingrese una hora valida", strlen("Ingrese una hora valida"));    
                 }
             }
+            return false;
             break;
         
         case 4:
@@ -169,41 +204,47 @@ void configurar_hora(void){
                 putUSBUSART("Ingrese minutos validos", strlen("Ingrese minutos validos"));    
                 }
             }
+            return false;
             break;
             
             
         case 5:
-            RTCC_BCDTimeSet(*calendar_time);
+            RTCC_BCDTimeSet(&calendar_time);
             state_config=6;
+            return true;
             break;
             
         case 6:
+            return true;
             break;
             
         default:
             state_config=0;
+            return false;
             break;
     }
 }      
 
 
-void dar_hora(void){
+bool dar_hora(void){
     char horario[8];
     char fecha[8];
     
     if((calendar_time.tm_mday)>0){
-        strftime(horario, 8, "%X", *calendar_time);
-        strftime(fecha, 8, "%x", *calendar_time);
+        strftime(horario, 8, "%X", &calendar_time);
+        strftime(fecha, 8, "%x", &calendar_time);
         putUSBUSART("Hora: ", strlen("Hora: "));
         putUSBUSART(horario, sizeof horario);
         putUSBUSART("\nFecha: ", strlen("\nFecha: "));
-        putUSBUSART(fecha, sizeof fecha);   
+        putUSBUSART(fecha, sizeof fecha); 
+        return true;
     }
     else{
-        putUSBUSART("\nUsted aun no a ingresado fecha y hora", strlen("\nUsted aun no a ingresado fecha y hora");  
+        putUSBUSART("\nUsted aun no a ingresado fecha y hora", strlen("\nUsted aun no a ingresado fecha y hora"));  
+        return false;
     }
 }
-
+/*
 void agregar_evento(void){
     
 }
@@ -211,7 +252,7 @@ void agregar_evento(void){
 void consultar_eventos(void){
     
 }
-
+*/
 
 /* ************************************************************************** */
 /* ************************************************************************** */

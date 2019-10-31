@@ -27,9 +27,9 @@
         <itemPath>mcc_generated_files/system.h</itemPath>
         <itemPath>mcc_generated_files/tmr2.h</itemPath>
         <itemPath>mcc_generated_files/rtcc.h</itemPath>
+        <itemPath>User Interface/UI.h</itemPath>
       </logicalFolder>
       <itemPath>utils/utils.h</itemPath>
-      <itemPath>User Interface/UI.h</itemPath>
       <itemPath>LEDs_RGB/leds.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -47,7 +47,7 @@
           <itemPath>mcc_generated_files/usb/usb_device.c</itemPath>
           <itemPath>mcc_generated_files/usb/usb_descriptors.c</itemPath>
           <itemPath>mcc_generated_files/usb/usb_device_cdc.c</itemPath>
-          <itemPath>mcc_generated_files/usb/usb_Example.c</itemPath>
+          <itemPath>mcc_generated_files/usb/example_mcc_usb_cdc.c</itemPath>
         </logicalFolder>
         <itemPath>mcc_generated_files/system.c</itemPath>
         <itemPath>mcc_generated_files/clock.c</itemPath>
@@ -186,7 +186,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value=""/>
+        <property key="heap-size" value="256"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>

@@ -99,7 +99,9 @@ int main(void)
             }
         }
          if ((USBGetDeviceState() >= CONFIGURED_STATE)&&( USBIsDeviceSuspended()== false)){
+             //CDCTxService
              UI_menu();
+             CDCTxService(); 
          }
     }
 }

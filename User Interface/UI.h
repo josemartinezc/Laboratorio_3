@@ -37,6 +37,7 @@ extern "C" {
         
     typedef enum{
         INIT,
+        MENU,        
         ESPERA,
         CONFIGURAR,
         DAR_HORA,

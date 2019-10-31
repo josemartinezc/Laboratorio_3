@@ -42,6 +42,8 @@ volatile bool button3On;
         uint32_t startValue;
         UT_TMR_DELAY_STATE state;
     }ut_tmrDelay_t;
+    
+    bool UT_delayDs(ut_tmrDelay_t* p_timer, uint32_t p_ds);
 
     
 

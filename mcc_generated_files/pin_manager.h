@@ -73,11 +73,11 @@
   @Example
     <code>
     // Set RA10 high (1)
-    LEDS_RGB_SetHigh();
+    LED_CTRL_SetHigh();
     </code>
 
 */
-#define LEDS_RGB_SetHigh()          ( LATASET = (1 << 10) )
+#define LED_CTRL_SetHigh()          ( LATASET = (1 << 10) )
 /**
   @Summary
     Sets the GPIO pin, RA10, low using LATA10.
@@ -97,11 +97,11 @@
   @Example
     <code>
     // Set RA10 low (0)
-    LEDS_RGB_SetLow();
+    LED_CTRL_SetLow();
     </code>
 
 */
-#define LEDS_RGB_SetLow()           ( LATACLR = (1 << 10) )
+#define LED_CTRL_SetLow()           ( LATACLR = (1 << 10) )
 
 /**
   @Summary
@@ -122,19 +122,19 @@
   @Example
     <code>
     // Set RA10 to low.
-    LEDS_RGB_SetValue(false);
+    LED_CTRL_SetValue(false);
     </code>
 
 */
-inline static void LEDS_RGB_SetValue(bool value)
+inline static void LED_CTRL_SetValue(bool value)
 {
   if(value)
   {
-    LEDS_RGB_SetHigh();
+    LED_CTRL_SetHigh();
   }
   else
   {
-    LEDS_RGB_SetLow();
+    LED_CTRL_SetLow();
   }
 }
 
@@ -157,11 +157,11 @@ inline static void LEDS_RGB_SetValue(bool value)
   @Example
     <code>
     // Toggle RA10
-    LEDS_RGB_Toggle();
+    LED_CTRL_Toggle();
     </code>
 
 */
-#define LEDS_RGB_Toggle()           ( LATAINV = (1 << 10) )
+#define LED_CTRL_Toggle()           ( LATAINV = (1 << 10) )
 /**
   @Summary
     Reads the value of the GPIO pin, RA10.
@@ -183,11 +183,11 @@ inline static void LEDS_RGB_SetValue(bool value)
     uint16_t portValue;
 
     // Read RA10
-    postValue = LEDS_RGB_GetValue();
+    postValue = LED_CTRL_GetValue();
     </code>
 
 */
-#define LEDS_RGB_GetValue()         PORTAbits.RA10
+#define LED_CTRL_GetValue()         PORTAbits.RA10
 /**
   @Summary
     Configures the GPIO pin, RA10, as an input.
@@ -207,11 +207,11 @@ inline static void LEDS_RGB_SetValue(bool value)
   @Example
     <code>
     // Sets the RA10 as an input
-    LEDS_RGB_SetDigitalInput();
+    LED_CTRL_SetDigitalInput();
     </code>
 
 */
-#define LEDS_RGB_SetDigitalInput()   ( TRISASET = (1 << 10) )
+#define LED_CTRL_SetDigitalInput()   ( TRISASET = (1 << 10) )
 /**
   @Summary
     Configures the GPIO pin, RA10, as an output.
@@ -231,11 +231,11 @@ inline static void LEDS_RGB_SetValue(bool value)
   @Example
     <code>
     // Sets the RA10 as an output
-    LEDS_RGB_SetDigitalOutput();
+    LED_CTRL_SetDigitalOutput();
     </code>
 
 */
-#define LEDS_RGB_SetDigitalOutput()   ( TRISACLR = (1 << 10) )
+#define LED_CTRL_SetDigitalOutput()   ( TRISACLR = (1 << 10) )
 /**
   @Summary
     Sets the GPIO pin, RA13, high using LATA13.
