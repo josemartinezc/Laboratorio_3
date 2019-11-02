@@ -31,7 +31,7 @@
 
 static UI_STATE state_UI=INIT;    
 static uint8_t evento;
-
+static int UI_int_lecture;
 
 bool UI_tasks (void){  
     if( USBGetDeviceState() < CONFIGURED_STATE ){
@@ -55,8 +55,10 @@ bool UI_tasks (void){
 //funcion que devuelve lo que hay en el usb, transformando el ascii a decimales
 int read_USB_int(void){
     static uint8_t datos[20];
+    int dato_int;
+    
     if(getsUSBUSART(datos, sizeof(datos))>0){
-        int dato_int=atoi(datos);
+        dato_int=atoi(datos);
         return dato_int;
     }
     else{
@@ -73,8 +75,9 @@ void UI_send_text(const char *text){
         all_sent=false;
 }
 
+void configurar_hora_interface();
+bool config_hora_function();
 void seleccionar_opcion();
-
 bool configurar_hora();
 bool dar_hora();
 //bool agregar_evento();
@@ -99,7 +102,7 @@ void UI_menu(){
                 state_UI=ESPERA;
             break;
         case ESPERA:
-           // seleccionar_opcion();
+            seleccionar_opcion();
             break;
         case CONFIGURAR:
             configurar_hora();
@@ -156,93 +159,125 @@ void seleccionar_opcion(void){
 
 bool configurar_hora(void){
     static int state_config=0;
-
-    switch(state_config){
+    static int p_config_hora_state;
+    bool dato_ingresado_valido;
+    
+    switch (state_config){
         case 0:
-            putUSBUSART("Ingrese el dia (00 a 31)", strlen("Ingrese el dia (00 a 31)"));
-            //se rompe aca
-            if (read_USB_int()>0){
-                if(read_USB_int()<32){
-                    calendar_time.tm_mday=read_USB_int();
-                    state_config=2;
-                }
-                else{
-                putUSBUSART("Ingrese un dia valido", strlen("Ingrese un dia valido"));
-                }
-            }
+            configurar_hora_interface(p_config_hora_state);
+            state_config=1;
             return false;
             break;
-            
         case 1:
-            putUSBUSART("Ingrese el mes (1 a 12)", strlen("Ingrese el mes (1 a 12)"));
-            if (read_USB_int()>0){
-                if(read_USB_int()<13){
-                    calendar_time.tm_mon=read_USB_int();
-                    state_config=3;
-                }
-                else{
-                putUSBUSART("Ingrese un mes valido", strlen("Ingrese un mes valido"));
-                }
+            UI_int_lecture=read_USB_int();
+            if(UI_int_lecture>0){
+                state_config=2;
             }
             return false;
             break;
-            
         case 2:
-            putUSBUSART("Ingrese el anio", strlen("Ingrese el anio"));
-            if (read_USB_int()>0){
-                if(read_USB_int()<2025){
-                    calendar_time.tm_year=read_USB_int();
+            dato_ingresado_valido=config_hora_function(p_config_hora_state);
+            if(dato_ingresado_valido==true){
+                if(p_config_hora_state<5){
+                    state_config=0;
+                    p_config_hora_state++;
+                    return false;
+                }
+                else{
                     state_config=3;
-                }
-                else{
-                putUSBUSART("Ingrese un ano valido", strlen("Ingrese un ano valido"));
+                    p_config_hora_state=0;
+                    return false;
                 }
             }
-            return false;
+            else{
+                state_config=0;
+                return false;
+            }
             break;
-            
         case 3:
-            putUSBUSART("Ingrese las horas (00 a 24)", strlen("Ingrese las horas (00 a 24)"));
-            if (read_USB_int()>0){
-                if(read_USB_int()<25){
-                calendar_time.tm_hour=read_USB_int();
-                state_config=1;
-                }
-                else{
-                putUSBUSART("Ingrese una hora valida", strlen("Ingrese una hora valida"));    
-                }
-            }
-            return false;
-            break;
-        
-        case 4:
-            putUSBUSART("Ingrese los minutos (00 a 60)", strlen("Ingrese las horas (00 a 24)"));
-            if(read_USB_int()>0){
-                if(read_USB_int()<61){
-                calendar_time.tm_min=read_USB_int();
-                calendar_time.tm_sec=0;
-                state_config=5;
-                }
-                else{
-                putUSBUSART("Ingrese minutos validos", strlen("Ingrese minutos validos"));    
-                }
-            }
-            return false;
-            break;
-            
-            
-        case 5:
             RTCC_BCDTimeSet(&calendar_time);
-            state_config=6;
             return true;
             break;
-            
-        case 6:
-            return true;
-            break;
-            
         default:
-            state_config=0;
+            return false;
+            break;
+    }
+}
+
+void configurar_hora_interface(int config_hora_state){    
+    switch(config_hora_state){
+        case 0:
+            UI_send_text("\nIngrese el dia (1 a 31)\n>>>");
+            break;
+        case 1:
+            UI_send_text("\nIngrese el mes (1 a 12)\n>>>");
+            break;
+        case 2:
+            UI_send_text("\nIngrese el anio (4 digitos)\n>>>");
+            break;
+        case 3:
+            UI_send_text("\nIngrese la hora (00 al 23)\n>>>");
+            break;
+        case 4:
+            UI_send_text("\nIngrese los minutos (00 al 59)\n>>>");
+            break;
+    }
+}
+
+bool config_hora_function(int config_hora_state){ 
+    switch(config_hora_state){
+        case 0:
+            if(UI_int_lecture<32 && UI_int_lecture>0){
+                calendar_time.tm_mday=UI_int_lecture;
+                return true;
+            }
+            else{
+                UI_send_text("\nIngrese un dia valido");
+                return false;
+            }
+            break;            
+        case 1:
+            if(UI_int_lecture<13 && UI_int_lecture>0){
+                calendar_time.tm_mon=UI_int_lecture;
+                return true;
+            }
+            else{
+                UI_send_text("\nIngrese un mes valido");
+                return false;
+            }
+            break;            
+        case 2:
+            if(UI_int_lecture<10000 && UI_int_lecture>999){
+                calendar_time.tm_year=UI_int_lecture;
+                return true;
+            }
+            else{
+                UI_send_text("\nIngrese un ano valido");
+                return false;
+            }
+            break;
+        case 3:
+            if(UI_int_lecture<24 && UI_int_lecture>0){
+                calendar_time.tm_hour=UI_int_lecture;
+                return true;
+            }
+            else{
+                UI_send_text("\nIngrese una hora valida");    
+                return false;
+            }
+            break;
+        case 4:
+            if(UI_int_lecture<60 && UI_int_lecture>0){
+                calendar_time.tm_min=UI_int_lecture;
+                calendar_time.tm_sec=0;
+                return true;
+            }
+            else{
+                UI_send_text("\nIngrese minutos validos");    
+                return false;
+            }
+            break;                
+        default:
             return false;
             break;
     }
