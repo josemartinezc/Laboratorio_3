@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <stdio.h>
 
 #include "../mcc_generated_files/rtcc.h"
 #include "UI.h"
@@ -29,10 +30,31 @@
 
 
 static UI_STATE state_UI=INIT;    
+static uint8_t evento;
+
+
+bool UI_tasks (void){  
+    if( USBGetDeviceState() < CONFIGURED_STATE ){
+        return false;
+    }
+
+    if( USBIsDeviceSuspended()== true ){
+        return false;
+    }
+
+    if( USBUSARTIsTxTrfReady() == true && all_sent==false){
+        putUSBUSART(buffer_USB_send_text, strlen(buffer_USB_send_text));
+        all_sent=true;
+    }
+    
+    CDCTxService();
+    return true;
+}
+
 
 //funcion que devuelve lo que hay en el usb, transformando el ascii a decimales
-int leer_USB_int(void){
-    uint8_t datos[20];
+int read_USB_int(void){
+    static uint8_t datos[20];
     if(getsUSBUSART(datos, sizeof(datos))>0){
         int dato_int=atoi(datos);
         return dato_int;
@@ -42,39 +64,42 @@ int leer_USB_int(void){
     }
 }
 
+void UI_send_text(const char *text){
+    
+    if (all_sent==true){
+        memset(buffer_USB_send_text, 0, sizeof(buffer_USB_send_text));
+    }
+        strcat(buffer_USB_send_text, text);           
+        all_sent=false;
+}
+
 void seleccionar_opcion();
+
 bool configurar_hora();
 bool dar_hora();
-//void agregar_evento();
+//bool agregar_evento();
 //void consultar_eventos();
 
 
 void UI_menu(){
-    static ut_tmrDelay_t timer;
-    static ut_tmrDelay_t *ptimer;
     static uint8_t ini[16];
-    
-    uint8_t i=0; 
-    ptimer = &timer;
-    
+   
     switch (state_UI){
         case INIT:
             calendar_time.tm_mday=0;
-            if(getsUSBUSART(ini, sizeof(ini))>0){
-            putUSBUSART("\n\n\nBIENVENIDO A SU CALENDARIO\n", strlen("\n\n\nBIENVENIDO A SU CALENDARIO\n"));
-            state_UI=MENU;
+            if( USBGetDeviceState() == CONFIGURED_STATE ){
+                if(getsUSBUSART(ini, sizeof(ini))>0){
+                    UI_send_text("\n\n\nBIENVENIDO A SU CALENDARIO\n");
+                    state_UI=MENU;
+                }
             }
             break;
         case MENU:
-            putUSBUSART("\nIngrese una opcion del 1-4\n", strlen("\nIngrese una opcion del 1-4\n")); 
-            //me falla en la linea de arriba, vi que cd_trf_state en este punto es distinto de ready y por eso
-            //putUSBUSART no entra al if en donde guarda lo que tiene que pasar al usb
-            //pero no se donde es que esa variable cambia, y si la chequeo en el main nunca entra a UI.C
-            //me hago una funcion mandar_daros? que tenga un dela incluido y el putusbusart?no tiene sentido.
-            state_UI=ESPERA;
+                UI_send_text("\nIngrese una opcion del 1-4\n");
+                state_UI=ESPERA;
             break;
         case ESPERA:
-            seleccionar_opcion();
+           // seleccionar_opcion();
             break;
         case CONFIGURAR:
             configurar_hora();
@@ -105,12 +130,10 @@ void UI_menu(){
 void seleccionar_opcion(void){
     uint8_t opcion_int;
     
-    if (leer_USB_int()>0){
-        opcion_int=leer_USB_int();
+    opcion_int=read_USB_int();
+    
+    if (opcion_int>0){
         switch(opcion_int){
-            case 0:
-                state_UI=ESPERA;
-                break;
             case 1:
                 state_UI=CONFIGURAR;
                 break;
@@ -136,11 +159,11 @@ bool configurar_hora(void){
 
     switch(state_config){
         case 0:
-            
-            putUSBUSART("Ingriese el dia (00 a 31)", strlen("Ingrese el dia (00 a 31)"));
-            if (leer_USB_int()>0){
-                if(leer_USB_int()<32){
-                    calendar_time.tm_mday=leer_USB_int();
+            putUSBUSART("Ingrese el dia (00 a 31)", strlen("Ingrese el dia (00 a 31)"));
+            //se rompe aca
+            if (read_USB_int()>0){
+                if(read_USB_int()<32){
+                    calendar_time.tm_mday=read_USB_int();
                     state_config=2;
                 }
                 else{
@@ -152,9 +175,9 @@ bool configurar_hora(void){
             
         case 1:
             putUSBUSART("Ingrese el mes (1 a 12)", strlen("Ingrese el mes (1 a 12)"));
-            if (leer_USB_int()>0){
-                if(leer_USB_int()<13){
-                    calendar_time.tm_mon=leer_USB_int();
+            if (read_USB_int()>0){
+                if(read_USB_int()<13){
+                    calendar_time.tm_mon=read_USB_int();
                     state_config=3;
                 }
                 else{
@@ -166,9 +189,9 @@ bool configurar_hora(void){
             
         case 2:
             putUSBUSART("Ingrese el anio", strlen("Ingrese el anio"));
-            if (leer_USB_int()>0){
-                if(leer_USB_int()<2025){
-                    calendar_time.tm_year=leer_USB_int();
+            if (read_USB_int()>0){
+                if(read_USB_int()<2025){
+                    calendar_time.tm_year=read_USB_int();
                     state_config=3;
                 }
                 else{
@@ -180,9 +203,9 @@ bool configurar_hora(void){
             
         case 3:
             putUSBUSART("Ingrese las horas (00 a 24)", strlen("Ingrese las horas (00 a 24)"));
-            if (leer_USB_int()>0){
-                if(leer_USB_int()<25){
-                calendar_time.tm_hour=leer_USB_int();
+            if (read_USB_int()>0){
+                if(read_USB_int()<25){
+                calendar_time.tm_hour=read_USB_int();
                 state_config=1;
                 }
                 else{
@@ -194,9 +217,9 @@ bool configurar_hora(void){
         
         case 4:
             putUSBUSART("Ingrese los minutos (00 a 60)", strlen("Ingrese las horas (00 a 24)"));
-            if(leer_USB_int()>0){
-                if(leer_USB_int()<61){
-                calendar_time.tm_min=leer_USB_int();
+            if(read_USB_int()>0){
+                if(read_USB_int()<61){
+                calendar_time.tm_min=read_USB_int();
                 calendar_time.tm_sec=0;
                 state_config=5;
                 }
@@ -244,11 +267,28 @@ bool dar_hora(void){
         return false;
     }
 }
+
+
 /*
-void agregar_evento(void){
+bool agregar_evento(void){
+    static int state_eventos=0;
     
+    switch(state_eventos)
+    {
+        case 0:
+            putUSBUSART("Ingrese el numero de evento a configurar (Del 1 al 8)", strlen("Ingrese el numero de evento a configurar (Del 1 al 8)"));  
+            if (read_USB_int>0){
+                evento=read_USB_int();
+                configurar_evento(evento);
+            }
+    }
 }
 
+void configurar_evento (int numero_evento){
+    
+}
+*/
+/*
 void consultar_eventos(void){
     
 }

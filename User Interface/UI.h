@@ -34,7 +34,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-        
+    
+    #define TAMANO 128
+    
+    
     typedef enum{
         INIT,
         MENU,        
@@ -46,6 +49,21 @@ extern "C" {
     }UI_STATE;
 
     static bcdTime_t calendar_time;
+    
+    typedef struct{
+        uint8_t command;
+        uint8_t param;
+        uint8_t color;
+        uint32_t time;
+    } app_event_t ;
+    
+    app_event_t eventos[8];
+    
+    static uint8_t buffer_USB_send_text[TAMANO];
+    static bool all_sent;
+    
+    bool UI_tasks (void);
+    
     
 /* *****************************************************************************
  End of File

@@ -83,28 +83,27 @@ int main(void)
             button3On = false; 
         }*/
         
-         if (UT_delayDs(ptimer,40) == true) {
-            switch (i){
-                case (0):
-                    LEDA_SetHigh();
-                    i++;
-                    break;
-                case (1):
-                    LEDA_SetLow();
-                    i++;
-                    break;
-                case (2):
-                    i = 0;
-                    break;
-            }
-        }
-         if ((USBGetDeviceState() >= CONFIGURED_STATE)&&( USBIsDeviceSuspended()== false)){
-             //CDCTxService
-             UI_menu();
-             CDCTxService(); 
-         }
+//         if (UT_delayDs(ptimer,40) == true) {
+//            switch (i){
+//                case (0):
+//                    LEDA_SetHigh();
+//                    i++;
+//                    break;
+//                case (1):
+//                    LEDA_SetLow();
+//                    i++;
+//                    break;
+//                case (2):
+//                    i = 0;
+//                    break;
+//            }
+//        }
+         
+        UI_menu();
+        UI_tasks(); 
     }
 }
+
 /**
  End of File
 */
