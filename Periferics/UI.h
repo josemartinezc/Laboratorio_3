@@ -36,11 +36,11 @@ extern "C" {
 #endif
     
     #define TAMANO 128
-    #define MAX_EVENTOS 8
+    #define MAX_EVENTOS 16
     
     static uint8_t buffer_USB_send_text[TAMANO];
     static bool all_sent;
-    static bcdTime_t calendar_time;
+    static bcdTime_t real_time;
     
     typedef enum{
         INIT,
@@ -66,7 +66,9 @@ extern "C" {
         uint32_t time;
     } app_event_t ;
     
-    app_event_t eventos[MAX_EVENTOS];
+    static app_event_t eventos[MAX_EVENTOS];
+    static bcdTime_t event_dates[MAX_EVENTOS];
+    
     
     bool UI_tasks (void);
     void UI_menu (void);

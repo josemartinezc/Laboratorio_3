@@ -27,7 +27,6 @@
         <itemPath>mcc_generated_files/system.h</itemPath>
         <itemPath>mcc_generated_files/tmr2.h</itemPath>
         <itemPath>mcc_generated_files/rtcc.h</itemPath>
-        <itemPath>User Interface/UI.h</itemPath>
       </logicalFolder>
       <itemPath>utils/utils.h</itemPath>
       <itemPath>LEDs_RGB/RGB_leds.h</itemPath>

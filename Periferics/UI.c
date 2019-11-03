@@ -30,7 +30,7 @@
 
 
 static UI_STATE state_UI=INIT;   
-static uint8_t evento;
+static uint8_t numero_evento=0;
 static int UI_int_lecture;
 
 bool UI_tasks (void){  
@@ -54,7 +54,7 @@ bool UI_tasks (void){
 
 //funcion que devuelve lo que hay en el usb, transformando el ascii a decimales
 int read_USB_int(void){
-    static uint8_t datos[20];
+    uint8_t datos[20];
     int dato_int;
     
     if(getsUSBUSART(datos, sizeof(datos))>0){
@@ -76,6 +76,7 @@ void UI_send_text(const char *text){
 }
 
 void seleccionar_opcion();
+
 bool configurar_hora();
 void configurar_hora_interface();
 bool config_hora_function();
@@ -94,7 +95,7 @@ void UI_menu(){
    
     switch (state_UI){
         case INIT:
-            calendar_time.tm_mday=0;
+            real_time.tm_mday=0;
             if( USBGetDeviceState() == CONFIGURED_STATE ){
                 if(getsUSBUSART(ini, sizeof(ini))>0){
                     UI_send_text("\n\n\nBIENVENIDO A SU CALENDARIO\n");
@@ -112,7 +113,7 @@ void UI_menu(){
         case CONFIGURAR:
             //configurar_hora();
             if (configurar_hora()==true){
-                UI_send_text("\nSu hora a sido configurada con exito!");
+                UI_send_text("\nSu hora a sido configurada con exito!\n\n\n\n");
                 state_UI=MENU;   
             }
             break;
@@ -122,7 +123,9 @@ void UI_menu(){
             break;
         case AGREGAR_EVENTO:
             //agregar_evento();
-            state_UI=MENU;  
+            if (agregar_evento()== true){
+            state_UI=MENU;      
+            }
             break;
         case CONSULTAR_EVENTOS:
             //consultar_eventos();
@@ -182,7 +185,7 @@ bool configurar_hora(void){
         case DO_TASKS:
             dato_ingresado_valido=config_hora_function(p_config_hora_state);
             if(dato_ingresado_valido==true){
-                if(p_config_hora_state<5){
+                if(p_config_hora_state<4){
                     state_config=INTERFACE;
                     p_config_hora_state++;
                     return false;
@@ -198,7 +201,7 @@ bool configurar_hora(void){
             }
             break;
         case END:
-            RTCC_BCDTimeSet(&calendar_time);
+            RTCC_BCDTimeSet(&real_time);
             state_config=INTERFACE;
             p_config_hora_state=0;
             return true;
@@ -235,7 +238,7 @@ bool config_hora_function(int config_hora_state){
     switch(config_hora_state){
         case 0:
             if(UI_int_lecture<32 && UI_int_lecture>0){
-                calendar_time.tm_mday=UI_int_lecture;
+                real_time.tm_mday=UI_int_lecture;
                 return true;
             }
             else{
@@ -245,7 +248,7 @@ bool config_hora_function(int config_hora_state){
             break;            
         case 1:
             if(UI_int_lecture<13 && UI_int_lecture>0){
-                calendar_time.tm_mon=UI_int_lecture;
+                real_time.tm_mon=(UI_int_lecture-1);
                 return true;
             }
             else{
@@ -255,7 +258,7 @@ bool config_hora_function(int config_hora_state){
             break;            
         case 2:
             if(UI_int_lecture<10000 && UI_int_lecture>999){
-                calendar_time.tm_year=UI_int_lecture;
+                real_time.tm_year=(UI_int_lecture-1900);
                 return true;
             }
             else{
@@ -265,7 +268,7 @@ bool config_hora_function(int config_hora_state){
             break;
         case 3:
             if(UI_int_lecture<24 && UI_int_lecture>0){
-                calendar_time.tm_hour=UI_int_lecture;
+                real_time.tm_hour=UI_int_lecture;
                 return true;
             }
             else{
@@ -275,8 +278,8 @@ bool config_hora_function(int config_hora_state){
             break;
         case 4:
             if(UI_int_lecture<60 && UI_int_lecture>0){
-                calendar_time.tm_min=UI_int_lecture;
-                calendar_time.tm_sec=0;
+                real_time.tm_min=UI_int_lecture;
+                real_time.tm_sec=0;
                 return true;
             }
             else{
@@ -292,16 +295,11 @@ bool config_hora_function(int config_hora_state){
 
 
 void dar_hora(void){
-    char horario[8];
-    char fecha[8];
+    char date_time_representation[32];
     
-    if((calendar_time.tm_mday)>0){
-        strftime(horario, 8, "%X", &calendar_time);
-        strftime(fecha, 8, "%x", &calendar_time);
-        UI_send_text("Hora: ");
-        UI_send_text(horario);
-        UI_send_text("\nFecha: ");
-        UI_send_text(fecha); 
+    if((real_time.tm_mday)>0){
+        strftime(date_time_representation, 8, "%c", &real_time);
+        UI_send_text(date_time_representation); 
     }
     else{
         UI_send_text("\nUsted aun no a ingresado fecha y hora");  
@@ -309,42 +307,144 @@ void dar_hora(void){
 }
 
 
-
 bool agregar_evento(void){
     static TASKS_STATE state_events=INTERFACE;
-    static p_agregar_eventos_state;
+    static int p_agregar_eventos_state;
     bool dato_ingresado_valido;
     
-    switch(state_events)
-    {
-        case INTERFACE:
-            configurar_evento_interface(p_agregar_eventos_state);
-            state_events=WAIT;
-            break;
-        case WAIT:
-            UI_int_lecture=read_USB_int();
-            if(UI_int_lecture>0){
-                state_events=DO_TASKS;
-            }
-            return false;
-            break;
-        case DO_TASKS:
-            
-            break;
-        case END:
-            break;
-        default:
-            break;
+    if(real_time.tm_mday==0){
+        UI_send_text("\nDebe configurar fecha y hora para agregar un evento\n");
+        return true;
+    }
+    else{
+        switch(state_events)
+        {
+            case INTERFACE:
+                configurar_evento_interface(p_agregar_eventos_state);
+                state_events=WAIT;
+                break;
+            case WAIT:
+                UI_int_lecture=read_USB_int();
+                if(UI_int_lecture>0){
+                    state_events=DO_TASKS;
+                }
+                return false;
+                break;
+            case DO_TASKS:
+                dato_ingresado_valido=configurar_evento(p_agregar_eventos_state);
+                if(dato_ingresado_valido==true){
+                    p_agregar_eventos_state++;
+                    if(p_agregar_eventos_state>4){
+                        state_events=END;
+                    }
+                }
+                else{
+                    state_events=INTERFACE;
+                }
+                return false;
+                break;
+            case END:
+                p_agregar_eventos_state=0;
+                state_events=INTERFACE;
+                if(numero_evento<17){
+                    numero_evento++;
+                }
+                else{
+                    UI_send_text("\nSu agenda esta llena!\n Sus nuevos eventos sustituiran un evento viejos\n");
+                    numero_evento=0;
+                }
+                return true;
+                break;
+            default:
+                return false;
+                break;
+        }
     }
 }
 
 
-bool configurar_evento (int numero_evento){
-    
+void configurar_evento_interface(int estado){
+    switch (estado){
+        case 0:
+            UI_send_text("\nIngrese el led que desea encender (1 al 8)\n>>>");
+            break;
+        case 1:
+            UI_send_text("\nIngrese:\n1. Si desea que la led se encienda\n2.2.Si desea que la led se apague\n>>>");
+            break;
+        case 2:
+            UI_send_text("\nIngrese el color de evento\n0.Blanco\n1.Rojo\n2.Azul\n3.Verde\n>>>");
+            break;
+        case 3:
+            UI_send_text("\nIngrese la hora en la que sera programado (00-23)\n>>>");
+            break;
+        case 4:
+            UI_send_text("\nIngrese los minutos en la que sera programado (00 al 59)\n>>>");
+            break;
+        default:
+            break;       
+    }               
 }
 
-void configurar_evento_interface(){
-    
+bool configurar_evento(int estado){
+    switch (estado){
+        case 0:
+            if(UI_int_lecture>0 && UI_int_lecture<9){
+                eventos[numero_evento].param=UI_int_lecture;
+                return true;
+            }
+            else{
+                UI_send_text("\nEl numero de led a encender es invalido!");
+                return false;
+            }//ingrese el numero de event
+            break;
+        case 1:
+            if(UI_int_lecture==0 || UI_int_lecture==1){
+                eventos[numero_evento].command=UI_int_lecture;
+                return true;
+            }
+            else{
+                UI_send_text("\nSu comando es invalido!");
+                return false;
+            }
+            //ingrese la funcion a ejecutarse
+            break;
+        case 2:
+            if(UI_int_lecture>=0 && UI_int_lecture<4)
+            {
+                eventos[numero_evento].color=UI_int_lecture;
+                return true;
+            }
+            else{
+                UI_send_text("\nEl numero de color seleccionado es invalido!");
+                return false;
+            }
+            //ingrese el color del evento
+            break;
+        case 3:
+             if(UI_int_lecture<24 && UI_int_lecture>0){
+                event_dates[numero_evento].tm_hour=UI_int_lecture;
+                return true;
+            }
+            else{
+                UI_send_text("\nIngrese una hora valida");    
+                return false;
+            }
+            break;
+        case 4:
+            if(UI_int_lecture<60 && UI_int_lecture>0){
+                event_dates[numero_evento].tm_min=UI_int_lecture;
+                event_dates[numero_evento].tm_sec=0;
+                event_dates[numero_evento].tm_mon=real_time.tm_mon;
+                event_dates[numero_evento].tm_year=real_time.tm_year;
+                return true;
+            }
+            else{
+                UI_send_text("\nIngrese minutos validos");    
+                return false;
+            }
+        default:
+            break;
+    }
 }
 /*
 void consultar_eventos(void){
