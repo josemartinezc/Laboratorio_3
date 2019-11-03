@@ -27,16 +27,34 @@
 #include "../utils/utils.h"
 #include "leds.h"
 
-void led_sequence(void){
+#include <stdbool.h>
+#include <xc.h> 
+#include "../utils/utils.h"
+
+#include "../mcc_generated_files/mcc.h"
+
+
+/*
+                         Main application
+*/
+
+
+void led_sequence_bloqueante(void){
  if(button3On==true){
             LEDA_SetHigh ();
-            UT_delayDs (20);  
+            UT_delayDs_bolqueante(20);  
             LEDA_SetLow();
             button3On = false; 
         }
 }
  
-void led_sequence_no_bloqueante(void){
+void led_sequence(void){
+    ut_tmrDelay_t timer;
+    ut_tmrDelay_t *ptimer;
+    uint8_t i=0;
+    ptimer = &timer;
+    ptimer->state = 0;
+
     if (UT_delayDs(ptimer,40) == true) {
         switch (i){
             case (0):

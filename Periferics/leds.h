@@ -31,13 +31,7 @@
 extern "C" {
 #endif
 
-
-    static ut_tmrDelay_t timer;
-    ut_tmrDelay_t *ptimer;
-    uint8_t i=0; 
-    int ptimer = &timer;
-    ptimer->state = 0;
-    
-    void led_sequence_no_bloqueante();
+    void led_Sequence_bloqueante();
+    void led_sequence();
     
 #endif

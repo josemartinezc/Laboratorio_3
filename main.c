@@ -66,7 +66,7 @@ int main(void)
  
     while (1)
     { 
-        led_sequence_no_bloqueante();
+        led_sequence();
         UI_menu();
         UI_tasks(); 
     }

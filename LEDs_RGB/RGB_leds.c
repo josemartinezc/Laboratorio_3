@@ -20,7 +20,7 @@
 /* Section: Included Files                                                    */
 /* ************************************************************************** */
 /* ************************************************************************** */
-#include "leds.h"
+#include "RGB_leds.h"
 #include "../mcc_generated_files/pin_manager.h"
 #include "../mcc_generated_files/interrupt_manager.h"
 

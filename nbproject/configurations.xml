@@ -31,6 +31,8 @@
       </logicalFolder>
       <itemPath>utils/utils.h</itemPath>
       <itemPath>LEDs_RGB/RGB_leds.h</itemPath>
+      <itemPath>Periferics/UI.h</itemPath>
+      <itemPath>Periferics/leds.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -60,7 +62,8 @@
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>utils/utils.c</itemPath>
-      <itemPath>User Interface/UI.c</itemPath>
+      <itemPath>Periferics/UI.c</itemPath>
+      <itemPath>Periferics/leds.c</itemPath>
       <itemPath>LEDs_RGB/RGB_leds.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -76,6 +79,7 @@
     <Elem>mcc_generated_files/usb</Elem>
     <Elem>LEDs_RGB</Elem>
     <Elem>User Interface</Elem>
+    <Elem>Periferics</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

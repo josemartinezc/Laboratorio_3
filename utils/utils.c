@@ -27,11 +27,12 @@
 #include "utils.h"
 #include "../mcc_generated_files/tmr2.h"
 
-/*void UT_delayDs ( int i ){
+void UT_delayDs_bolqueante ( int i ){
     int t;
     t = TMR2_SoftwareCounterGet ();
     while ( TMR2_SoftwareCounterGet () < t + i);
-    }*/
+}
+
 
 bool UT_delayDs(ut_tmrDelay_t* p_timer, uint32_t p_ds){
     switch ( p_timer->state ) {

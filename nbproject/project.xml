@@ -18,6 +18,7 @@
                 <sourceRootElem>mcc_generated_files/usb</sourceRootElem>
                 <sourceRootElem>LEDs_RGB</sourceRootElem>
                 <sourceRootElem>User Interface</sourceRootElem>
+                <sourceRootElem>Periferics</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
