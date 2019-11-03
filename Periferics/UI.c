@@ -258,7 +258,7 @@ bool config_hora_function(int config_hora_state){
             break;            
         case 2:
             if(UI_int_lecture<10000 && UI_int_lecture>999){
-                real_time.tm_year=(UI_int_lecture-1900);
+                real_time.tm_year=(UI_int_lecture);
                 return true;
             }
             else{
@@ -267,7 +267,7 @@ bool config_hora_function(int config_hora_state){
             }
             break;
         case 3:
-            if(UI_int_lecture<24 && UI_int_lecture>0){
+            if(UI_int_lecture<24 && UI_int_lecture>=0){
                 real_time.tm_hour=UI_int_lecture;
                 return true;
             }
@@ -277,7 +277,7 @@ bool config_hora_function(int config_hora_state){
             }
             break;
         case 4:
-            if(UI_int_lecture<60 && UI_int_lecture>0){
+            if(UI_int_lecture<60 && UI_int_lecture>=0){
                 real_time.tm_min=UI_int_lecture;
                 real_time.tm_sec=0;
                 return true;
