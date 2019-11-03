@@ -30,7 +30,7 @@
         <itemPath>User Interface/UI.h</itemPath>
       </logicalFolder>
       <itemPath>utils/utils.h</itemPath>
-      <itemPath>LEDs_RGB/leds.h</itemPath>
+      <itemPath>LEDs_RGB/RGB_leds.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -61,7 +61,7 @@
       <itemPath>main.c</itemPath>
       <itemPath>utils/utils.c</itemPath>
       <itemPath>User Interface/UI.c</itemPath>
-      <itemPath>LEDs_RGB/leds.c</itemPath>
+      <itemPath>LEDs_RGB/RGB_leds.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

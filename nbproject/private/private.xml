@@ -4,10 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/utils/utils.c</file>
+            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/mcc_generated_files/rtcc.c</file>
+            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/LEDs_RGB/RGB_leds.c</file>
+            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/Periferics/leds.c</file>
+            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/Periferics/UI.c</file>
             <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/main.c</file>
-            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/User%20Interface/UI.h</file>
             <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/mcc_generated_files/tmr2.c</file>
-            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/User%20Interface/UI.c</file>
+            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/Periferics/leds.h</file>
+            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/Periferics/UI.h</file>
+            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/utils/utils.h</file>
+            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/mcc_generated_files/rtcc.h</file>
         </group>
     </open-files>
 </project-private>

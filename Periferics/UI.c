@@ -29,7 +29,7 @@
 #include "../utils/utils.h"
 
 
-static UI_STATE state_UI=INIT;    
+static UI_STATE state_UI=INIT;   
 static uint8_t evento;
 static int UI_int_lecture;
 
@@ -75,12 +75,17 @@ void UI_send_text(const char *text){
         all_sent=false;
 }
 
-void configurar_hora_interface();
-bool config_hora_function();
 void seleccionar_opcion();
 bool configurar_hora();
-bool dar_hora();
-//bool agregar_evento();
+void configurar_hora_interface();
+bool config_hora_function();
+
+void dar_hora();
+
+bool agregar_evento();
+void configurar_evento_interface();
+bool configurar_evento();
+
 //void consultar_eventos();
 
 
@@ -98,23 +103,22 @@ void UI_menu(){
             }
             break;
         case MENU:
-                UI_send_text("\nIngrese una opcion del 1-4\n");
+                UI_send_text("\nIngrese una opcion del 1-4\n1.Configurar fecha y hora\n2.consultar hora\n3.Agregar evento\n4.Consultar eventos");
                 state_UI=ESPERA;
             break;
         case ESPERA:
             seleccionar_opcion();
             break;
         case CONFIGURAR:
-            configurar_hora();
+            //configurar_hora();
             if (configurar_hora()==true){
+                UI_send_text("\nSu hora a sido configurada con exito!");
                 state_UI=MENU;   
             }
             break;
         case DAR_HORA:
             dar_hora();
-            if(dar_hora()==true){
-                state_UI=MENU;
-            }
+            state_UI=MENU;
             break;
         case AGREGAR_EVENTO:
             //agregar_evento();
@@ -158,44 +162,45 @@ void seleccionar_opcion(void){
 
 
 bool configurar_hora(void){
-    static int state_config=0;
+    static TASKS_STATE state_config=INTERFACE;
     static int p_config_hora_state;
     bool dato_ingresado_valido;
     
     switch (state_config){
-        case 0:
+        case INTERFACE:
             configurar_hora_interface(p_config_hora_state);
-            state_config=1;
+            state_config=WAIT;
             return false;
             break;
-        case 1:
+        case WAIT:
             UI_int_lecture=read_USB_int();
             if(UI_int_lecture>0){
-                state_config=2;
+                state_config=DO_TASKS;
             }
             return false;
             break;
-        case 2:
+        case DO_TASKS:
             dato_ingresado_valido=config_hora_function(p_config_hora_state);
             if(dato_ingresado_valido==true){
                 if(p_config_hora_state<5){
-                    state_config=0;
+                    state_config=INTERFACE;
                     p_config_hora_state++;
                     return false;
                 }
                 else{
-                    state_config=3;
-                    p_config_hora_state=0;
+                    state_config=END;
                     return false;
                 }
             }
             else{
-                state_config=0;
+                state_config=INTERFACE;
                 return false;
             }
             break;
-        case 3:
+        case END:
             RTCC_BCDTimeSet(&calendar_time);
+            state_config=INTERFACE;
+            p_config_hora_state=0;
             return true;
             break;
         default:
@@ -220,6 +225,8 @@ void configurar_hora_interface(int config_hora_state){
             break;
         case 4:
             UI_send_text("\nIngrese los minutos (00 al 59)\n>>>");
+            break;
+        default:
             break;
     }
 }
@@ -284,45 +291,61 @@ bool config_hora_function(int config_hora_state){
 }      
 
 
-bool dar_hora(void){
+void dar_hora(void){
     char horario[8];
     char fecha[8];
     
     if((calendar_time.tm_mday)>0){
         strftime(horario, 8, "%X", &calendar_time);
         strftime(fecha, 8, "%x", &calendar_time);
-        putUSBUSART("Hora: ", strlen("Hora: "));
-        putUSBUSART(horario, sizeof horario);
-        putUSBUSART("\nFecha: ", strlen("\nFecha: "));
-        putUSBUSART(fecha, sizeof fecha); 
-        return true;
+        UI_send_text("Hora: ");
+        UI_send_text(horario);
+        UI_send_text("\nFecha: ");
+        UI_send_text(fecha); 
     }
     else{
-        putUSBUSART("\nUsted aun no a ingresado fecha y hora", strlen("\nUsted aun no a ingresado fecha y hora"));  
-        return false;
+        UI_send_text("\nUsted aun no a ingresado fecha y hora");  
     }
 }
 
 
-/*
+
 bool agregar_evento(void){
-    static int state_eventos=0;
+    static TASKS_STATE state_events=INTERFACE;
+    static p_agregar_eventos_state;
+    bool dato_ingresado_valido;
     
-    switch(state_eventos)
+    switch(state_events)
     {
-        case 0:
-            putUSBUSART("Ingrese el numero de evento a configurar (Del 1 al 8)", strlen("Ingrese el numero de evento a configurar (Del 1 al 8)"));  
-            if (read_USB_int>0){
-                evento=read_USB_int();
-                configurar_evento(evento);
+        case INTERFACE:
+            configurar_evento_interface(p_agregar_eventos_state);
+            state_events=WAIT;
+            break;
+        case WAIT:
+            UI_int_lecture=read_USB_int();
+            if(UI_int_lecture>0){
+                state_events=DO_TASKS;
             }
+            return false;
+            break;
+        case DO_TASKS:
+            
+            break;
+        case END:
+            break;
+        default:
+            break;
     }
 }
 
-void configurar_evento (int numero_evento){
+
+bool configurar_evento (int numero_evento){
     
 }
-*/
+
+void configurar_evento_interface(){
+    
+}
 /*
 void consultar_eventos(void){
     

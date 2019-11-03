@@ -48,7 +48,8 @@
 #include <stdbool.h>
 #include <xc.h> 
 #include "utils/utils.h"
-#include "User Interface/UI.h"
+#include "Periferics/UI.h"
+#include "Periferics/leds.h"
 
 #include "mcc_generated_files/mcc.h"
 
@@ -58,47 +59,14 @@
  */
 int main(void)
 {   
-    ut_tmrDelay_t timer;
-    ut_tmrDelay_t *ptimer;
-    uint8_t i=0; 
-    ptimer = &timer;
-    ptimer->state = 0;
-
-    button2On=false;
-    button3On=false;
-    
     SYSTEM_Initialize();
     
     LEDA_SetLow();
     LEDB_SetLow();
-
-
-    
+ 
     while (1)
     { 
-        /*if(button3On==true){
-            LEDA_SetHigh ();
-            UT_delayDs (20);  
-            LEDA_SetLow();
-            button3On = false; 
-        }*/
-        
-//         if (UT_delayDs(ptimer,40) == true) {
-//            switch (i){
-//                case (0):
-//                    LEDA_SetHigh();
-//                    i++;
-//                    break;
-//                case (1):
-//                    LEDA_SetLow();
-//                    i++;
-//                    break;
-//                case (2):
-//                    i = 0;
-//                    break;
-//            }
-//        }
-         
+        led_sequence_no_bloqueante();
         UI_menu();
         UI_tasks(); 
     }

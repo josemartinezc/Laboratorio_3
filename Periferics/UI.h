@@ -36,7 +36,11 @@ extern "C" {
 #endif
     
     #define TAMANO 128
+    #define MAX_EVENTOS 8
     
+    static uint8_t buffer_USB_send_text[TAMANO];
+    static bool all_sent;
+    static bcdTime_t calendar_time;
     
     typedef enum{
         INIT,
@@ -47,8 +51,13 @@ extern "C" {
         AGREGAR_EVENTO,
         CONSULTAR_EVENTOS,                
     }UI_STATE;
-
-    static bcdTime_t calendar_time;
+    
+    typedef enum{
+        INTERFACE,
+        DO_TASKS,
+        WAIT,
+        END,        
+    }TASKS_STATE;
     
     typedef struct{
         uint8_t command;
@@ -57,13 +66,10 @@ extern "C" {
         uint32_t time;
     } app_event_t ;
     
-    app_event_t eventos[8];
-    
-    static uint8_t buffer_USB_send_text[TAMANO];
-    static bool all_sent;
+    app_event_t eventos[MAX_EVENTOS];
     
     bool UI_tasks (void);
-    
+    void UI_menu (void);
     
 /* *****************************************************************************
  End of File
