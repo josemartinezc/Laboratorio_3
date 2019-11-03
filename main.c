@@ -67,8 +67,8 @@ int main(void)
     while (1)
     { 
         led_sequence();
-//        UI_menu();
-  //      UI_tasks(); 
+        UI_menu();
+        UI_tasks(); 
     }
 }
 

@@ -54,7 +54,7 @@ bool UI_tasks (void){
 
 //funcion que devuelve lo que hay en el usb, transformando el ascii a decimales
 int read_USB_int(void){
-    uint8_t datos[20];
+    uint8_t datos[20]={0};
     int dato_int;
     
     if(getsUSBUSART(datos, sizeof(datos))>0){
@@ -104,7 +104,7 @@ void UI_menu(){
             }
             break;
         case MENU:
-                UI_send_text("\nIngrese una opcion del 1-4\n1.Configurar fecha y hora\n2.consultar hora\n3.Agregar evento\n4.Consultar eventos");
+                UI_send_text("\nIngrese una opcion del 1-4\n1.Configurar fecha y hora\n2.consultar hora\n3.Agregar evento\n4.Consultar eventos\n\n>>>");
                 state_UI=ESPERA;
             break;
         case ESPERA:
@@ -113,7 +113,7 @@ void UI_menu(){
         case CONFIGURAR:
             //configurar_hora();
             if (configurar_hora()==true){
-                UI_send_text("\nSu hora a sido configurada con exito!\n\n\n\n");
+                UI_send_text("\n\nSu hora a sido configurada con exito!\n\n\n\n");
                 state_UI=MENU;   
             }
             break;
@@ -262,7 +262,7 @@ bool config_hora_function(int config_hora_state){
                 return true;
             }
             else{
-                UI_send_text("\nIngrese un ano valido");
+                UI_send_text("\nIngrese un anio valido");
                 return false;
             }
             break;
@@ -294,12 +294,13 @@ bool config_hora_function(int config_hora_state){
 }      
 
 
-void dar_hora(void){
-    char date_time_representation[32];
-    
+void dar_hora(void){    
     if((real_time.tm_mday)>0){
-        strftime(date_time_representation, 8, "%c", &real_time);
+        RTCC_TimeGet(&real_time);
+        strftime(date_time_representation, 32, "%c", &real_time);
+        UI_send_text("\n\n");
         UI_send_text(date_time_representation); 
+        UI_send_text("\n\n");
     }
     else{
         UI_send_text("\nUsted aun no a ingresado fecha y hora");  
@@ -322,6 +323,7 @@ bool agregar_evento(void){
             case INTERFACE:
                 configurar_evento_interface(p_agregar_eventos_state);
                 state_events=WAIT;
+                return false;
                 break;
             case WAIT:
                 UI_int_lecture=read_USB_int();
