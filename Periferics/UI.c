@@ -258,7 +258,7 @@ bool config_hora_function(int config_hora_state){
             break;            
         case 2:
             if(UI_int_lecture<10000 && UI_int_lecture>999){
-                real_time.tm_year=(UI_int_lecture);
+                real_time.tm_year=(UI_int_lecture-1900);
                 return true;
             }
             else{
