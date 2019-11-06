@@ -47,7 +47,8 @@ extern "C" {
         CONFIGURAR,
         DAR_HORA,
         AGREGAR_EVENTO,
-        CONSULTAR_EVENTOS,                
+        CONSULTAR_EVENTOS,
+        DEBUG,
     }UI_STATE;
     
     typedef enum{

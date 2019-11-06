@@ -102,6 +102,10 @@ ws2812_t interpret_event_color(uint8_t);
 
 void UI_menu(){
     static uint8_t ini[16];
+    
+    uint32_t mk_hora_actual;
+    bcdTime_t actual;
+    bcdTime_t evento;
    
     switch (state_UI){
         case INIT:
@@ -447,6 +451,7 @@ bool configurar_evento(int estado){
             if(UI_int_lecture<60 && UI_int_lecture>0){
                 event_dates[numero_evento].tm_min=UI_int_lecture;
                 event_dates[numero_evento].tm_sec=0;
+                RTCC_TimeGet(&real_time);
                 event_dates[numero_evento].tm_mon=real_time.tm_mon;
                 event_dates[numero_evento].tm_year=real_time.tm_year;
                 eventos[numero_evento].time=mktime(&(event_dates[numero_evento]));
@@ -467,23 +472,38 @@ void consultar_eventos(void){
 */
 
 void do_events(void){
+    int32_t mk_hora_actual;
+    uint8_t posicion;
+    uint8_t i, j;
+    bcdTime_t actual;
+    bcdTime_t evento;
+    
     if(undone_events==true){
-        int32_t mk_hora_actual;
-        ws2812_t color_led;
-        uint8_t posicion;
-        uint8_t i;
 
         RTCC_TimeGet(&real_time);
         mk_hora_actual=mktime(&real_time);
 
-        for(i=0; i=(numero_evento-1); i++){
-            if(mk_hora_actual>eventos[i].time){
+        for(i=0; i<=numero_evento; i++){
+            if(mk_hora_actual>eventos[i].time && eventos[i].time!=0){
                 posicion=eventos[i].param;
                 tira_leds[posicion]=interpret_event_color(i);
+                if(posicion>0){
+                    for (j=0; j<=(posicion-1); j++){
+                        tira_leds[j]=BLACK;
+                    }
+                    for(j=posicion+1; j<=CANTIDAD_LEDS; j++){
+                        tira_leds[j]=BLACK;
+                    }   
+                }
+                else{
+                    for(j=1; j<=(CANTIDAD_LEDS-1); j++){
+                        tira_leds[j]=BLACK;
+                    }
+                }
+            WS2812_send(tira_leds, CANTIDAD_LEDS);
+            undone_events=false;
             }
         }
-        WS2812_send(tira_leds, CANTIDAD_LEDS);
-        undone_events=false;
     }
 }
 
@@ -505,6 +525,8 @@ ws2812_t interpret_event_color (uint8_t evento){
                 break;
             case 3:
                 return GREEN;
+                break;
+            default:
                 break;
         }
     }
