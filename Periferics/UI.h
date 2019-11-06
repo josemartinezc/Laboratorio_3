@@ -68,6 +68,7 @@ extern "C" {
     
     bool UI_tasks (void);
     void UI_menu (void);
+    void do_events(void);
     
 /* *****************************************************************************
  End of File

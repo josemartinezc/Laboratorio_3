@@ -47,7 +47,6 @@
 */
 #include <stdbool.h>
 #include <xc.h> 
-
 #include "utils/utils.h"
 #include "Periferics/UI.h"
 #include "Periferics/leds.h"
@@ -67,12 +66,14 @@ int main(void)
     LEDA_SetLow();
     LEDB_SetLow();
  
+    WS2812_send( &RED, 1 );
     while (1)
     { 
         led_sequence();
         UI_menu();
-        UI_tasks();
+        UI_tasks(); 
         do_events();
+        
     }
 }
 

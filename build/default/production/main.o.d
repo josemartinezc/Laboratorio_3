@@ -23,4 +23,5 @@ Periferics/leds.h  \
  Periferics/../mcc_generated_files/tmr2.h  \
  Periferics/../mcc_generated_files/rtcc.h  \
 Periferics/../utils/utils.h  \
- mcc_generated_files/mcc.h 
+ LEDs_RGB/RGB_leds.h  \
+mcc_generated_files/mcc.h 

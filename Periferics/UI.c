@@ -444,6 +444,7 @@ bool configurar_evento(int estado){
                 event_dates[numero_evento].tm_sec=0;
                 event_dates[numero_evento].tm_mon=real_time.tm_mon;
                 event_dates[numero_evento].tm_year=real_time.tm_year;
+                eventos[numero_evento].time=mktime(&(event_dates[numero_evento]));
                 return true;
             }
             else{
@@ -459,6 +460,21 @@ void consultar_eventos(void){
     
 }
 */
+
+void do_events(void){
+    /*int16_t mk_hora_actual;
+    
+    RTCC_TimeGet(&real_time);
+    mk_hora_actual=mktime(&real_time);
+    
+    if(mk_hora_actual>eventos[numero_evento].time){
+       */
+    
+    //}
+}
+
+
+
 
 /* ************************************************************************** */
 /* ************************************************************************** */
