@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=mcc_generated_files/usb/usb_device_events.c mcc_generated_files/usb/usb_device.c mcc_generated_files/usb/usb_descriptors.c mcc_generated_files/usb/usb_device_cdc.c mcc_generated_files/usb/example_mcc_usb_cdc.c mcc_generated_files/system.c mcc_generated_files/clock.c mcc_generated_files/exceptions.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/tmr2.c mcc_generated_files/rtcc.c main.c utils/utils.c Periferics/UI.c Periferics/leds.c LEDs_RGB/RGB_leds.c
+SOURCEFILES_QUOTED_IF_SPACED=mcc_generated_files/usb/usb_device_events.c mcc_generated_files/usb/usb_device.c mcc_generated_files/usb/usb_descriptors.c mcc_generated_files/usb/usb_device_cdc.c mcc_generated_files/usb/example_mcc_usb_cdc.c mcc_generated_files/system.c mcc_generated_files/clock.c mcc_generated_files/exceptions.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/tmr2.c mcc_generated_files/rtcc.c main.c utils/utils.c LEDs_RGB/RGB_leds.c Periferics/UI.c Periferics/leds.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device.o ${OBJECTDIR}/mcc_generated_files/usb/usb_descriptors.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device_cdc.o ${OBJECTDIR}/mcc_generated_files/usb/example_mcc_usb_cdc.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/exceptions.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/main.o ${OBJECTDIR}/utils/utils.o ${OBJECTDIR}/Periferics/UI.o ${OBJECTDIR}/Periferics/leds.o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_device.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_descriptors.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_device_cdc.o.d ${OBJECTDIR}/mcc_generated_files/usb/example_mcc_usb_cdc.o.d ${OBJECTDIR}/mcc_generated_files/system.o.d ${OBJECTDIR}/mcc_generated_files/clock.o.d ${OBJECTDIR}/mcc_generated_files/exceptions.o.d ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d ${OBJECTDIR}/mcc_generated_files/mcc.o.d ${OBJECTDIR}/mcc_generated_files/pin_manager.o.d ${OBJECTDIR}/mcc_generated_files/tmr2.o.d ${OBJECTDIR}/mcc_generated_files/rtcc.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/utils/utils.o.d ${OBJECTDIR}/Periferics/UI.o.d ${OBJECTDIR}/Periferics/leds.o.d ${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device.o ${OBJECTDIR}/mcc_generated_files/usb/usb_descriptors.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device_cdc.o ${OBJECTDIR}/mcc_generated_files/usb/example_mcc_usb_cdc.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/exceptions.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/main.o ${OBJECTDIR}/utils/utils.o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o ${OBJECTDIR}/Periferics/UI.o ${OBJECTDIR}/Periferics/leds.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_device.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_descriptors.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_device_cdc.o.d ${OBJECTDIR}/mcc_generated_files/usb/example_mcc_usb_cdc.o.d ${OBJECTDIR}/mcc_generated_files/system.o.d ${OBJECTDIR}/mcc_generated_files/clock.o.d ${OBJECTDIR}/mcc_generated_files/exceptions.o.d ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d ${OBJECTDIR}/mcc_generated_files/mcc.o.d ${OBJECTDIR}/mcc_generated_files/pin_manager.o.d ${OBJECTDIR}/mcc_generated_files/tmr2.o.d ${OBJECTDIR}/mcc_generated_files/rtcc.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/utils/utils.o.d ${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d ${OBJECTDIR}/Periferics/UI.o.d ${OBJECTDIR}/Periferics/leds.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device.o ${OBJECTDIR}/mcc_generated_files/usb/usb_descriptors.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device_cdc.o ${OBJECTDIR}/mcc_generated_files/usb/example_mcc_usb_cdc.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/exceptions.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/main.o ${OBJECTDIR}/utils/utils.o ${OBJECTDIR}/Periferics/UI.o ${OBJECTDIR}/Periferics/leds.o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o
+OBJECTFILES=${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device.o ${OBJECTDIR}/mcc_generated_files/usb/usb_descriptors.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device_cdc.o ${OBJECTDIR}/mcc_generated_files/usb/example_mcc_usb_cdc.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/exceptions.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/main.o ${OBJECTDIR}/utils/utils.o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o ${OBJECTDIR}/Periferics/UI.o ${OBJECTDIR}/Periferics/leds.o
 
 # Source Files
-SOURCEFILES=mcc_generated_files/usb/usb_device_events.c mcc_generated_files/usb/usb_device.c mcc_generated_files/usb/usb_descriptors.c mcc_generated_files/usb/usb_device_cdc.c mcc_generated_files/usb/example_mcc_usb_cdc.c mcc_generated_files/system.c mcc_generated_files/clock.c mcc_generated_files/exceptions.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/tmr2.c mcc_generated_files/rtcc.c main.c utils/utils.c Periferics/UI.c Periferics/leds.c LEDs_RGB/RGB_leds.c
+SOURCEFILES=mcc_generated_files/usb/usb_device_events.c mcc_generated_files/usb/usb_device.c mcc_generated_files/usb/usb_descriptors.c mcc_generated_files/usb/usb_device_cdc.c mcc_generated_files/usb/example_mcc_usb_cdc.c mcc_generated_files/system.c mcc_generated_files/clock.c mcc_generated_files/exceptions.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/tmr2.c mcc_generated_files/rtcc.c main.c utils/utils.c LEDs_RGB/RGB_leds.c Periferics/UI.c Periferics/leds.c
 
 
 CFLAGS=
@@ -196,6 +196,12 @@ ${OBJECTDIR}/utils/utils.o: utils/utils.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/utils/utils.o 
 	@${FIXDEPS} "${OBJECTDIR}/utils/utils.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/utils/utils.o.d" -o ${OBJECTDIR}/utils/utils.o utils/utils.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/LEDs_RGB/RGB_leds.o: LEDs_RGB/RGB_leds.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/LEDs_RGB" 
+	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d 
+	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o 
+	@${FIXDEPS} "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" -o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o LEDs_RGB/RGB_leds.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/Periferics/UI.o: Periferics/UI.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/Periferics" 
 	@${RM} ${OBJECTDIR}/Periferics/UI.o.d 
@@ -207,12 +213,6 @@ ${OBJECTDIR}/Periferics/leds.o: Periferics/leds.c  nbproject/Makefile-${CND_CONF
 	@${RM} ${OBJECTDIR}/Periferics/leds.o.d 
 	@${RM} ${OBJECTDIR}/Periferics/leds.o 
 	@${FIXDEPS} "${OBJECTDIR}/Periferics/leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Periferics/leds.o.d" -o ${OBJECTDIR}/Periferics/leds.o Periferics/leds.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/LEDs_RGB/RGB_leds.o: LEDs_RGB/RGB_leds.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/LEDs_RGB" 
-	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d 
-	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o 
-	@${FIXDEPS} "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" -o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o LEDs_RGB/RGB_leds.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
 else
 ${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o: mcc_generated_files/usb/usb_device_events.c  nbproject/Makefile-${CND_CONF}.mk
@@ -305,6 +305,12 @@ ${OBJECTDIR}/utils/utils.o: utils/utils.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/utils/utils.o 
 	@${FIXDEPS} "${OBJECTDIR}/utils/utils.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/utils/utils.o.d" -o ${OBJECTDIR}/utils/utils.o utils/utils.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/LEDs_RGB/RGB_leds.o: LEDs_RGB/RGB_leds.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/LEDs_RGB" 
+	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d 
+	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o 
+	@${FIXDEPS} "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" -o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o LEDs_RGB/RGB_leds.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/Periferics/UI.o: Periferics/UI.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/Periferics" 
 	@${RM} ${OBJECTDIR}/Periferics/UI.o.d 
@@ -316,12 +322,6 @@ ${OBJECTDIR}/Periferics/leds.o: Periferics/leds.c  nbproject/Makefile-${CND_CONF
 	@${RM} ${OBJECTDIR}/Periferics/leds.o.d 
 	@${RM} ${OBJECTDIR}/Periferics/leds.o 
 	@${FIXDEPS} "${OBJECTDIR}/Periferics/leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Periferics/leds.o.d" -o ${OBJECTDIR}/Periferics/leds.o Periferics/leds.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/LEDs_RGB/RGB_leds.o: LEDs_RGB/RGB_leds.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/LEDs_RGB" 
-	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d 
-	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o 
-	@${FIXDEPS} "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" -o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o LEDs_RGB/RGB_leds.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
 endif
 

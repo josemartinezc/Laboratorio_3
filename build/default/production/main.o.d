@@ -3,6 +3,7 @@ main.c  \
 utils/utils.h  \
 Periferics/UI.h  \
  Periferics/../mcc_generated_files/rtcc.h  \
+ Periferics/../LEDs_RGB/RGB_leds.h  \
 Periferics/leds.h  \
  Periferics/../mcc_generated_files/mcc.h  \
  Periferics/../mcc_generated_files/system.h  \

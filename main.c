@@ -66,7 +66,6 @@ int main(void)
     LEDA_SetLow();
     LEDB_SetLow();
  
-    WS2812_send( &RED, 1 );
     while (1)
     { 
         led_sequence();

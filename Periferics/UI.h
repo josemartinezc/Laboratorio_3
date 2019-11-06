@@ -29,6 +29,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "../mcc_generated_files/rtcc.h"
+#include "../LEDs_RGB/RGB_leds.h"
 
 /* Provide C++ Compatibility */
 #ifdef __cplusplus
@@ -37,6 +38,7 @@ extern "C" {
     
     #define TAMANO 128
     #define MAX_EVENTOS 16
+    #define CANTIDAD_LEDS 8
     
     typedef enum{
         INIT,
@@ -62,9 +64,14 @@ extern "C" {
         uint32_t time;
     } app_event_t ;
     
+    typedef struct{
+        ws2812_t color;
+        uint8_t position;
+    }app_event_parametres;
+    
     static app_event_t eventos[MAX_EVENTOS];
     static bcdTime_t event_dates[MAX_EVENTOS];
-    
+    static ws2812_t tira_leds[CANTIDAD_LEDS];
     
     bool UI_tasks (void);
     void UI_menu (void);

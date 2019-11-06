@@ -93,6 +93,8 @@ bool agregar_evento();
 void configurar_evento_interface();
 bool configurar_evento();
 
+ws2812_t interpret_event_color();
+
 //void consultar_eventos();
 
 
@@ -462,19 +464,44 @@ void consultar_eventos(void){
 */
 
 void do_events(void){
-    /*int16_t mk_hora_actual;
+    int32_t mk_hora_actual;
+    ws2812_t color_led;
+    uint8_t posicion;
+    uint8_t i;
     
     RTCC_TimeGet(&real_time);
     mk_hora_actual=mktime(&real_time);
     
-    if(mk_hora_actual>eventos[numero_evento].time){
-       */
-    
-    //}
+    for(i=0; i=(numero_evento-1); i++){
+        if(mk_hora_actual>eventos[i].time){
+            color_led=interpret_event_color(i);
+            posicion=eventos[i].param;
+            WS2812_send( &color_led, posicion);
+        }
+    }
 }
 
-
-
+ws2812_t interpret_event_color (int8_t evento){
+    if (eventos[evento].command==1){
+        return BLACK;
+    }
+    else{
+        switch(eventos[evento].color){
+            case 0:
+                return WHITE;
+                break;
+            case 1:
+                return RED;
+                break;
+            case 2:
+                return BLUE;
+                break;
+            case 3:
+                return GREEN;
+                break;
+        }
+    }
+}
 
 /* ************************************************************************** */
 /* ************************************************************************** */
