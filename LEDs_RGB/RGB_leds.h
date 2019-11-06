@@ -65,7 +65,7 @@ extern const ws2812_t WHITE;
 extern const ws2812_t RED;
 extern const ws2812_t GREEN;
 extern const ws2812_t BLUE;
-
+extern const ws2812_t BLACK;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -98,6 +98,7 @@ extern const ws2812_t BLUE;
     None.
  */
 void WS2812_send( ws2812_t *p_leds, uint8_t p_length );
+void RGBs_SetDown(void);
 
 #endif /* _WS2812_H */
 

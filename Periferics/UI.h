@@ -64,11 +64,6 @@ extern "C" {
         uint32_t time;
     } app_event_t ;
     
-    typedef struct{
-        ws2812_t color;
-        uint8_t position;
-    }app_event_parametres;
-    
     static app_event_t eventos[MAX_EVENTOS];
     static bcdTime_t event_dates[MAX_EVENTOS];
     static ws2812_t tira_leds[CANTIDAD_LEDS];

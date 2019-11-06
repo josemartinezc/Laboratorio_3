@@ -65,7 +65,8 @@ int main(void)
     
     LEDA_SetLow();
     LEDB_SetLow();
- 
+    RGBs_SetDown();
+    
     while (1)
     { 
         led_sequence();

@@ -27,14 +27,16 @@
 #include "UI.h"
 #include "../mcc_generated_files/usb/usb.h"
 #include "../utils/utils.h"
+#include "../LEDs_RGB/RGB_leds.h"
 
 
 static UI_STATE state_UI=INIT;   
-static uint8_t numero_evento=0;
+static int8_t numero_evento=0;
 static int UI_int_lecture;
 static bcdTime_t real_time;
 static uint8_t buffer_USB_send_text[TAMANO];
 static bool all_sent;
+static bool undone_events=false;
 char date_time_representation[32];
 
 bool UI_tasks (void){  
@@ -93,7 +95,7 @@ bool agregar_evento();
 void configurar_evento_interface();
 bool configurar_evento();
 
-ws2812_t interpret_event_color();
+ws2812_t interpret_event_color(uint8_t);
 
 //void consultar_eventos();
 
@@ -354,6 +356,7 @@ bool agregar_evento(void){
                 return false;
                 break;
             case END:
+                undone_events=true;
                 p_agregar_eventos_state=0;
                 state_events=INTERFACE;
                 if(numero_evento<17){
@@ -464,25 +467,29 @@ void consultar_eventos(void){
 */
 
 void do_events(void){
-    int32_t mk_hora_actual;
-    ws2812_t color_led;
-    uint8_t posicion;
-    uint8_t i;
-    
-    RTCC_TimeGet(&real_time);
-    mk_hora_actual=mktime(&real_time);
-    
-    for(i=0; i=(numero_evento-1); i++){
-        if(mk_hora_actual>eventos[i].time){
-            color_led=interpret_event_color(i);
-            posicion=eventos[i].param;
-            WS2812_send( &color_led, posicion);
+    if(undone_events==true){
+        int32_t mk_hora_actual;
+        ws2812_t color_led;
+        uint8_t posicion;
+        uint8_t i;
+
+        RTCC_TimeGet(&real_time);
+        mk_hora_actual=mktime(&real_time);
+
+        for(i=0; i=(numero_evento-1); i++){
+            if(mk_hora_actual>eventos[i].time){
+                posicion=eventos[i].param;
+                tira_leds[posicion]=interpret_event_color(i);
+            }
         }
+        WS2812_send(tira_leds, CANTIDAD_LEDS);
+        undone_events=false;
     }
 }
 
-ws2812_t interpret_event_color (int8_t evento){
-    if (eventos[evento].command==1){
+
+ws2812_t interpret_event_color (uint8_t evento){
+   if (eventos[evento].command==1){
         return BLACK;
     }
     else{

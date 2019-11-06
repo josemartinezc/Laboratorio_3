@@ -23,6 +23,7 @@
 #include "RGB_leds.h"
 #include "../mcc_generated_files/pin_manager.h"
 #include "../mcc_generated_files/interrupt_manager.h"
+#include "../Periferics/UI.h"
 
 
 /* ************************************************************************** */
@@ -202,6 +203,16 @@ void WS2812_send( ws2812_t *p_leds, uint8_t p_length )
     
     INTERRUPT_GlobalEnable();
 }
+
+void RGBs_SetDown(void){
+    uint8_t i;
+
+    for(i=0; i<CANTIDAD_LEDS; i++){
+        tira_leds[i]=BLACK;
+        }
+    WS2812_send( tira_leds, CANTIDAD_LEDS);
+}
+
 
 /* *****************************************************************************
  End of File
