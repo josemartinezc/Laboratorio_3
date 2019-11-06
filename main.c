@@ -47,9 +47,11 @@
 */
 #include <stdbool.h>
 #include <xc.h> 
+
 #include "utils/utils.h"
 #include "Periferics/UI.h"
 #include "Periferics/leds.h"
+#include "LEDs_RGB/RGB_leds.h"
 
 #include "mcc_generated_files/mcc.h"
 
@@ -57,6 +59,7 @@
 /*
                          Main application
  */
+
 int main(void)
 {   
     SYSTEM_Initialize();
@@ -68,7 +71,8 @@ int main(void)
     { 
         led_sequence();
         UI_menu();
-        UI_tasks(); 
+        UI_tasks();
+        do_events();
     }
 }
 

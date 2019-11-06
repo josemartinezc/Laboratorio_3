@@ -32,6 +32,10 @@
 static UI_STATE state_UI=INIT;   
 static uint8_t numero_evento=0;
 static int UI_int_lecture;
+static bcdTime_t real_time;
+static uint8_t buffer_USB_send_text[TAMANO];
+static bool all_sent;
+char date_time_representation[32];
 
 bool UI_tasks (void){  
     if( USBGetDeviceState() < CONFIGURED_STATE ){
@@ -54,15 +58,17 @@ bool UI_tasks (void){
 
 //funcion que devuelve lo que hay en el usb, transformando el ascii a decimales
 int read_USB_int(void){
-    uint8_t datos[20]={0};
+    uint8_t datos[20];
     int dato_int;
+    
+    memset(datos,0,sizeof(datos));
     
     if(getsUSBUSART(datos, sizeof(datos))>0){
         dato_int=atoi(datos);
         return dato_int;
     }
     else{
-        return 0;
+        return -1;
     }
 }
 
@@ -111,9 +117,8 @@ void UI_menu(){
             seleccionar_opcion();
             break;
         case CONFIGURAR:
-            //configurar_hora();
             if (configurar_hora()==true){
-                UI_send_text("\n\nSu hora a sido configurada con exito!\n\n\n\n");
+                UI_send_text("\n\nSu hora ha sido configurada con exito!\n\n\n\n");
                 state_UI=MENU;   
             }
             break;
@@ -122,7 +127,6 @@ void UI_menu(){
             state_UI=MENU;
             break;
         case AGREGAR_EVENTO:
-            //agregar_evento();
             if (agregar_evento()== true){
             state_UI=MENU;      
             }
@@ -138,7 +142,7 @@ void UI_menu(){
 }
 
 void seleccionar_opcion(void){
-    uint8_t opcion_int;
+    int8_t opcion_int;
     
     opcion_int=read_USB_int();
     
@@ -177,7 +181,7 @@ bool configurar_hora(void){
             break;
         case WAIT:
             UI_int_lecture=read_USB_int();
-            if(UI_int_lecture>0){
+            if(UI_int_lecture>=0){
                 state_config=DO_TASKS;
             }
             return false;
@@ -201,7 +205,7 @@ bool configurar_hora(void){
             }
             break;
         case END:
-            RTCC_BCDTimeSet(&real_time);
+            RTCC_TimeSet(&real_time);
             state_config=INTERFACE;
             p_config_hora_state=0;
             return true;
@@ -257,7 +261,7 @@ bool config_hora_function(int config_hora_state){
             }
             break;            
         case 2:
-            if(UI_int_lecture<10000 && UI_int_lecture>999){
+            if(UI_int_lecture<10000 && UI_int_lecture>1900){
                 real_time.tm_year=(UI_int_lecture-1900);
                 return true;
             }
@@ -297,6 +301,7 @@ bool config_hora_function(int config_hora_state){
 void dar_hora(void){    
     if((real_time.tm_mday)>0){
         RTCC_TimeGet(&real_time);
+
         strftime(date_time_representation, 32, "%c", &real_time);
         UI_send_text("\n\n");
         UI_send_text(date_time_representation); 
@@ -327,7 +332,7 @@ bool agregar_evento(void){
                 break;
             case WAIT:
                 UI_int_lecture=read_USB_int();
-                if(UI_int_lecture>0){
+                if(UI_int_lecture>=0){
                     state_events=DO_TASKS;
                 }
                 return false;
@@ -336,6 +341,7 @@ bool agregar_evento(void){
                 dato_ingresado_valido=configurar_evento(p_agregar_eventos_state);
                 if(dato_ingresado_valido==true){
                     p_agregar_eventos_state++;
+                    state_events=INTERFACE;
                     if(p_agregar_eventos_state>4){
                         state_events=END;
                     }
@@ -371,7 +377,7 @@ void configurar_evento_interface(int estado){
             UI_send_text("\nIngrese el led que desea encender (1 al 8)\n>>>");
             break;
         case 1:
-            UI_send_text("\nIngrese:\n1. Si desea que la led se encienda\n2.2.Si desea que la led se apague\n>>>");
+            UI_send_text("\nIngrese:\n0. Si desea que la led se encienda\n1.Si desea que la led se apague\n>>>");
             break;
         case 2:
             UI_send_text("\nIngrese el color de evento\n0.Blanco\n1.Rojo\n2.Azul\n3.Verde\n>>>");

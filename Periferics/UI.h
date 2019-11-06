@@ -38,11 +38,6 @@ extern "C" {
     #define TAMANO 128
     #define MAX_EVENTOS 16
     
-    static uint8_t buffer_USB_send_text[TAMANO];
-    static bool all_sent;
-    static bcdTime_t real_time;
-    char date_time_representation[32];
-    
     typedef enum{
         INIT,
         MENU,        
