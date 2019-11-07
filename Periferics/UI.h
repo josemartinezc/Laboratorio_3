@@ -36,7 +36,7 @@
 extern "C" {
 #endif
     
-    #define TAMANO 128
+    #define TAMANO 256
     #define MAX_EVENTOS 16
     #define CANTIDAD_LEDS 8
     

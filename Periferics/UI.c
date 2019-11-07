@@ -97,7 +97,7 @@ bool configurar_evento();
 
 ws2812_t interpret_event_color(uint8_t);
 
-//void consultar_eventos();
+void consultar_eventos();
 
 
 void UI_menu(){
@@ -140,7 +140,7 @@ void UI_menu(){
             }
             break;
         case CONSULTAR_EVENTOS:
-            //consultar_eventos();
+            consultar_eventos();
             state_UI=MENU;  
             break;
         default:
@@ -452,6 +452,7 @@ bool configurar_evento(int estado){
                 event_dates[numero_evento].tm_min=UI_int_lecture;
                 event_dates[numero_evento].tm_sec=0;
                 RTCC_TimeGet(&real_time);
+                event_dates[numero_evento].tm_mday=real_time.tm_mday;
                 event_dates[numero_evento].tm_mon=real_time.tm_mon;
                 event_dates[numero_evento].tm_year=real_time.tm_year;
                 eventos[numero_evento].time=mktime(&(event_dates[numero_evento]));
@@ -465,18 +466,58 @@ bool configurar_evento(int estado){
             break;
     }
 }
-/*
+
 void consultar_eventos(void){
+    uint8_t i=0;
+    char hora[8];
+    uint8_t color;
+    uint8_t numero_led[8];
     
+    if (numero_evento>0){
+        for (i=0; i<numero_evento; i++){
+            memset(hora,0,sizeof(hora));
+            strftime(hora, sizeof(hora), "%X", &(event_dates[i]));
+            sprintf(numero_led, "%s", (eventos[i].param));
+            color=eventos[i].color;
+            sprintf(numero_de_evento, "%s", i);
+            
+            UI_send_text("\n\nEVENTO");
+            UI_send_text(i);
+            
+            UI_send_text("\nLa led numero ");
+            UI_send_text(numero_led);
+            if(eventos[i].command==1){
+                UI_send_text(" se apagara.");
+            }
+            else{
+                UI_send_text(" se encendera de color ");
+            switch (color){
+                case 0:
+                    UI_send_text("blanco.");
+                    break;
+                case 1:
+                    UI_send_text("rojo.");
+                    break;
+                case 2:
+                    UI_send_text("azul.");
+                case 3:
+                    UI_send_text("verde.");
+                    break;
+                default:
+                    break;
+                }
+            }
+            UI_send_text(":\nProgramado para la hora ");
+            UI_send_text(hora);
+        }
+    }
 }
-*/
+
 
 void do_events(void){
     int32_t mk_hora_actual;
     uint8_t posicion;
     uint8_t i, j;
-    bcdTime_t actual;
-    bcdTime_t evento;
     
     if(undone_events==true){
 
