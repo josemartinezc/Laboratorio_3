@@ -472,6 +472,7 @@ void consultar_eventos(void){
     char hora[8];
     uint8_t color;
     uint8_t numero_led[8];
+    uint8_t numero_de_evento[8];
     
     if (numero_evento>0){
         for (i=0; i<numero_evento; i++){
