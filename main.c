@@ -51,6 +51,10 @@
 #include "Periferics/UI.h"
 #include "Periferics/leds.h"
 #include "LEDs_RGB/RGB_leds.h"
+#include "Periferics/UI_IS.h"
+#include "Periferics/irrigation.h"
+#include "Periferics/sensor.h"
+#include "Periferics/system_control.h"
 
 #include "mcc_generated_files/mcc.h"
 
@@ -66,6 +70,7 @@ int main(void)
     LEDA_SetLow();
     LEDB_SetLow();
     RGBs_SetDown();
+    threshold_SetUp(); //define los umbrales por defecto, definida en sensor.c
     
     while (1)
     { 
@@ -77,6 +82,12 @@ int main(void)
     }
 }
 
+/*
+ while(1){
+    sensor_menu();
+    interface_IS();
+    irrigation();
+    system_control();*/
 /**
  End of File
 */
