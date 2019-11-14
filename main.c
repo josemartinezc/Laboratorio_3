@@ -52,10 +52,8 @@
 #include "Periferics/leds.h"
 #include "LEDs_RGB/RGB_leds.h"
 #include "Periferics/UI_IS.h"
-#include "Periferics/irrigation.h"
-#include "Periferics/sensor.h"
 #include "Periferics/system_control.h"
-
+#include "Periferics/sensor.h"
 #include "mcc_generated_files/mcc.h"
 
 
@@ -65,29 +63,38 @@
 
 int main(void)
 {   
+    static uint8_t ini[16];
+    
     SYSTEM_Initialize();
     
     LEDA_SetLow();
     LEDB_SetLow();
     RGBs_SetDown();
-    threshold_SetUp(); //define los umbrales por defecto, definida en sensor.c
+    threshold_SetUp();  //define los umbrales por defecto, definida en sensor.c
+    //hour_SetUp();
     
     while (1)
     { 
         led_sequence();
-        UI_menu();
+        if( USBGetDeviceState() == CONFIGURED_STATE ){
+                if(getsUSBUSART(ini, sizeof(ini))>0){
+                analog_scale_to_cb();
+                }
+        }
+        //UI_menu();
         UI_tasks(); 
-        do_events();
+        //do_events();
         
     }
 }
+
 
 /*
  while(1){
     sensor_menu();
     interface_IS();
-    irrigation();
-    system_control();*/
+ *  UI_tasks();
+    system_tasks();*/
 /**
  End of File
 */

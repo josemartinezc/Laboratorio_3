@@ -23,22 +23,30 @@
 #include <time.h>
 #include <stdio.h>
 
-#include "../mcc_generated_files/rtcc.h"
-#include "UI.h"
-#include "../mcc_generated_files/usb/usb.h"
 #include "../utils/utils.h"
 #include "../LEDs_RGB/RGB_leds.h"
 #include "sensor.h"
+#include "UI.h"
 
 //VARIABLES
 
+//umbrales
+static uint8_t red_yellow_max;
+static uint8_t yellow_green_max;
+static uint8_t yellow_green_min;
+static uint8_t red_yellow_min;
+
+static uint8_t humidity_value;
+static SENSOR_STATE humidity_state; //indica el anillo en el que esta lo sensado en el potenciometro
+static bool critic_humidity; //si es true, es porque la humedad esta en anillo rojo
+static bool irrigation_on; //prende el riego 
+static bool irrigation_off;//apaga el riego
 
 //FUNCIONES
 int estado_humedad();//funcion que me devuelva RED_LOW, RED_HIGH, YELLOW_LOW, YELLOW_HIGH, GREEN
 void encender_leds(int nivel_de_humedad);//funcion que enciende la tira de RGB dependiendo del estado de la humedad 
-uint8_t analog_scale_to_Cb(); //funcion que linealiza los valores de 0-1024 a 0-60. Debuelve un int entre 0 y 60
-void threshold_SetUp();
 
+/*
 void sensor_menu(void){
     switch(estado_humedad()){
         case RED_LOW:
@@ -74,7 +82,7 @@ void sensor_menu(void){
             break;
     }
     encender_leds(humidity_state);
-}
+}*/
 
 void threshold_SetUp(){
     red_yellow_max=49;
@@ -83,7 +91,7 @@ void threshold_SetUp(){
     red_yellow_min=6;
 }
 
-/*           
+/*        
 int estado_humedad(void){//funcion que me devuelva RED_LOW, RED_HIGH, YELLOW_LOW, YELLOW_HIGH, GREEN
     humidity_value=analog_scale_to_Cb();
     if(umbral estado rojo alto){
@@ -106,7 +114,22 @@ int estado_humedad(void){//funcion que me devuelva RED_LOW, RED_HIGH, YELLOW_LOW
 }
 */
 
-/*int analog_scale_to_cb(void){
- 
+char* analog_scale_to_cb(void){
+    uint16_t conversion;
+    char conv_array[20];
+       int i;
+        ADC1_Start();
+        //Provide Delay
+        for(i=0;i <1000;i++)
+        {
+        }
+        ADC1_Stop();
+        while(!ADC1_IsConversionComplete())
+        {
+            Nop();   
+        }
+        conversion=(ADC1_ConversionResultGet()/17);
+        itoa(conv_array, conversion, 10);
+        return conv_array;
  }
- */
+ 

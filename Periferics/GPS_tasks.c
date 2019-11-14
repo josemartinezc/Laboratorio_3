@@ -5,7 +5,7 @@
     Company Name
 
   @File Name
-    filename.h
+    filename.c
 
   @Summary
     Brief description of the file.
@@ -15,34 +15,27 @@
  */
 /* ************************************************************************** */
 
-#ifndef _SENSOR_H    /* Guard against multiple inclusion */
-#define _SENSOR_H
-
 /* ************************************************************************** */
 /* ************************************************************************** */
 /* Section: Included Files                                                    */
 /* ************************************************************************** */
 /* ************************************************************************** */
-#include <xc.h>
 
-#define MAX_CB_VALUE 60
-#define MIN_CB_VALUE 0
-
-
-typedef enum{
-    RED_LOW,
-    RED_HIGH,
-    YELLOW_LOW,
-    YELLOW_HIGH,
-    GREEN_,
-}SENSOR_STATE;
-   
-void sensor();
-void threshold_SetUp();
-void analog_scale_to_cb(); //funcion que linealiza los valores de 0-1024 a 0-60. Debuelve un int entre 0 y 60
-    
-#endif /* _EXAMPLE_FILE_NAME_H */
-    
-/* *****************************************************************************
- End of File
+/* This section lists the other files that are included in this file.
  */
+
+/* TODO:  Include other files here if needed. */
+/*
+#include <xc.h>
+#include <stdbool.h>
+#include <stdint.h>
+
+#include "u"
+
+
+*int get_GPS_coord();   //devuelve array con la parte de la trama que tiene las coordenadas
+*int get_GPS_hour();    //idem con hora 
+*int get_GPS_date();    //idem con fecha
+
+
+//pregunta! LAS COMAS LAS TENGO QUE SACAR?

@@ -34,7 +34,6 @@
 */
 
 ut_tmrDelay_t timer;
-ut_tmrDelay_t *ptimer;
 uint8_t i;
 
 
@@ -49,8 +48,7 @@ void led_sequence_bloqueante(void){
  
 void sequence_configuration(void){
     uint8_t i=0;         
-    ptimer = &timer;
-    ptimer->state = 0;
+    timer.state = 0;
 }
 
 void led_sequence(void){
@@ -62,7 +60,7 @@ void led_sequence(void){
             estado_leds=true;
             break;
         case true:
-            if (UT_delayDs(ptimer,40) == true) {
+            if (UT_delayDs(&timer,40) == true) {
                 switch (i){
                     case 0:
                         LEDA_SetHigh();

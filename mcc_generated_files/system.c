@@ -60,6 +60,7 @@ void SYSTEM_Initialize(void)
     USBDeviceInit();
     USBDeviceAttach();
     ADC1_Initialize();
+    ADC1_ChannelSelect(ADC1_POT);
     TMR2_Initialize();
     RTCC_Initialize();
     INTERRUPT_GlobalEnable();
