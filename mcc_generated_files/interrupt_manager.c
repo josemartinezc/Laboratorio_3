@@ -75,4 +75,9 @@ void INTERRUPT_Initialize (void)
         IPC4bits.T2IP = 1;
     //    Sub Priority: 0
         IPC4bits.T2IS = 0;
+    //    ADI: ADC Conversion Done
+    //    Priority: 1
+        IPC8bits.AD1IP = 1;
+    //    Sub Priority: 0
+        IPC8bits.AD1IS = 0;
 }

@@ -38,7 +38,6 @@ extern "C" {
     
     #define TAMANO 256
     #define MAX_EVENTOS 16
-    #define CANTIDAD_LEDS 8
     
     typedef enum{
         INIT,
@@ -67,11 +66,28 @@ extern "C" {
     
     static app_event_t eventos[MAX_EVENTOS];
     static bcdTime_t event_dates[MAX_EVENTOS];
-    static ws2812_t tira_leds[CANTIDAD_LEDS];
+    
+    int read_USB_int(void);
+    void UI_send_text(const char *text);
     
     bool UI_tasks (void);
     void UI_menu (void);
     void do_events(void);
+    
+    void seleccionar_opcion();
+    bool configurar_hora();
+    void configurar_hora_interface();
+    bool config_hora_function();
+
+    void dar_hora();
+
+    bool agregar_evento();
+    void configurar_evento_interface();
+    bool configurar_evento();
+
+    ws2812_t interpret_event_color(uint8_t);
+
+    void consultar_eventos();
     
 /* *****************************************************************************
  End of File

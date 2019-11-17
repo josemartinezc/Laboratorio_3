@@ -7,6 +7,7 @@ Periferics/leds.h  \
  Periferics/../mcc_generated_files/system.h  \
  Periferics/../mcc_generated_files/clock.h  \
  Periferics/../mcc_generated_files/pin_manager.h  \
+ Periferics/../mcc_generated_files/adc1.h  \
  Periferics/../mcc_generated_files/usb/usb.h  \
  Periferics/../mcc_generated_files/usb/usb_device_config.h  \
  Periferics/../mcc_generated_files/usb/usb_common.h  \

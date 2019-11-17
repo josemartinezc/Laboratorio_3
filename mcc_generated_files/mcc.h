@@ -50,6 +50,7 @@
 #include "pin_manager.h"
 #include <stdint.h>
 #include <stdbool.h>
+#include "adc1.h"
 #include "usb/usb.h"
 #include "watchdog.h"
 #include "interrupt_manager.h"

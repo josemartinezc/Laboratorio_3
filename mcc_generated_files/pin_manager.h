@@ -964,6 +964,188 @@ inline static void BTN2_SetValue(bool value)
 
 */
 #define BTN2_SetDigitalOutput()   ( TRISBCLR = (1 << 15) )
+/**
+  @Summary
+    Sets the GPIO pin, RC5, high using LATC5.
+
+  @Description
+    Sets the GPIO pin, RC5, high using LATC5.
+
+  @Preconditions
+    The RC5 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RC5 high (1)
+    POT_SetHigh();
+    </code>
+
+*/
+#define POT_SetHigh()          ( LATCSET = (1 << 5) )
+/**
+  @Summary
+    Sets the GPIO pin, RC5, low using LATC5.
+
+  @Description
+    Sets the GPIO pin, RC5, low using LATC5.
+
+  @Preconditions
+    The RC5 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RC5 low (0)
+    POT_SetLow();
+    </code>
+
+*/
+#define POT_SetLow()           ( LATCCLR = (1 << 5) )
+
+/**
+  @Summary
+    Sets a value to the GPIO pin.
+
+  @Description
+    Sets or Resets the GPIO pin, RC5, low or high using LATC5.
+
+  @Preconditions
+    The RC5 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    bool value; : value to be set to the GPIO pin.
+
+  @Example
+    <code>
+    // Set RC5 to low.
+    POT_SetValue(false);
+    </code>
+
+*/
+inline static void POT_SetValue(bool value)
+{
+  if(value)
+  {
+    POT_SetHigh();
+  }
+  else
+  {
+    POT_SetLow();
+  }
+}
+
+/**
+  @Summary
+    Toggles the GPIO pin, RC5, using LATC5.
+
+  @Description
+    Toggles the GPIO pin, RC5, using LATC5.
+
+  @Preconditions
+    The RC5 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RC5
+    POT_Toggle();
+    </code>
+
+*/
+#define POT_Toggle()           ( LATCINV = (1 << 5) )
+/**
+  @Summary
+    Reads the value of the GPIO pin, RC5.
+
+  @Description
+    Reads the value of the GPIO pin, RC5.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RC5
+    postValue = POT_GetValue();
+    </code>
+
+*/
+#define POT_GetValue()         PORTCbits.RC5
+/**
+  @Summary
+    Configures the GPIO pin, RC5, as an input.
+
+  @Description
+    Configures the GPIO pin, RC5, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RC5 as an input
+    POT_SetDigitalInput();
+    </code>
+
+*/
+#define POT_SetDigitalInput()   ( TRISCSET = (1 << 5) )
+/**
+  @Summary
+    Configures the GPIO pin, RC5, as an output.
+
+  @Description
+    Configures the GPIO pin, RC5, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RC5 as an output
+    POT_SetDigitalOutput();
+    </code>
+
+*/
+#define POT_SetDigitalOutput()   ( TRISCCLR = (1 << 5) )
 
 /**
     Section: Function Prototypes

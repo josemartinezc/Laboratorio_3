@@ -74,31 +74,13 @@ int read_USB_int(void){
     }
 }
 
-void UI_send_text(const char *text){
-    
+void UI_send_text(const char *text){  
     if (all_sent==true){
         memset(buffer_USB_send_text, 0, sizeof(buffer_USB_send_text));
     }
         strcat(buffer_USB_send_text, text);           
         all_sent=false;
 }
-
-void seleccionar_opcion();
-
-bool configurar_hora();
-void configurar_hora_interface();
-bool config_hora_function();
-
-void dar_hora();
-
-bool agregar_evento();
-void configurar_evento_interface();
-bool configurar_evento();
-
-ws2812_t interpret_event_color(uint8_t);
-
-void consultar_eventos();
-
 
 void UI_menu(){
     static uint8_t ini[16];
@@ -483,7 +465,7 @@ void consultar_eventos(void){
             sprintf(numero_de_evento, "%s", i);
             
             UI_send_text("\n\nEVENTO");
-            UI_send_text(i);
+            UI_send_text(numero_de_evento);
             
             UI_send_text("\nLa led numero ");
             UI_send_text(numero_led);

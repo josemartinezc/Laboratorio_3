@@ -23,6 +23,9 @@
 
 /* This section lists the other files that are included in this file.
  */
+#include <xc.h>
+#include <stdbool.h>
+#include <stdint.h>
 
 #include "utils.h"
 #include "../mcc_generated_files/tmr2.h"
