@@ -41,11 +41,16 @@
 #include "../mcc_generated_files/rtcc.h"
 #include "UI.h"
 #include "sensor.h"
+#include "../LEDs_RGB/RGB_leds.h"
 
 
 void system_control_menu(void){
     humidity_state=humidity_state_function();
+    
     RGB_humidity_state(humidity_state);
+ /*   if (humidity_state==RED_HIGH || humidity_state==RED_LOW){
+        send_text_message();
+    }*/
 }
 
 void RGB_humidity_state(int estado_de_humedad){
@@ -57,7 +62,7 @@ void RGB_humidity_state(int estado_de_humedad){
         color_indicator=RED;
     }
     else if(estado_de_humedad==YELLOW_HIGH || estado_de_humedad==YELLOW_LOW){
-        color_indicator=BLUE; //hay que hacer el color amarillo
+        color_indicator=YELLOW; //hay que hacer el color amarillo
     }
     else{
         color_indicator=GREEN;
@@ -72,17 +77,10 @@ void RGB_humidity_state(int estado_de_humedad){
 
 //void irrigation(void); //funcion que prende o apaga el riego en caso de que sea necesario
 //void SMS_tasks(void);
+//void irrigation(void); //funcion q
 
 
-/*void system_tasks (void);{
-    if (critic_humidity==true){
-        SMS_tasks();
-    }
-    Irrigation_tasks();
-}
-
-
-void SMS_tasks(void){
+void send_text_message(void){
     //*int get_GPS_coord(); //funcion que debuelve un puntero a las coordenadas ya sseparadas de la trama
     
 }
@@ -90,5 +88,3 @@ void SMS_tasks(void){
 void irrigation(void){
     
 }
- * 
- * */
