@@ -73,28 +73,25 @@ int main(void)
     threshold_SetUp();  //define los umbrales por defecto, definida en sensor.c
     //hour_SetUp();
     
-    while (1)
+   /* while (1)
     { 
         led_sequence();
-        if( USBGetDeviceState() == CONFIGURED_STATE ){
-                if(getsUSBUSART(ini, sizeof(ini))>0){
-                analog_scale_to_cb();
-                }
-        }
         //UI_menu();
         UI_tasks(); 
-        //do_events();
+        do_events();
         
     }
 }
+*/
+    while(1){
+        led_sequence();
+        //interface_IS();
+        //UI_tasks();
+        system_control_menu();
+    }
+}
 
-
+            
 /*
- while(1){
-    sensor_menu();
-    interface_IS();
- *  UI_tasks();
-    system_tasks();*/
-/**
  End of File
 */

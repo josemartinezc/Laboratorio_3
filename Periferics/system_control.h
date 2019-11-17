@@ -29,6 +29,10 @@
 }
 #endif
 
+
+void system_control_menu(void);
+void RGB_humidity_state(int);         
+         
 #endif /* _EXAMPLE_FILE_NAME_H */
 
 /* *****************************************************************************

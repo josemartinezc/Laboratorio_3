@@ -61,6 +61,10 @@ typedef struct
 /* Section: Constants                                                         */
 /* ************************************************************************** */
 /* ************************************************************************** */
+#define CANTIDAD_LEDS 8
+
+static ws2812_t tira_leds[CANTIDAD_LEDS];
+
 extern const ws2812_t WHITE;
 extern const ws2812_t RED;
 extern const ws2812_t GREEN;

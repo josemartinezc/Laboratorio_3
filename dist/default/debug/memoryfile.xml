@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<project>                                  
+  <executable name="dist/default/debug/Laboratorio_3.debug.elf">                 
+    <memory name="program">                 
+      <units>bytes</units>                 
+      <length>263312</length>                 
+      <used>50388</used>                     
+      <free>212924</free>                     
+    </memory>                              
+    <memory name="data">              
+      <units>bytes</units>                 
+      <length>33280</length>                 
+      <used>7328</used>                     
+      <free>25952</free>                     
+    </memory>                              
+  </executable>                            
+</project>                                 

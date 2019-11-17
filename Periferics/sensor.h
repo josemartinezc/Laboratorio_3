@@ -37,10 +37,18 @@ typedef enum{
     GREEN_,
 }SENSOR_STATE;
    
-void sensor();
+static uint8_t humidity_state;
+static bool critic_humidity; //si es true, es porque la humedad esta en anillo rojo
+static bool irrigation_on; //prende el riego 
+static bool irrigation_off;//apaga el riego
+
+
 void threshold_SetUp();
-void analog_scale_to_cb(); //funcion que linealiza los valores de 0-1024 a 0-60. Debuelve un int entre 0 y 60
-    
+uint16_t analog_scale_to_cb(); //funcion que linealiza los valores de 0-1024 a 0-60. Debuelve un int entre 0 y 60
+void analog_scale_to_cb_array(char*);
+int humidity_state_function(void);
+
+
 #endif /* _EXAMPLE_FILE_NAME_H */
     
 /* *****************************************************************************

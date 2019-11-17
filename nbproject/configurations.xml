@@ -34,6 +34,7 @@
       <itemPath>Periferics/leds.h</itemPath>
       <itemPath>LEDs_RGB/RGB_leds.h</itemPath>
       <itemPath>Periferics/sensor.h</itemPath>
+      <itemPath>Periferics/system_control.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -68,6 +69,7 @@
       <itemPath>Periferics/UI.c</itemPath>
       <itemPath>Periferics/leds.c</itemPath>
       <itemPath>Periferics/sensor.c</itemPath>
+      <itemPath>Periferics/system_control.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
