@@ -19,6 +19,7 @@
                 <sourceRootElem>LEDs_RGB</sourceRootElem>
                 <sourceRootElem>User Interface</sourceRootElem>
                 <sourceRootElem>Periferics</sourceRootElem>
+                <sourceRootElem>SIM_TEMP</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

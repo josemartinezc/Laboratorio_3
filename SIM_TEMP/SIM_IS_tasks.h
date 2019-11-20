@@ -5,7 +5,7 @@
     Company Name
 
   @File Name
-    filename.c
+    filename.h
 
   @Summary
     Brief description of the file.
@@ -15,27 +15,35 @@
  */
 /* ************************************************************************** */
 
+#ifndef _SIM_IS_TASKS_H    /* Guard against multiple inclusion */
+#define _SIM_IS_TASKS_H
+
+
 /* ************************************************************************** */
 /* ************************************************************************** */
 /* Section: Included Files                                                    */
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-/* This section lists the other files that are included in this file.
- */
-
-/* TODO:  Include other files here if needed. */
-/*
 #include <xc.h>
 #include <stdbool.h>
 #include <stdint.h>
-
-#include "u"
-
-
-*int get_GPS_coord();   //devuelve array con la parte de la trama que tiene las coordenadas
-*int get_GPS_hour();    //idem con hora 
-*int get_GPS_date();    //idem con fecha
+    
 
 
-//pregunta! LAS COMAS LAS TENGO QUE SACAR?
+#endif /* _EXAMPLE_FILE_NAME_H */
+
+
+
+
+
+
+
+
+
+
+
+
+/* *****************************************************************************
+ End of File
+ */

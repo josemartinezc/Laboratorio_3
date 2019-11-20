@@ -30,14 +30,14 @@
 #include "../LEDs_RGB/RGB_leds.h"
 
 
-static UI_STATE state_UI=INIT;   
+//static UI_STATE state_UI=INIT;   
 static int8_t numero_evento=0;
-static int UI_int_lecture;
 static bcdTime_t real_time;
 static uint8_t buffer_USB_send_text[TAMANO];
 static bool all_sent;
 static bool undone_events=false;
 char date_time_representation[32];
+int UI_int_lecture;
 
 bool UI_tasks (void){  
     if( USBGetDeviceState() < CONFIGURED_STATE ){
@@ -81,7 +81,7 @@ void UI_send_text(const char *text){
         strcat(buffer_USB_send_text, text);           
         all_sent=false;
 }
-
+/*
 void UI_menu(){
     static uint8_t ini[16];
     
@@ -129,34 +129,8 @@ void UI_menu(){
             state_UI=MENU;
             break;
     }
-}
-
-void seleccionar_opcion(void){
-    int8_t opcion_int;
-    
-    opcion_int=read_USB_int();
-    
-    if (opcion_int>0){
-        switch(opcion_int){
-            case 1:
-                state_UI=CONFIGURAR;
-                break;
-            case 2:
-                state_UI=DAR_HORA;
-                break;
-            case 3:
-                state_UI=AGREGAR_EVENTO;
-                break;
-            case 4:
-                state_UI=CONSULTAR_EVENTOS;
-                break;
-            default:
-                state_UI=MENU;
-                break;
-        }
-    }
-}       
-
+ * }
+*/      
 
 bool configurar_hora(void){
     static TASKS_STATE state_config=INTERFACE;

@@ -70,7 +70,7 @@ int main(void)
     LEDA_SetLow();
     LEDB_SetLow();
     RGBs_SetDown();
-    threshold_SetUp();  //define los umbrales por defecto, definida en sensor.c
+    threshold__default_SetUp();  //define los umbrales por defecto, definida en sensor.c
     //hour_SetUp();
     
    /* while (1)
@@ -85,8 +85,8 @@ int main(void)
 */
     while(1){
         led_sequence();
-        //interface_IS();
-        //UI_tasks();
+        interface_IS();
+        UI_tasks();
         system_control_menu();
     }
 }

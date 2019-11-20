@@ -19,19 +19,31 @@
 #define _SYSTEM_CONTROL_H
 
 
+#include "sensor.h"
+
 /* ************************************************************************** */
 /* ************************************************************************** */
 /* Section: Included Files                                                    */
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-#ifdef __cplusplus
-}
-#endif
+typedef struct{
+    uint8_t ID;
+    uint8_t position;
+    uint8_t humidity_;
+    SENSOR_STATE status;
+} plant_t ;
+
+extern plant_t plant;
+
+void system_control_menu(void);
+
+void RGB_humidity_state(uint8_t);
+ 
+bool ID_SetUp();
+bool Telephone_SetUp();
 
 
-void system_control_menu(void);        
-         
 #endif /* _EXAMPLE_FILE_NAME_H */
 
 /* *****************************************************************************

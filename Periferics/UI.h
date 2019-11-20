@@ -38,7 +38,7 @@ extern "C" {
     
     #define TAMANO 256
     #define MAX_EVENTOS 16
-    
+    /*
     typedef enum{
         INIT,
         MENU,        
@@ -49,6 +49,7 @@ extern "C" {
         CONSULTAR_EVENTOS,
         DEBUG,
     }UI_STATE;
+    */
     
     typedef enum{
         INTERFACE,
@@ -69,12 +70,12 @@ extern "C" {
     
     int read_USB_int(void);
     void UI_send_text(const char *text);
+    extern int UI_int_lecture;
     
     bool UI_tasks (void);
     void UI_menu (void);
     void do_events(void);
     
-    void seleccionar_opcion();
     bool configurar_hora();
     void configurar_hora_interface();
     bool config_hora_function();

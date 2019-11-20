@@ -29,4 +29,5 @@ Periferics/../utils/utils.h  \
 Periferics/UI_IS.h  \
 Periferics/system_control.h  \
  Periferics/sensor.h  \
+Periferics/sensor.h  \
 mcc_generated_files/mcc.h 

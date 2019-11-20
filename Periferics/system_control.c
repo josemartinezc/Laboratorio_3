@@ -44,16 +44,19 @@
 #include "../LEDs_RGB/RGB_leds.h"
 
 
+plant_t plant;
+
+
 void system_control_menu(void){
-    humidity_state=humidity_state_function();
+    plant.status=humidity_state_function();
     
-    RGB_humidity_state(humidity_state);
+    RGB_humidity_state(plant.status);
  /*   if (humidity_state==RED_HIGH || humidity_state==RED_LOW){
         send_text_message();
     }*/
 }
 
-void RGB_humidity_state(int estado_de_humedad){
+void RGB_humidity_state(uint8_t estado_de_humedad){
     uint8_t i;
     ws2812_t tira_leds[CANTIDAD_LEDS];
     ws2812_t color_indicator;
@@ -79,6 +82,13 @@ void RGB_humidity_state(int estado_de_humedad){
 //void SMS_tasks(void);
 //void irrigation(void); //funcion q
 
+bool ID_SetUp(){
+    
+}
+
+bool Telephone_SetUp(){
+    
+}
 
 void send_text_message(void){
     //*int get_GPS_coord(); //funcion que debuelve un puntero a las coordenadas ya sseparadas de la trama
@@ -88,3 +98,4 @@ void send_text_message(void){
 void irrigation(void){
     
 }
+

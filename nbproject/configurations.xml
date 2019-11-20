@@ -35,6 +35,8 @@
       <itemPath>LEDs_RGB/RGB_leds.h</itemPath>
       <itemPath>Periferics/sensor.h</itemPath>
       <itemPath>Periferics/system_control.h</itemPath>
+      <itemPath>Periferics/UI_IS.h</itemPath>
+      <itemPath>SIM_TEMP/SIM_IS_tasks.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -70,6 +72,8 @@
       <itemPath>Periferics/leds.c</itemPath>
       <itemPath>Periferics/sensor.c</itemPath>
       <itemPath>Periferics/system_control.c</itemPath>
+      <itemPath>Periferics/UI_IS.c</itemPath>
+      <itemPath>SIM_TEMP/SIM_IS_tasks.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -85,6 +89,7 @@
     <Elem>LEDs_RGB</Elem>
     <Elem>User Interface</Elem>
     <Elem>Periferics</Elem>
+    <Elem>SIM_TEMP</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
