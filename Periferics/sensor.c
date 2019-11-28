@@ -37,6 +37,22 @@ static uint8_t yellow_green_max;
 static uint8_t yellow_green_min;
 static uint8_t red_yellow_min;
 
+uint8_t get_red_yellow_max(){
+    return red_yellow_max;
+}
+
+uint8_t get_yellow_green_max(){
+    return yellow_green_max;
+}
+
+uint8_t get_yellow_green_min(){
+    return yellow_green_min;
+}
+
+uint8_t get_red_yellow_min(){
+    return red_yellow_min;
+}
+
 
 void threshold__default_SetUp(){
     red_yellow_max=41;
@@ -111,6 +127,7 @@ int humidity_state_function(void){//funcion que me devuelva RED_LOW, RED_HIGH, Y
     uint16_t humidity_value;
     
     humidity_value=analog_conversion_to_cb();
+    
     if(humidity_value>=red_yellow_max){
         return RED_HIGH;        
     }

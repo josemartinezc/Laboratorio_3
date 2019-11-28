@@ -31,8 +31,8 @@
 
 #include "system_control.h"
 #include "../mcc_generated_files/usb/usb.h"
-#include "sensor.h"
-#include "UI.h"
+#include "../periferics/sensor.h"
+#include "../periferics/UI.h"
 #include "UI_IS.h"
 
 
@@ -41,6 +41,7 @@
 
 void interface_IS(){
     static uint8_t ini[16];
+    bcdTime_t real_time;
    
     switch (state_UI){       
         case INIT:
@@ -52,7 +53,7 @@ void interface_IS(){
             }
             break;
         case MENU:
-                UI_send_text("\nIngrese una opcion del 1-3\n1.Configurar UMBRALES\n\n>>>");
+                UI_send_text("\nIngrese una opcion del 1-3\n1.Configurar UMBRALES\n2.\n3.\n4.Consultar hora\n5.Ver mensaje critico\n\n>>>");
                 state_UI=ESPERA;
             break;
         case ESPERA:
@@ -74,11 +75,37 @@ void interface_IS(){
                 state_UI=MENU;
             //}
             break;
+        case DAR_HORA:
+            get_real_time_IS(&real_time);
+            dar_hora(real_time);
+            state_UI=MENU;
+            break;
+        case CHECK_CRITIC_MESSAGE:
+            show_critic_message();
+            state_UI=MENU;
+            break;
         default:
             state_UI=MENU;
             break;
     }
 }
+
+
+void show_critic_message(void){
+    char message[120];
+    int humidity_local_state;
+    
+    humidity_local_state=humidity_state_function();
+    if (humidity_local_state==RED_HIGH || humidity_local_state==RED_LOW){
+        memset(message, 0, sizeof(message));
+        send_critic_message(humidity_local_state, message);
+        UI_send_text(message);
+    }
+    else{
+        UI_send_text("No hay mensaje critico para enviar");
+    }
+}
+
 
 IS_INTERFACE_STATE seleccionar_opcion(void){
     int8_t opcion_int;
@@ -95,6 +122,12 @@ IS_INTERFACE_STATE seleccionar_opcion(void){
                 break;
             case 3:
                 state_UI=CONFIGURAR_TELEFONO;
+                break;
+            case 4:
+                state_UI=DAR_HORA;
+                break;
+            case 5:
+                state_UI=CHECK_CRITIC_MESSAGE;
                 break;
             default:
                 state_UI=MENU;

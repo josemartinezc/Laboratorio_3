@@ -30,6 +30,7 @@
 #include <stdint.h>
 #include "../mcc_generated_files/rtcc.h"
 #include "../LEDs_RGB/RGB_leds.h"
+#include "../utils/utils.h"
 
 /* Provide C++ Compatibility */
 #ifdef __cplusplus
@@ -69,9 +70,10 @@ extern "C" {
     static bcdTime_t event_dates[MAX_EVENTOS];
     
     int read_USB_int(void);
-    void UI_send_text(const char *text);
+    void UI_send_text(char *text);
     extern int UI_int_lecture;
     
+    void Initialize_USB_delay(ut_tmrDelay_t*);
     bool UI_tasks (void);
     void UI_menu (void);
     void do_events(void);
@@ -80,7 +82,7 @@ extern "C" {
     void configurar_hora_interface();
     bool config_hora_function();
 
-    void dar_hora();
+    void dar_hora(bcdTime_t);
 
     bool agregar_evento();
     void configurar_evento_interface();

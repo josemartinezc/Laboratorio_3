@@ -51,8 +51,8 @@
 #include "Periferics/UI.h"
 #include "Periferics/leds.h"
 #include "LEDs_RGB/RGB_leds.h"
-#include "Periferics/UI_IS.h"
-#include "Periferics/system_control.h"
+#include "Irrigation_system/UI_IS.h"
+#include "Irrigation_system/system_control.h"
 #include "Periferics/sensor.h"
 #include "mcc_generated_files/mcc.h"
 
@@ -64,6 +64,7 @@
 int main(void)
 {   
     static uint8_t ini[16];
+    bool ini_SIM808=false;
     
     SYSTEM_Initialize();
     
@@ -71,23 +72,24 @@ int main(void)
     LEDB_SetLow();
     RGBs_SetDown();
     threshold__default_SetUp();  //define los umbrales por defecto, definida en sensor.c
-    //hour_SetUp();
+    hour_SetUp();
+    plant_init();
     
-   /* while (1)
-    { 
-        led_sequence();
-        //UI_menu();
-        UI_tasks(); 
-        do_events();
-        
-    }
-}
-*/
+    PWR_KEY_SetDigitalInput();
+    STATUS_SetDigitalInput();
+    RESET_SetDigitalOutput();
+    RESET_SetHigh();
+    
+    //RESET_SetLow();
+    
     while(1){
+        if(ini_SIM808==false){
+            ini_SIM808=Initialize_SIM808();
+        }
         led_sequence();
         interface_IS();
-        UI_tasks();
         system_control_menu();
+        UI_tasks();
     }
 }
 

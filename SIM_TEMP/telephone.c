@@ -5,7 +5,7 @@
     Company Name
 
   @File Name
-    filename.h
+    filename.c
 
   @Summary
     Brief description of the file.
@@ -15,37 +15,24 @@
  */
 /* ************************************************************************** */
 
-#ifndef _SYSTEM_CONTROL_H    /* Guard against multiple inclusion */
-#define _SYSTEM_CONTROL_H
-
-
-#include "sensor.h"
-
 /* ************************************************************************** */
 /* ************************************************************************** */
 /* Section: Included Files                                                    */
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-typedef struct{
-    uint8_t ID;
-    uint8_t position;
-    uint8_t humidity_;
-    SENSOR_STATE status;
-} plant_t ;
-
-extern plant_t plant;
-
-void system_control_menu(void);
-
-void RGB_humidity_state(uint8_t);
- 
-bool ID_SetUp();
-bool Telephone_SetUp();
-
-
-#endif /* _EXAMPLE_FILE_NAME_H */
-
-/* *****************************************************************************
- End of File
+/* This section lists the other files that are included in this file.
  */
+
+/* TODO:  Include other files here if needed. */
+
+#include <xc.h>
+#include <stdbool.h>
+#include <stdint.h>
+
+bool send_text_message(char *p_message){
+    return false;
+}
+
+ 
+ 

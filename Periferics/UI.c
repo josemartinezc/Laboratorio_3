@@ -35,11 +35,12 @@ static int8_t numero_evento=0;
 static bcdTime_t real_time;
 static uint8_t buffer_USB_send_text[TAMANO];
 static bool all_sent;
+static bool sending = false;
 static bool undone_events=false;
 char date_time_representation[32];
 int UI_int_lecture;
 
-bool UI_tasks (void){  
+bool UI_tasks (void){    
     if( USBGetDeviceState() < CONFIGURED_STATE ){
         return false;
     }
@@ -49,11 +50,13 @@ bool UI_tasks (void){
     }
 
     if( USBUSARTIsTxTrfReady() == true && all_sent==false){
-        putUSBUSART(buffer_USB_send_text, strlen(buffer_USB_send_text));
-        all_sent=true;
+        do{
+            putUSBUSART(buffer_USB_send_text, strlen(buffer_USB_send_text));
+        }while(USBUSARTIsTxTrfReady()==true);
     }
     
     CDCTxService();
+    all_sent=true;
     return true;
 }
 
@@ -74,63 +77,13 @@ int read_USB_int(void){
     }
 }
 
-void UI_send_text(const char *text){  
+void UI_send_text(char *text){  
     if (all_sent==true){
         memset(buffer_USB_send_text, 0, sizeof(buffer_USB_send_text));
     }
         strcat(buffer_USB_send_text, text);           
         all_sent=false;
 }
-/*
-void UI_menu(){
-    static uint8_t ini[16];
-    
-    uint32_t mk_hora_actual;
-    bcdTime_t actual;
-    bcdTime_t evento;
-   
-    switch (state_UI){
-        case INIT:
-            real_time.tm_mday=0;
-            if( USBGetDeviceState() == CONFIGURED_STATE ){
-                if(getsUSBUSART(ini, sizeof(ini))>0){
-                    UI_send_text("\n\n\nBIENVENIDO A SU CALENDARIO\n");
-                    state_UI=MENU;
-                }
-            }
-            break;
-        case MENU:
-                UI_send_text("\nIngrese una opcion del 1-4\n1.Configurar fecha y hora\n2.consultar hora\n3.Agregar evento\n4.Consultar eventos\n\n>>>");
-                state_UI=ESPERA;
-            break;
-        case ESPERA:
-            seleccionar_opcion();
-            break;
-        case CONFIGURAR:
-            if (configurar_hora()==true){
-                UI_send_text("\n\nSu hora ha sido configurada con exito!\n\n\n\n");
-                state_UI=MENU;   
-            }
-            break;
-        case DAR_HORA:
-            dar_hora();
-            state_UI=MENU;
-            break;
-        case AGREGAR_EVENTO:
-            if (agregar_evento()== true){
-            state_UI=MENU;      
-            }
-            break;
-        case CONSULTAR_EVENTOS:
-            consultar_eventos();
-            state_UI=MENU;  
-            break;
-        default:
-            state_UI=MENU;
-            break;
-    }
- * }
-*/      
 
 bool configurar_hora(void){
     static TASKS_STATE state_config=INTERFACE;
@@ -262,8 +215,9 @@ bool config_hora_function(int config_hora_state){
 }      
 
 
-void dar_hora(void){    
-    if((real_time.tm_mday)>0){
+void dar_hora(bcdTime_t time){
+    bcdTime_t real_time;
+    if((&real_time.tm_mday)>0){
         RTCC_TimeGet(&real_time);
 
         strftime(date_time_representation, 32, "%c", &real_time);

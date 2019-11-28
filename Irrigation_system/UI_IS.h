@@ -5,7 +5,7 @@
     Company Name
 
   @File Name
-    filename.c
+    filename.h
 
   @Summary
     Brief description of the file.
@@ -15,31 +15,33 @@
  */
 /* ************************************************************************** */
 
+#ifndef _UI_IS_H    /* Guard against multiple inclusion */
+#define _UI_IS_H
+
+#include <stdbool.h>
+
 /* ************************************************************************** */
 /* ************************************************************************** */
 /* Section: Included Files                                                    */
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-/* This section lists the other files that are included in this file.
- */
+    typedef enum{
+        INIT,
+        MENU,        
+        ESPERA,
+        CONFIGURAR_ID,
+        CONFIGURAR_UMBRALES,
+        CONFIGURAR_TELEFONO,
+        DAR_HORA,
+        CHECK_CRITIC_MESSAGE,
+    }IS_INTERFACE_STATE;
+    
+    void interface_IS();
 
-/* TODO:  Include other files here if needed. */
-
-#include <xc.h>
-#include <stdbool.h>
-#include <stdint.h>
-/*
-#include "u"
-
-
-*int get_GPS_coord();   //devuelve array con la parte de la trama que tiene las coordenadas
-*int get_GPS_hour();    //idem con hora 
-*int get_GPS_date();    //idem con fecha
-*/
-
-/*
-//pregunta! LAS COMAS LAS TENGO QUE SACAR?
- * */
- 
- 
+    IS_INTERFACE_STATE seleccionar_opcion();
+    bool threshold_SetUp();
+    void threshold_SetUp_interface(int);
+    void show_critic_message(void);
+    
+#endif

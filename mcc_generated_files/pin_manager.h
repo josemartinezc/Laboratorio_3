@@ -56,6 +56,370 @@
 */
 /**
   @Summary
+    Sets the GPIO pin, RA0, high using LATA0.
+
+  @Description
+    Sets the GPIO pin, RA0, high using LATA0.
+
+  @Preconditions
+    The RA0 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RA0 high (1)
+    PWR_KEY_SetHigh();
+    </code>
+
+*/
+#define PWR_KEY_SetHigh()          ( LATASET = (1 << 0) )
+/**
+  @Summary
+    Sets the GPIO pin, RA0, low using LATA0.
+
+  @Description
+    Sets the GPIO pin, RA0, low using LATA0.
+
+  @Preconditions
+    The RA0 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RA0 low (0)
+    PWR_KEY_SetLow();
+    </code>
+
+*/
+#define PWR_KEY_SetLow()           ( LATACLR = (1 << 0) )
+
+/**
+  @Summary
+    Sets a value to the GPIO pin.
+
+  @Description
+    Sets or Resets the GPIO pin, RA0, low or high using LATA0.
+
+  @Preconditions
+    The RA0 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    bool value; : value to be set to the GPIO pin.
+
+  @Example
+    <code>
+    // Set RA0 to low.
+    PWR_KEY_SetValue(false);
+    </code>
+
+*/
+inline static void PWR_KEY_SetValue(bool value)
+{
+  if(value)
+  {
+    PWR_KEY_SetHigh();
+  }
+  else
+  {
+    PWR_KEY_SetLow();
+  }
+}
+
+/**
+  @Summary
+    Toggles the GPIO pin, RA0, using LATA0.
+
+  @Description
+    Toggles the GPIO pin, RA0, using LATA0.
+
+  @Preconditions
+    The RA0 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RA0
+    PWR_KEY_Toggle();
+    </code>
+
+*/
+#define PWR_KEY_Toggle()           ( LATAINV = (1 << 0) )
+/**
+  @Summary
+    Reads the value of the GPIO pin, RA0.
+
+  @Description
+    Reads the value of the GPIO pin, RA0.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RA0
+    postValue = PWR_KEY_GetValue();
+    </code>
+
+*/
+#define PWR_KEY_GetValue()         PORTAbits.RA0
+/**
+  @Summary
+    Configures the GPIO pin, RA0, as an input.
+
+  @Description
+    Configures the GPIO pin, RA0, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RA0 as an input
+    PWR_KEY_SetDigitalInput();
+    </code>
+
+*/
+#define PWR_KEY_SetDigitalInput()   ( TRISASET = (1 << 0) )
+/**
+  @Summary
+    Configures the GPIO pin, RA0, as an output.
+
+  @Description
+    Configures the GPIO pin, RA0, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RA0 as an output
+    PWR_KEY_SetDigitalOutput();
+    </code>
+
+*/
+#define PWR_KEY_SetDigitalOutput()   ( TRISACLR = (1 << 0) )
+/**
+  @Summary
+    Sets the GPIO pin, RA1, high using LATA1.
+
+  @Description
+    Sets the GPIO pin, RA1, high using LATA1.
+
+  @Preconditions
+    The RA1 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RA1 high (1)
+    RESET_SetHigh();
+    </code>
+
+*/
+#define RESET_SetHigh()          ( LATASET = (1 << 1) )
+/**
+  @Summary
+    Sets the GPIO pin, RA1, low using LATA1.
+
+  @Description
+    Sets the GPIO pin, RA1, low using LATA1.
+
+  @Preconditions
+    The RA1 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RA1 low (0)
+    RESET_SetLow();
+    </code>
+
+*/
+#define RESET_SetLow()           ( LATACLR = (1 << 1) )
+
+/**
+  @Summary
+    Sets a value to the GPIO pin.
+
+  @Description
+    Sets or Resets the GPIO pin, RA1, low or high using LATA1.
+
+  @Preconditions
+    The RA1 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    bool value; : value to be set to the GPIO pin.
+
+  @Example
+    <code>
+    // Set RA1 to low.
+    RESET_SetValue(false);
+    </code>
+
+*/
+inline static void RESET_SetValue(bool value)
+{
+  if(value)
+  {
+    RESET_SetHigh();
+  }
+  else
+  {
+    RESET_SetLow();
+  }
+}
+
+/**
+  @Summary
+    Toggles the GPIO pin, RA1, using LATA1.
+
+  @Description
+    Toggles the GPIO pin, RA1, using LATA1.
+
+  @Preconditions
+    The RA1 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RA1
+    RESET_Toggle();
+    </code>
+
+*/
+#define RESET_Toggle()           ( LATAINV = (1 << 1) )
+/**
+  @Summary
+    Reads the value of the GPIO pin, RA1.
+
+  @Description
+    Reads the value of the GPIO pin, RA1.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RA1
+    postValue = RESET_GetValue();
+    </code>
+
+*/
+#define RESET_GetValue()         PORTAbits.RA1
+/**
+  @Summary
+    Configures the GPIO pin, RA1, as an input.
+
+  @Description
+    Configures the GPIO pin, RA1, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RA1 as an input
+    RESET_SetDigitalInput();
+    </code>
+
+*/
+#define RESET_SetDigitalInput()   ( TRISASET = (1 << 1) )
+/**
+  @Summary
+    Configures the GPIO pin, RA1, as an output.
+
+  @Description
+    Configures the GPIO pin, RA1, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RA1 as an output
+    RESET_SetDigitalOutput();
+    </code>
+
+*/
+#define RESET_SetDigitalOutput()   ( TRISACLR = (1 << 1) )
+/**
+  @Summary
     Sets the GPIO pin, RA10, high using LATA10.
 
   @Description
@@ -236,6 +600,188 @@ inline static void LED_CTRL_SetValue(bool value)
 
 */
 #define LED_CTRL_SetDigitalOutput()   ( TRISACLR = (1 << 10) )
+/**
+  @Summary
+    Sets the GPIO pin, RA11, high using LATA11.
+
+  @Description
+    Sets the GPIO pin, RA11, high using LATA11.
+
+  @Preconditions
+    The RA11 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RA11 high (1)
+    STATUS_SetHigh();
+    </code>
+
+*/
+#define STATUS_SetHigh()          ( LATASET = (1 << 11) )
+/**
+  @Summary
+    Sets the GPIO pin, RA11, low using LATA11.
+
+  @Description
+    Sets the GPIO pin, RA11, low using LATA11.
+
+  @Preconditions
+    The RA11 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RA11 low (0)
+    STATUS_SetLow();
+    </code>
+
+*/
+#define STATUS_SetLow()           ( LATACLR = (1 << 11) )
+
+/**
+  @Summary
+    Sets a value to the GPIO pin.
+
+  @Description
+    Sets or Resets the GPIO pin, RA11, low or high using LATA11.
+
+  @Preconditions
+    The RA11 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    bool value; : value to be set to the GPIO pin.
+
+  @Example
+    <code>
+    // Set RA11 to low.
+    STATUS_SetValue(false);
+    </code>
+
+*/
+inline static void STATUS_SetValue(bool value)
+{
+  if(value)
+  {
+    STATUS_SetHigh();
+  }
+  else
+  {
+    STATUS_SetLow();
+  }
+}
+
+/**
+  @Summary
+    Toggles the GPIO pin, RA11, using LATA11.
+
+  @Description
+    Toggles the GPIO pin, RA11, using LATA11.
+
+  @Preconditions
+    The RA11 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RA11
+    STATUS_Toggle();
+    </code>
+
+*/
+#define STATUS_Toggle()           ( LATAINV = (1 << 11) )
+/**
+  @Summary
+    Reads the value of the GPIO pin, RA11.
+
+  @Description
+    Reads the value of the GPIO pin, RA11.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RA11
+    postValue = STATUS_GetValue();
+    </code>
+
+*/
+#define STATUS_GetValue()         PORTAbits.RA11
+/**
+  @Summary
+    Configures the GPIO pin, RA11, as an input.
+
+  @Description
+    Configures the GPIO pin, RA11, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RA11 as an input
+    STATUS_SetDigitalInput();
+    </code>
+
+*/
+#define STATUS_SetDigitalInput()   ( TRISASET = (1 << 11) )
+/**
+  @Summary
+    Configures the GPIO pin, RA11, as an output.
+
+  @Description
+    Configures the GPIO pin, RA11, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RA11 as an output
+    STATUS_SetDigitalOutput();
+    </code>
+
+*/
+#define STATUS_SetDigitalOutput()   ( TRISACLR = (1 << 11) )
 /**
   @Summary
     Sets the GPIO pin, RA13, high using LATA13.

@@ -43,10 +43,6 @@ typedef enum{
     YG_min,
     RY_min,
 }threshold_limits;
-   
-//static bool critic_humidity; //si es true, es porque la humedad esta en anillo rojo
-//static bool irrigation_on; //prende el riego 
-//static bool irrigation_off;//apaga el riego
 
 
 bool threshold_SetUp_tasks(uint8_t);
@@ -55,6 +51,10 @@ uint16_t analog_conversion_to_cb(); //funcion que linealiza los valores de 0-102
 void analog_scale_to_cb_array(char*);
 int humidity_state_function(void);
 
+uint8_t get_red_yellow_max();
+uint8_t get_yellow_green_max();
+uint8_t get_yellow_green_min();
+uint8_t get_red_yellow_min();
 
 #endif /* _EXAMPLE_FILE_NAME_H */
     

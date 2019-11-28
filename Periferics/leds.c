@@ -36,16 +36,6 @@
 ut_tmrDelay_t timer;
 uint8_t i;
 
-
-void led_sequence_bloqueante(void){
- if(button3On==true){
-            LEDA_SetHigh ();
-            UT_delayDs_bolqueante(20);  
-            LEDA_SetLow();
-            button3On = false; 
-        }
-}
- 
 void sequence_configuration(void){
     uint8_t i=0;         
     timer.state = 0;

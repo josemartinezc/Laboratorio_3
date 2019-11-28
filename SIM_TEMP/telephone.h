@@ -15,10 +15,9 @@
  */
 /* ************************************************************************** */
 
-#ifndef _UI_IS_H    /* Guard against multiple inclusion */
-#define _UI_IS_H
+#ifndef _SIM_IS_TASKS_H    /* Guard against multiple inclusion */
+#define _SIM_IS_TASKS_H
 
-#include <stdbool.h>
 
 /* ************************************************************************** */
 /* ************************************************************************** */
@@ -26,19 +25,25 @@
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-    typedef enum{
-        INIT,
-        MENU,        
-        ESPERA,
-        CONFIGURAR_ID,
-        CONFIGURAR_UMBRALES,
-        CONFIGURAR_TELEFONO,
-    }IS_INTERFACE_STATE;
+#include <stdbool.h>
+#include <stdint.h>
     
-    void interface_IS();
+bool send_text_message(char *p_message)
 
-    IS_INTERFACE_STATE seleccionar_opcion();
-    bool threshold_SetUp();
-    void threshold_SetUp_interface(int);
-    
-#endif
+
+#endif /* _EXAMPLE_FILE_NAME_H */
+
+
+
+
+
+
+
+
+
+
+
+
+/* *****************************************************************************
+ End of File
+ */

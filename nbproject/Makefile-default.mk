@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=mcc_generated_files/usb/usb_device_events.c mcc_generated_files/usb/usb_device.c mcc_generated_files/usb/usb_descriptors.c mcc_generated_files/usb/usb_device_cdc.c mcc_generated_files/usb/example_mcc_usb_cdc.c mcc_generated_files/system.c mcc_generated_files/clock.c mcc_generated_files/exceptions.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/tmr2.c mcc_generated_files/rtcc.c mcc_generated_files/adc1.c main.c utils/utils.c LEDs_RGB/RGB_leds.c Periferics/UI.c Periferics/leds.c Periferics/sensor.c Periferics/system_control.c Periferics/UI_IS.c SIM_TEMP/SIM_IS_tasks.c
+SOURCEFILES_QUOTED_IF_SPACED=Irrigation_system/system_control.c Irrigation_system/UI_IS.c Irrigation_system/data_register.c mcc_generated_files/usb/usb_device_events.c mcc_generated_files/usb/usb_device.c mcc_generated_files/usb/usb_descriptors.c mcc_generated_files/usb/usb_device_cdc.c mcc_generated_files/usb/example_mcc_usb_cdc.c mcc_generated_files/system.c mcc_generated_files/clock.c mcc_generated_files/exceptions.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/tmr2.c mcc_generated_files/rtcc.c mcc_generated_files/adc1.c mcc_generated_files/tmr1.c mcc_generated_files/uart1.c Periferics/UI.c Periferics/leds.c LEDs_RGB/RGB_leds.c SIM_TEMP/GPS.c SIM_TEMP/telephone.c main.c utils/utils.c Periferics/sensor.c SIM808/SIM808.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device.o ${OBJECTDIR}/mcc_generated_files/usb/usb_descriptors.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device_cdc.o ${OBJECTDIR}/mcc_generated_files/usb/example_mcc_usb_cdc.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/exceptions.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/mcc_generated_files/adc1.o ${OBJECTDIR}/main.o ${OBJECTDIR}/utils/utils.o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o ${OBJECTDIR}/Periferics/UI.o ${OBJECTDIR}/Periferics/leds.o ${OBJECTDIR}/Periferics/sensor.o ${OBJECTDIR}/Periferics/system_control.o ${OBJECTDIR}/Periferics/UI_IS.o ${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_device.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_descriptors.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_device_cdc.o.d ${OBJECTDIR}/mcc_generated_files/usb/example_mcc_usb_cdc.o.d ${OBJECTDIR}/mcc_generated_files/system.o.d ${OBJECTDIR}/mcc_generated_files/clock.o.d ${OBJECTDIR}/mcc_generated_files/exceptions.o.d ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d ${OBJECTDIR}/mcc_generated_files/mcc.o.d ${OBJECTDIR}/mcc_generated_files/pin_manager.o.d ${OBJECTDIR}/mcc_generated_files/tmr2.o.d ${OBJECTDIR}/mcc_generated_files/rtcc.o.d ${OBJECTDIR}/mcc_generated_files/adc1.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/utils/utils.o.d ${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d ${OBJECTDIR}/Periferics/UI.o.d ${OBJECTDIR}/Periferics/leds.o.d ${OBJECTDIR}/Periferics/sensor.o.d ${OBJECTDIR}/Periferics/system_control.o.d ${OBJECTDIR}/Periferics/UI_IS.o.d ${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Irrigation_system/system_control.o ${OBJECTDIR}/Irrigation_system/UI_IS.o ${OBJECTDIR}/Irrigation_system/data_register.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device.o ${OBJECTDIR}/mcc_generated_files/usb/usb_descriptors.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device_cdc.o ${OBJECTDIR}/mcc_generated_files/usb/example_mcc_usb_cdc.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/exceptions.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/mcc_generated_files/adc1.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/mcc_generated_files/uart1.o ${OBJECTDIR}/Periferics/UI.o ${OBJECTDIR}/Periferics/leds.o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o ${OBJECTDIR}/SIM_TEMP/GPS.o ${OBJECTDIR}/SIM_TEMP/telephone.o ${OBJECTDIR}/main.o ${OBJECTDIR}/utils/utils.o ${OBJECTDIR}/Periferics/sensor.o ${OBJECTDIR}/SIM808/SIM808.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/Irrigation_system/system_control.o.d ${OBJECTDIR}/Irrigation_system/UI_IS.o.d ${OBJECTDIR}/Irrigation_system/data_register.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_device.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_descriptors.o.d ${OBJECTDIR}/mcc_generated_files/usb/usb_device_cdc.o.d ${OBJECTDIR}/mcc_generated_files/usb/example_mcc_usb_cdc.o.d ${OBJECTDIR}/mcc_generated_files/system.o.d ${OBJECTDIR}/mcc_generated_files/clock.o.d ${OBJECTDIR}/mcc_generated_files/exceptions.o.d ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d ${OBJECTDIR}/mcc_generated_files/mcc.o.d ${OBJECTDIR}/mcc_generated_files/pin_manager.o.d ${OBJECTDIR}/mcc_generated_files/tmr2.o.d ${OBJECTDIR}/mcc_generated_files/rtcc.o.d ${OBJECTDIR}/mcc_generated_files/adc1.o.d ${OBJECTDIR}/mcc_generated_files/tmr1.o.d ${OBJECTDIR}/mcc_generated_files/uart1.o.d ${OBJECTDIR}/Periferics/UI.o.d ${OBJECTDIR}/Periferics/leds.o.d ${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d ${OBJECTDIR}/SIM_TEMP/GPS.o.d ${OBJECTDIR}/SIM_TEMP/telephone.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/utils/utils.o.d ${OBJECTDIR}/Periferics/sensor.o.d ${OBJECTDIR}/SIM808/SIM808.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device.o ${OBJECTDIR}/mcc_generated_files/usb/usb_descriptors.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device_cdc.o ${OBJECTDIR}/mcc_generated_files/usb/example_mcc_usb_cdc.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/exceptions.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/mcc_generated_files/adc1.o ${OBJECTDIR}/main.o ${OBJECTDIR}/utils/utils.o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o ${OBJECTDIR}/Periferics/UI.o ${OBJECTDIR}/Periferics/leds.o ${OBJECTDIR}/Periferics/sensor.o ${OBJECTDIR}/Periferics/system_control.o ${OBJECTDIR}/Periferics/UI_IS.o ${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o
+OBJECTFILES=${OBJECTDIR}/Irrigation_system/system_control.o ${OBJECTDIR}/Irrigation_system/UI_IS.o ${OBJECTDIR}/Irrigation_system/data_register.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device.o ${OBJECTDIR}/mcc_generated_files/usb/usb_descriptors.o ${OBJECTDIR}/mcc_generated_files/usb/usb_device_cdc.o ${OBJECTDIR}/mcc_generated_files/usb/example_mcc_usb_cdc.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/exceptions.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/mcc_generated_files/adc1.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/mcc_generated_files/uart1.o ${OBJECTDIR}/Periferics/UI.o ${OBJECTDIR}/Periferics/leds.o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o ${OBJECTDIR}/SIM_TEMP/GPS.o ${OBJECTDIR}/SIM_TEMP/telephone.o ${OBJECTDIR}/main.o ${OBJECTDIR}/utils/utils.o ${OBJECTDIR}/Periferics/sensor.o ${OBJECTDIR}/SIM808/SIM808.o
 
 # Source Files
-SOURCEFILES=mcc_generated_files/usb/usb_device_events.c mcc_generated_files/usb/usb_device.c mcc_generated_files/usb/usb_descriptors.c mcc_generated_files/usb/usb_device_cdc.c mcc_generated_files/usb/example_mcc_usb_cdc.c mcc_generated_files/system.c mcc_generated_files/clock.c mcc_generated_files/exceptions.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/tmr2.c mcc_generated_files/rtcc.c mcc_generated_files/adc1.c main.c utils/utils.c LEDs_RGB/RGB_leds.c Periferics/UI.c Periferics/leds.c Periferics/sensor.c Periferics/system_control.c Periferics/UI_IS.c SIM_TEMP/SIM_IS_tasks.c
+SOURCEFILES=Irrigation_system/system_control.c Irrigation_system/UI_IS.c Irrigation_system/data_register.c mcc_generated_files/usb/usb_device_events.c mcc_generated_files/usb/usb_device.c mcc_generated_files/usb/usb_descriptors.c mcc_generated_files/usb/usb_device_cdc.c mcc_generated_files/usb/example_mcc_usb_cdc.c mcc_generated_files/system.c mcc_generated_files/clock.c mcc_generated_files/exceptions.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/tmr2.c mcc_generated_files/rtcc.c mcc_generated_files/adc1.c mcc_generated_files/tmr1.c mcc_generated_files/uart1.c Periferics/UI.c Periferics/leds.c LEDs_RGB/RGB_leds.c SIM_TEMP/GPS.c SIM_TEMP/telephone.c main.c utils/utils.c Periferics/sensor.c SIM808/SIM808.c
 
 
 CFLAGS=
@@ -106,6 +106,24 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/Irrigation_system/system_control.o: Irrigation_system/system_control.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/Irrigation_system" 
+	@${RM} ${OBJECTDIR}/Irrigation_system/system_control.o.d 
+	@${RM} ${OBJECTDIR}/Irrigation_system/system_control.o 
+	@${FIXDEPS} "${OBJECTDIR}/Irrigation_system/system_control.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Irrigation_system/system_control.o.d" -o ${OBJECTDIR}/Irrigation_system/system_control.o Irrigation_system/system_control.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/Irrigation_system/UI_IS.o: Irrigation_system/UI_IS.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/Irrigation_system" 
+	@${RM} ${OBJECTDIR}/Irrigation_system/UI_IS.o.d 
+	@${RM} ${OBJECTDIR}/Irrigation_system/UI_IS.o 
+	@${FIXDEPS} "${OBJECTDIR}/Irrigation_system/UI_IS.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Irrigation_system/UI_IS.o.d" -o ${OBJECTDIR}/Irrigation_system/UI_IS.o Irrigation_system/UI_IS.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/Irrigation_system/data_register.o: Irrigation_system/data_register.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/Irrigation_system" 
+	@${RM} ${OBJECTDIR}/Irrigation_system/data_register.o.d 
+	@${RM} ${OBJECTDIR}/Irrigation_system/data_register.o 
+	@${FIXDEPS} "${OBJECTDIR}/Irrigation_system/data_register.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Irrigation_system/data_register.o.d" -o ${OBJECTDIR}/Irrigation_system/data_register.o Irrigation_system/data_register.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o: mcc_generated_files/usb/usb_device_events.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/mcc_generated_files/usb" 
 	@${RM} ${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o.d 
@@ -190,23 +208,17 @@ ${OBJECTDIR}/mcc_generated_files/adc1.o: mcc_generated_files/adc1.c  nbproject/M
 	@${RM} ${OBJECTDIR}/mcc_generated_files/adc1.o 
 	@${FIXDEPS} "${OBJECTDIR}/mcc_generated_files/adc1.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/mcc_generated_files/adc1.o.d" -o ${OBJECTDIR}/mcc_generated_files/adc1.o mcc_generated_files/adc1.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.o.d 
-	@${RM} ${OBJECTDIR}/main.o 
-	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d" -o ${OBJECTDIR}/main.o main.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+${OBJECTDIR}/mcc_generated_files/tmr1.o: mcc_generated_files/tmr1.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/mcc_generated_files" 
+	@${RM} ${OBJECTDIR}/mcc_generated_files/tmr1.o.d 
+	@${RM} ${OBJECTDIR}/mcc_generated_files/tmr1.o 
+	@${FIXDEPS} "${OBJECTDIR}/mcc_generated_files/tmr1.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/mcc_generated_files/tmr1.o.d" -o ${OBJECTDIR}/mcc_generated_files/tmr1.o mcc_generated_files/tmr1.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/utils/utils.o: utils/utils.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/utils" 
-	@${RM} ${OBJECTDIR}/utils/utils.o.d 
-	@${RM} ${OBJECTDIR}/utils/utils.o 
-	@${FIXDEPS} "${OBJECTDIR}/utils/utils.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/utils/utils.o.d" -o ${OBJECTDIR}/utils/utils.o utils/utils.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/LEDs_RGB/RGB_leds.o: LEDs_RGB/RGB_leds.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/LEDs_RGB" 
-	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d 
-	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o 
-	@${FIXDEPS} "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" -o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o LEDs_RGB/RGB_leds.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+${OBJECTDIR}/mcc_generated_files/uart1.o: mcc_generated_files/uart1.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/mcc_generated_files" 
+	@${RM} ${OBJECTDIR}/mcc_generated_files/uart1.o.d 
+	@${RM} ${OBJECTDIR}/mcc_generated_files/uart1.o 
+	@${FIXDEPS} "${OBJECTDIR}/mcc_generated_files/uart1.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/mcc_generated_files/uart1.o.d" -o ${OBJECTDIR}/mcc_generated_files/uart1.o mcc_generated_files/uart1.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
 ${OBJECTDIR}/Periferics/UI.o: Periferics/UI.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/Periferics" 
@@ -220,31 +232,67 @@ ${OBJECTDIR}/Periferics/leds.o: Periferics/leds.c  nbproject/Makefile-${CND_CONF
 	@${RM} ${OBJECTDIR}/Periferics/leds.o 
 	@${FIXDEPS} "${OBJECTDIR}/Periferics/leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Periferics/leds.o.d" -o ${OBJECTDIR}/Periferics/leds.o Periferics/leds.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/LEDs_RGB/RGB_leds.o: LEDs_RGB/RGB_leds.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/LEDs_RGB" 
+	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d 
+	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o 
+	@${FIXDEPS} "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" -o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o LEDs_RGB/RGB_leds.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/SIM_TEMP/GPS.o: SIM_TEMP/GPS.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/SIM_TEMP" 
+	@${RM} ${OBJECTDIR}/SIM_TEMP/GPS.o.d 
+	@${RM} ${OBJECTDIR}/SIM_TEMP/GPS.o 
+	@${FIXDEPS} "${OBJECTDIR}/SIM_TEMP/GPS.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/SIM_TEMP/GPS.o.d" -o ${OBJECTDIR}/SIM_TEMP/GPS.o SIM_TEMP/GPS.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/SIM_TEMP/telephone.o: SIM_TEMP/telephone.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/SIM_TEMP" 
+	@${RM} ${OBJECTDIR}/SIM_TEMP/telephone.o.d 
+	@${RM} ${OBJECTDIR}/SIM_TEMP/telephone.o 
+	@${FIXDEPS} "${OBJECTDIR}/SIM_TEMP/telephone.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/SIM_TEMP/telephone.o.d" -o ${OBJECTDIR}/SIM_TEMP/telephone.o SIM_TEMP/telephone.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/main.o.d 
+	@${RM} ${OBJECTDIR}/main.o 
+	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d" -o ${OBJECTDIR}/main.o main.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/utils/utils.o: utils/utils.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/utils" 
+	@${RM} ${OBJECTDIR}/utils/utils.o.d 
+	@${RM} ${OBJECTDIR}/utils/utils.o 
+	@${FIXDEPS} "${OBJECTDIR}/utils/utils.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/utils/utils.o.d" -o ${OBJECTDIR}/utils/utils.o utils/utils.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/Periferics/sensor.o: Periferics/sensor.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/Periferics" 
 	@${RM} ${OBJECTDIR}/Periferics/sensor.o.d 
 	@${RM} ${OBJECTDIR}/Periferics/sensor.o 
 	@${FIXDEPS} "${OBJECTDIR}/Periferics/sensor.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Periferics/sensor.o.d" -o ${OBJECTDIR}/Periferics/sensor.o Periferics/sensor.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/Periferics/system_control.o: Periferics/system_control.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/Periferics" 
-	@${RM} ${OBJECTDIR}/Periferics/system_control.o.d 
-	@${RM} ${OBJECTDIR}/Periferics/system_control.o 
-	@${FIXDEPS} "${OBJECTDIR}/Periferics/system_control.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Periferics/system_control.o.d" -o ${OBJECTDIR}/Periferics/system_control.o Periferics/system_control.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/Periferics/UI_IS.o: Periferics/UI_IS.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/Periferics" 
-	@${RM} ${OBJECTDIR}/Periferics/UI_IS.o.d 
-	@${RM} ${OBJECTDIR}/Periferics/UI_IS.o 
-	@${FIXDEPS} "${OBJECTDIR}/Periferics/UI_IS.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Periferics/UI_IS.o.d" -o ${OBJECTDIR}/Periferics/UI_IS.o Periferics/UI_IS.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o: SIM_TEMP/SIM_IS_tasks.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/SIM_TEMP" 
-	@${RM} ${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o.d 
-	@${RM} ${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o 
-	@${FIXDEPS} "${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o.d" -o ${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o SIM_TEMP/SIM_IS_tasks.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+${OBJECTDIR}/SIM808/SIM808.o: SIM808/SIM808.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/SIM808" 
+	@${RM} ${OBJECTDIR}/SIM808/SIM808.o.d 
+	@${RM} ${OBJECTDIR}/SIM808/SIM808.o 
+	@${FIXDEPS} "${OBJECTDIR}/SIM808/SIM808.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/SIM808/SIM808.o.d" -o ${OBJECTDIR}/SIM808/SIM808.o SIM808/SIM808.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
 else
+${OBJECTDIR}/Irrigation_system/system_control.o: Irrigation_system/system_control.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/Irrigation_system" 
+	@${RM} ${OBJECTDIR}/Irrigation_system/system_control.o.d 
+	@${RM} ${OBJECTDIR}/Irrigation_system/system_control.o 
+	@${FIXDEPS} "${OBJECTDIR}/Irrigation_system/system_control.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Irrigation_system/system_control.o.d" -o ${OBJECTDIR}/Irrigation_system/system_control.o Irrigation_system/system_control.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/Irrigation_system/UI_IS.o: Irrigation_system/UI_IS.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/Irrigation_system" 
+	@${RM} ${OBJECTDIR}/Irrigation_system/UI_IS.o.d 
+	@${RM} ${OBJECTDIR}/Irrigation_system/UI_IS.o 
+	@${FIXDEPS} "${OBJECTDIR}/Irrigation_system/UI_IS.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Irrigation_system/UI_IS.o.d" -o ${OBJECTDIR}/Irrigation_system/UI_IS.o Irrigation_system/UI_IS.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/Irrigation_system/data_register.o: Irrigation_system/data_register.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/Irrigation_system" 
+	@${RM} ${OBJECTDIR}/Irrigation_system/data_register.o.d 
+	@${RM} ${OBJECTDIR}/Irrigation_system/data_register.o 
+	@${FIXDEPS} "${OBJECTDIR}/Irrigation_system/data_register.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Irrigation_system/data_register.o.d" -o ${OBJECTDIR}/Irrigation_system/data_register.o Irrigation_system/data_register.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o: mcc_generated_files/usb/usb_device_events.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/mcc_generated_files/usb" 
 	@${RM} ${OBJECTDIR}/mcc_generated_files/usb/usb_device_events.o.d 
@@ -329,23 +377,17 @@ ${OBJECTDIR}/mcc_generated_files/adc1.o: mcc_generated_files/adc1.c  nbproject/M
 	@${RM} ${OBJECTDIR}/mcc_generated_files/adc1.o 
 	@${FIXDEPS} "${OBJECTDIR}/mcc_generated_files/adc1.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/mcc_generated_files/adc1.o.d" -o ${OBJECTDIR}/mcc_generated_files/adc1.o mcc_generated_files/adc1.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.o.d 
-	@${RM} ${OBJECTDIR}/main.o 
-	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d" -o ${OBJECTDIR}/main.o main.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+${OBJECTDIR}/mcc_generated_files/tmr1.o: mcc_generated_files/tmr1.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/mcc_generated_files" 
+	@${RM} ${OBJECTDIR}/mcc_generated_files/tmr1.o.d 
+	@${RM} ${OBJECTDIR}/mcc_generated_files/tmr1.o 
+	@${FIXDEPS} "${OBJECTDIR}/mcc_generated_files/tmr1.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/mcc_generated_files/tmr1.o.d" -o ${OBJECTDIR}/mcc_generated_files/tmr1.o mcc_generated_files/tmr1.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/utils/utils.o: utils/utils.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/utils" 
-	@${RM} ${OBJECTDIR}/utils/utils.o.d 
-	@${RM} ${OBJECTDIR}/utils/utils.o 
-	@${FIXDEPS} "${OBJECTDIR}/utils/utils.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/utils/utils.o.d" -o ${OBJECTDIR}/utils/utils.o utils/utils.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/LEDs_RGB/RGB_leds.o: LEDs_RGB/RGB_leds.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/LEDs_RGB" 
-	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d 
-	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o 
-	@${FIXDEPS} "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" -o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o LEDs_RGB/RGB_leds.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+${OBJECTDIR}/mcc_generated_files/uart1.o: mcc_generated_files/uart1.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/mcc_generated_files" 
+	@${RM} ${OBJECTDIR}/mcc_generated_files/uart1.o.d 
+	@${RM} ${OBJECTDIR}/mcc_generated_files/uart1.o 
+	@${FIXDEPS} "${OBJECTDIR}/mcc_generated_files/uart1.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/mcc_generated_files/uart1.o.d" -o ${OBJECTDIR}/mcc_generated_files/uart1.o mcc_generated_files/uart1.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
 ${OBJECTDIR}/Periferics/UI.o: Periferics/UI.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/Periferics" 
@@ -359,29 +401,47 @@ ${OBJECTDIR}/Periferics/leds.o: Periferics/leds.c  nbproject/Makefile-${CND_CONF
 	@${RM} ${OBJECTDIR}/Periferics/leds.o 
 	@${FIXDEPS} "${OBJECTDIR}/Periferics/leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Periferics/leds.o.d" -o ${OBJECTDIR}/Periferics/leds.o Periferics/leds.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
+${OBJECTDIR}/LEDs_RGB/RGB_leds.o: LEDs_RGB/RGB_leds.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/LEDs_RGB" 
+	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d 
+	@${RM} ${OBJECTDIR}/LEDs_RGB/RGB_leds.o 
+	@${FIXDEPS} "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/LEDs_RGB/RGB_leds.o.d" -o ${OBJECTDIR}/LEDs_RGB/RGB_leds.o LEDs_RGB/RGB_leds.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/SIM_TEMP/GPS.o: SIM_TEMP/GPS.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/SIM_TEMP" 
+	@${RM} ${OBJECTDIR}/SIM_TEMP/GPS.o.d 
+	@${RM} ${OBJECTDIR}/SIM_TEMP/GPS.o 
+	@${FIXDEPS} "${OBJECTDIR}/SIM_TEMP/GPS.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/SIM_TEMP/GPS.o.d" -o ${OBJECTDIR}/SIM_TEMP/GPS.o SIM_TEMP/GPS.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/SIM_TEMP/telephone.o: SIM_TEMP/telephone.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/SIM_TEMP" 
+	@${RM} ${OBJECTDIR}/SIM_TEMP/telephone.o.d 
+	@${RM} ${OBJECTDIR}/SIM_TEMP/telephone.o 
+	@${FIXDEPS} "${OBJECTDIR}/SIM_TEMP/telephone.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/SIM_TEMP/telephone.o.d" -o ${OBJECTDIR}/SIM_TEMP/telephone.o SIM_TEMP/telephone.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/main.o.d 
+	@${RM} ${OBJECTDIR}/main.o 
+	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d" -o ${OBJECTDIR}/main.o main.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
+${OBJECTDIR}/utils/utils.o: utils/utils.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/utils" 
+	@${RM} ${OBJECTDIR}/utils/utils.o.d 
+	@${RM} ${OBJECTDIR}/utils/utils.o 
+	@${FIXDEPS} "${OBJECTDIR}/utils/utils.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/utils/utils.o.d" -o ${OBJECTDIR}/utils/utils.o utils/utils.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+	
 ${OBJECTDIR}/Periferics/sensor.o: Periferics/sensor.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/Periferics" 
 	@${RM} ${OBJECTDIR}/Periferics/sensor.o.d 
 	@${RM} ${OBJECTDIR}/Periferics/sensor.o 
 	@${FIXDEPS} "${OBJECTDIR}/Periferics/sensor.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Periferics/sensor.o.d" -o ${OBJECTDIR}/Periferics/sensor.o Periferics/sensor.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
-${OBJECTDIR}/Periferics/system_control.o: Periferics/system_control.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/Periferics" 
-	@${RM} ${OBJECTDIR}/Periferics/system_control.o.d 
-	@${RM} ${OBJECTDIR}/Periferics/system_control.o 
-	@${FIXDEPS} "${OBJECTDIR}/Periferics/system_control.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Periferics/system_control.o.d" -o ${OBJECTDIR}/Periferics/system_control.o Periferics/system_control.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/Periferics/UI_IS.o: Periferics/UI_IS.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/Periferics" 
-	@${RM} ${OBJECTDIR}/Periferics/UI_IS.o.d 
-	@${RM} ${OBJECTDIR}/Periferics/UI_IS.o 
-	@${FIXDEPS} "${OBJECTDIR}/Periferics/UI_IS.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/Periferics/UI_IS.o.d" -o ${OBJECTDIR}/Periferics/UI_IS.o Periferics/UI_IS.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
-	
-${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o: SIM_TEMP/SIM_IS_tasks.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/SIM_TEMP" 
-	@${RM} ${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o.d 
-	@${RM} ${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o 
-	@${FIXDEPS} "${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o.d" -o ${OBJECTDIR}/SIM_TEMP/SIM_IS_tasks.o SIM_TEMP/SIM_IS_tasks.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
+${OBJECTDIR}/SIM808/SIM808.o: SIM808/SIM808.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/SIM808" 
+	@${RM} ${OBJECTDIR}/SIM808/SIM808.o.d 
+	@${RM} ${OBJECTDIR}/SIM808/SIM808.o 
+	@${FIXDEPS} "${OBJECTDIR}/SIM808/SIM808.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/SIM808/SIM808.o.d" -o ${OBJECTDIR}/SIM808/SIM808.o SIM808/SIM808.c    -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD) 
 	
 endif
 

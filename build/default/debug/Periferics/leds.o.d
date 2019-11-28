@@ -7,7 +7,7 @@ Periferics/leds.h  \
  Periferics/../mcc_generated_files/system.h  \
  Periferics/../mcc_generated_files/clock.h  \
  Periferics/../mcc_generated_files/pin_manager.h  \
- Periferics/../mcc_generated_files/adc1.h  \
+ Periferics/../mcc_generated_files/uart1.h  \
  Periferics/../mcc_generated_files/usb/usb.h  \
  Periferics/../mcc_generated_files/usb/usb_device_config.h  \
  Periferics/../mcc_generated_files/usb/usb_common.h  \
@@ -17,8 +17,10 @@ Periferics/leds.h  \
  Periferics/../mcc_generated_files/usb/usb_hal_pic32mm.h  \
  Periferics/../mcc_generated_files/usb/usb_device_cdc.h  \
  Periferics/../mcc_generated_files/usb/usb.h  \
- Periferics/../mcc_generated_files/watchdog.h  \
+ Periferics/../mcc_generated_files/tmr2.h  \
+ Periferics/../mcc_generated_files/rtcc.h  \
+ Periferics/../mcc_generated_files/tmr1.h  \
+ Periferics/../mcc_generated_files/adc1.h  \
  Periferics/../mcc_generated_files/interrupt_manager.h  \
  Periferics/../mcc_generated_files/exceptions.h  \
- Periferics/../mcc_generated_files/tmr2.h  \
- Periferics/../mcc_generated_files/rtcc.h 
+ Periferics/../mcc_generated_files/watchdog.h 
