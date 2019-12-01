@@ -35,6 +35,7 @@
         CONFIGURAR_TELEFONO,
         DAR_HORA,
         CHECK_CRITIC_MESSAGE,
+        SHOW_REGISTERS,
     }IS_INTERFACE_STATE;
     
     void interface_IS();
@@ -43,5 +44,6 @@
     bool threshold_SetUp();
     void threshold_SetUp_interface(int);
     void show_critic_message(void);
+    void show_data_registers();
     
 #endif

@@ -34,6 +34,7 @@
 #include "../periferics/sensor.h"
 #include "../periferics/UI.h"
 #include "UI_IS.h"
+#include "data_register.h"
 
 
 //variables
@@ -47,13 +48,13 @@ void interface_IS(){
         case INIT:
             if( USBGetDeviceState() == CONFIGURED_STATE ){
                 if(getsUSBUSART(ini, sizeof(ini))>0){
-                    UI_send_text("\n\n\nBIENVENIDO A SU SISTEMA DE RIEGO!\n");
+                    UI_send_text("\nBIENVENIDO A SU SISTEMA DE RIEGO!\n");
                     state_UI=MENU;
                 }
             }
             break;
         case MENU:
-                UI_send_text("\nIngrese una opcion del 1-3\n1.Configurar UMBRALES\n2.\n3.\n4.Consultar hora\n5.Ver mensaje critico\n\n>>>");
+                UI_send_text("\n\n\nIngrese una opcion del 1-3\n1.Configurar UMBRALES\n2.\n3.\n4.Consultar hora\n5.Ver mensaje critico\n\n>>>");
                 state_UI=ESPERA;
             break;
         case ESPERA:
@@ -84,12 +85,22 @@ void interface_IS(){
             show_critic_message();
             state_UI=MENU;
             break;
+        case SHOW_REGISTERS:
+            show_data_registers();
+            state_UI=MENU;
+            break;
         default:
             state_UI=MENU;
             break;
     }
 }
 
+void show_data_registers(){
+    char data_register[150];
+    while(get_register(data_register)==true){
+        UI_send_text(data_register);
+    }
+}
 
 void show_critic_message(void){
     char message[120];
@@ -128,6 +139,9 @@ IS_INTERFACE_STATE seleccionar_opcion(void){
                 break;
             case 5:
                 state_UI=CHECK_CRITIC_MESSAGE;
+                break;
+            case 6:
+                state_UI=SHOW_REGISTERS;
                 break;
             default:
                 state_UI=MENU;

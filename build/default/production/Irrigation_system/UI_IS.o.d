@@ -16,4 +16,6 @@ Irrigation_system/system_control.h  \
  Irrigation_system/../periferics/../mcc_generated_files/rtcc.h  \
  Irrigation_system/../periferics/../LEDs_RGB/RGB_leds.h  \
  Irrigation_system/../periferics/../utils/utils.h  \
- Irrigation_system/UI_IS.h 
+ Irrigation_system/UI_IS.h  \
+Irrigation_system/data_register.h  \
+ Irrigation_system/../SIM_TEMP/GPS.h 

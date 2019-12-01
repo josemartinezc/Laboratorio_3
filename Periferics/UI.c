@@ -26,6 +26,7 @@
 #include "../mcc_generated_files/rtcc.h"
 #include "UI.h"
 #include "../mcc_generated_files/usb/usb.h"
+#include"../mcc_generated_files/usb/usb_device_cdc.h"
 #include "../utils/utils.h"
 #include "../LEDs_RGB/RGB_leds.h"
 
@@ -34,13 +35,17 @@
 static int8_t numero_evento=0;
 static bcdTime_t real_time;
 static uint8_t buffer_USB_send_text[TAMANO];
-static bool all_sent;
+static uint8_t buffer_USB_save_text[TAMANO];
+static bool all_sent=true;
 static bool sending = false;
 static bool undone_events=false;
 char date_time_representation[32];
 int UI_int_lecture;
 
-bool UI_tasks (void){    
+bool UI_tasks (void){  
+    ut_tmrDelay_t timer;
+    timer.state=0;
+    
     if( USBGetDeviceState() < CONFIGURED_STATE ){
         return false;
     }
@@ -49,16 +54,20 @@ bool UI_tasks (void){
         return false;
     }
 
-    if( USBUSARTIsTxTrfReady() == true && all_sent==false){
-        do{
-            putUSBUSART(buffer_USB_send_text, strlen(buffer_USB_send_text));
-        }while(USBUSARTIsTxTrfReady()==true);
+    if( USBUSARTIsTxTrfReady() && all_sent==false){
+        putUSBUSART(buffer_USB_send_text, strlen(buffer_USB_send_text));
+        sending=true;
     }
     
+    if( sending==true && cdc_trf_state == CDC_TX_COMPLETING){
+        sending=false;
+        all_sent=true;
+    }
+
     CDCTxService();
-    all_sent=true;
     return true;
 }
+
 
 
 //funcion que devuelve lo que hay en el usb, transformando el ascii a decimales
@@ -77,12 +86,27 @@ int read_USB_int(void){
     }
 }
 
-void UI_send_text(char *text){  
-    if (all_sent==true){
-        memset(buffer_USB_send_text, 0, sizeof(buffer_USB_send_text));
+void UI_send_text(char *text){
+    static uint8_t send_text_state=0;
+    switch(send_text_state){
+        case 0:
+            memset(buffer_USB_send_text, 0, sizeof(buffer_USB_send_text));
+            send_text_state=1;
+        case 1:
+            memset(buffer_USB_save_text, 0, sizeof(buffer_USB_save_text));
+            send_text_state=2;
+        case 2:
+            strcat(buffer_USB_save_text, text);
+            if(all_sent==true && sending==false){
+                if(buffer_USB_save_text[0]!=0){
+                    memset(buffer_USB_send_text, 0, sizeof(buffer_USB_send_text));
+                    strcpy(buffer_USB_send_text, buffer_USB_save_text);
+                    send_text_state=1;
+                    all_sent=false;
+                }
+            }
+            break;
     }
-        strcat(buffer_USB_send_text, text);           
-        all_sent=false;
 }
 
 bool configurar_hora(void){

@@ -31,6 +31,7 @@
 
 
 //VARIABLES
+static uint8_t register_number=0;
 historic_data data_buffer[REGISTER_CAPACITY];
 
 
@@ -44,10 +45,10 @@ void data_save(void){
             i=0;
             j=0;
             timer.state=0;
-            state_register_system=WAIT;
+            state_register_system=WAIT_;
             break;
 
-        case WAIT:
+        case WAIT_:
             if(UT_delayDs(&timer, 600)==true){
                 i++;
                 if(i>=PERIOD_DATA_SAVING_MIN){
@@ -56,7 +57,7 @@ void data_save(void){
                         state_register_system=SAVE;
                     }
                     else{
-                        state_register_system=WAIT;
+                        state_register_system=WAIT_;
                     }
                 }
                 else{
@@ -73,8 +74,33 @@ void data_save(void){
     
 }
 
+//me quede acaaaaaaaaaaaaaaaaaaa
+
+
+bool get_register(char* p_data_register){
+    static SENDING_DATA_STATE data_left=INIT_DATA;
+    static uint8_t pending_data;
+    
+    switch(data_left){
+        case INIT_DATA:
+            if(register_number==0){
+                p_data_register="no hay datos a enviar";
+                return true;
+            }
+            else{
+                pending_data=register_number--;
+                data_left=DATA_PENDING;
+            }
+            break;
+        case DATA_PENDING:
+            
+            break;
+        case EMPTY:
+            break;
+    }
+}
+
 void save_register(void) {
-    static register_number=0;
     uint8_t trama[110];
     
     RTCC_TimeGet(&data_buffer[register_number].hour_and_date); 

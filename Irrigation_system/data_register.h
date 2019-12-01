@@ -45,13 +45,20 @@ typedef struct{
 
 typedef enum{
     INITIALIZE,
-    WAIT,
+    WAIT_,
     SAVE,        
 }REGISTER_SYSTEM_STATE;
 
+typedef enum{
+    INIT_DATA,
+    EMPTY,
+    DATA_PENDING,
+}SENDING_DATA_STATE;
+
 void data_save(void);
 void save_register(void);
-
+uint8_t get_register_number();
+bool get_register(char*);
 
 #endif /* _EXAMPLE_FILE_NAME_H */
 
