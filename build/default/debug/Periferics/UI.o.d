@@ -12,4 +12,5 @@ Periferics/../utils/utils.h  \
  Periferics/../mcc_generated_files/usb/usb_hal.h  \
  Periferics/../mcc_generated_files/usb/usb_hal_pic32mm.h  \
  Periferics/../mcc_generated_files/usb/usb_device_cdc.h  \
- Periferics/../mcc_generated_files/usb/usb.h 
+ Periferics/../mcc_generated_files/usb/usb.h  \
+ Periferics/../mcc_generated_files/usb/usb_device_cdc.h 

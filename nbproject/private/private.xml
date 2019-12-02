@@ -5,13 +5,9 @@
         <group>
             <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/periferics/UI.c</file>
             <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/Irrigation_system/UI_IS.c</file>
-            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/utils/utils.c</file>
-            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/Irrigation_system/data_register.c</file>
-            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/Irrigation_system/UI_IS.h</file>
             <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/main.c</file>
-            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/Irrigation_system/data_register.h</file>
+            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/mcc_generated_files/usb/usb_device_cdc.h</file>
             <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/periferics/UI.h</file>
-            <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/SIM_TEMP/GPS.c</file>
             <file>file:/C:/Users/Jose/Documents/Ingenieria/MPLABXProjects/Laboratorio_3/mcc_generated_files/usb/usb_device_cdc.c</file>
         </group>
     </open-files>

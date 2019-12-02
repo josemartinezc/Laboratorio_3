@@ -42,10 +42,8 @@ static bool undone_events=false;
 char date_time_representation[32];
 int UI_int_lecture;
 
+
 bool UI_tasks (void){  
-    ut_tmrDelay_t timer;
-    timer.state=0;
-    
     if( USBGetDeviceState() < CONFIGURED_STATE ){
         return false;
     }
@@ -54,20 +52,46 @@ bool UI_tasks (void){
         return false;
     }
 
-    if( USBUSARTIsTxTrfReady() && all_sent==false){
+    if( USBUSARTIsTxTrfReady() == true && all_sent==false){
         putUSBUSART(buffer_USB_send_text, strlen(buffer_USB_send_text));
-        sending=true;
+        all_sent=true;
     }
     
-    if( sending==true && cdc_trf_state == CDC_TX_COMPLETING){
+    CDCTxService();
+    return true;
+}
+
+
+/*
+bool UI_tasks (void){  
+    if( USBGetDeviceState() < CONFIGURED_STATE ){
+        return false;
+    }
+
+    if( USBIsDeviceSuspended()== true ){
+        return false;
+    }
+    
+    if(sending==true && USBUSARTIsTxTrfReady()==true){
         sending=false;
-        all_sent=true;
+    }
+
+    if( USBUSARTIsTxTrfReady()==true && all_sent==false){
+        if(sending==false){
+            memset(buffer_USB_send_text, 0, sizeof(buffer_USB_send_text));
+            if(buffer_USB_save_text[0]!=0){
+                strcpy(buffer_USB_send_text, buffer_USB_save_text);    
+                memset(buffer_USB_save_text, 0, sizeof(buffer_USB_save_text));
+                sending=true;
+            }            
+        }
+        putUSBUSART(buffer_USB_send_text, strlen(buffer_USB_send_text));
     }
 
     CDCTxService();
     return true;
 }
-
+*/
 
 
 //funcion que devuelve lo que hay en el usb, transformando el ascii a decimales
@@ -86,28 +110,33 @@ int read_USB_int(void){
     }
 }
 
+void UI_send_text(char *text){  
+    if (all_sent==true){
+        memset(buffer_USB_send_text, 0, sizeof(buffer_USB_send_text));
+    }
+        strcat(buffer_USB_send_text, text);           
+        all_sent=false;
+}
+
+/*
 void UI_send_text(char *text){
     static uint8_t send_text_state=0;
     switch(send_text_state){
         case 0:
             memset(buffer_USB_send_text, 0, sizeof(buffer_USB_send_text));
+            memset(buffer_USB_save_text, 0, sizeof(buffer_USB_save_text));
             send_text_state=1;
         case 1:
-            memset(buffer_USB_save_text, 0, sizeof(buffer_USB_save_text));
-            send_text_state=2;
-        case 2:
             strcat(buffer_USB_save_text, text);
-            if(all_sent==true && sending==false){
-                if(buffer_USB_save_text[0]!=0){
-                    memset(buffer_USB_send_text, 0, sizeof(buffer_USB_send_text));
-                    strcpy(buffer_USB_send_text, buffer_USB_save_text);
-                    send_text_state=1;
-                    all_sent=false;
-                }
-            }
+            all_sent=false;
+            break;
+        default:
+            send_text_state=1;
             break;
     }
 }
+*/
+
 
 bool configurar_hora(void){
     static TASKS_STATE state_config=INTERFACE;
