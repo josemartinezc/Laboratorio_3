@@ -146,7 +146,35 @@ uint8_t get_irrigation_high_threshold(){
 
 
 bool ID_SetUp(){
-    
+    static TASKS_STATE state_config;
+    switch (state_config){
+        case INTERFACE:
+            UI_send_text("\nIngrese el ID de su planta (max 99999)\n\n>>>");
+            state_config=WAIT;
+            return false;
+            break;
+        case WAIT:
+            UI_int_lecture=read_USB_int();
+            if(UI_int_lecture>=0){
+                state_config=DO_TASKS;
+            }
+            return false;
+            break;
+        case DO_TASKS:
+            if(UI_int_lecture<=99999){
+                plant.ID=UI_int_lecture;
+                UI_send_text("\n\nEl ID de su planta a sido configurado con exito!");
+                return true;
+            }
+            else{
+                state_config=INTERFACE;
+                return false;
+            }
+            break;
+        default:
+            return false;
+            break;
+    }
 }
 
 bool Telephone_SetUp(){
@@ -159,7 +187,6 @@ void send_critic_message(SENSOR_STATE critic_state, char* p_message){
     char coord_posicion_str[50];
     char ID[32];
     char message[120];
-    ws2812_t led_emergencia[1];
     
     
     memset(message,0,sizeof(message));

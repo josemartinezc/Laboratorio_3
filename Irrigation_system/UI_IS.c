@@ -48,13 +48,13 @@ void interface_IS(){
         case INIT:
             if( USBGetDeviceState() == CONFIGURED_STATE ){
                 if(getsUSBUSART(ini, sizeof(ini))>0){
-                    UI_send_text("\nBIENVENIDO A SU SISTEMA DE RIEGO!\n");
+                    UI_send_text("\nBIENVENIDO A SU SISTEMA DE RIEGO!");
                     state_UI=MENU;
                 }
             }
             break;
         case MENU:
-                UI_send_text("\n\n\nIngrese una opcion del 1-3\n1.Configurar UMBRALES\n2.\n3.\n4.Consultar hora\n5.Ver mensaje critico\n\n>>>");
+                UI_send_text("\n\nIngrese una opcion del 1-3\n1.Configurar UMBRALES\n2.Configurar ID\n3.\n4.Consultar hora\n5.Ver mensaje critico\n\n>>>");
                 state_UI=ESPERA;
             break;
         case ESPERA:
@@ -63,13 +63,13 @@ void interface_IS(){
         case CONFIGURAR_UMBRALES:    
             if(threshold_SetUp()==true){
                 state_UI=MENU;
-                UI_send_text("\nSus umbrales fueron configurados con exito.\n");
+                UI_send_text("\n\nSus umbrales fueron configurados con exito.\n");
             }
             break;
         case CONFIGURAR_ID:
-            //if(ID_SetUp()==true){
+            if(ID_SetUp()==true){
                 state_UI=MENU;
-            //}
+            }
             break;
         case CONFIGURAR_TELEFONO:
             //if(Telephone_SetUp()==true){
@@ -108,12 +108,13 @@ void show_critic_message(void){
     
     humidity_local_state=humidity_state_function();
     if (humidity_local_state==RED_HIGH || humidity_local_state==RED_LOW){
+        UI_send_text("\n\n");
         memset(message, 0, sizeof(message));
         send_critic_message(humidity_local_state, message);
         UI_send_text(message);
     }
     else{
-        UI_send_text("No hay mensaje critico para enviar");
+        UI_send_text("\n\nNo hay mensaje critico para enviar");
     }
 }
 
@@ -224,4 +225,7 @@ void threshold_SetUp_interface(int limit){
             break;
     }    
 }
+
+
+
 

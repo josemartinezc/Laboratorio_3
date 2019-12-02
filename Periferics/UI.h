@@ -37,7 +37,7 @@
 extern "C" {
 #endif
     
-    #define TAMANO 256
+    #define TAMANO 365
     #define MAX_EVENTOS 16
     /*
     typedef enum{
