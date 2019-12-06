@@ -23,9 +23,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <proc/p32mm0256gpm064.h>
-//#include "../GPS/GPS.h"
+#include "../SIM_TEMP/GPS.h"
 #include "SIM808.h"
-#include "../utils/utils.h"
 #include "../mcc_generated_files/mcc.h"
 #include "../mcc_generated_files/../Periferics/UI.h"
 #include "../mcc_generated_files/pin_manager.h"
@@ -43,9 +42,6 @@
  uint8_t tiempo;
  uint8_t rxBuffer[30];
  
- bool espero_OK ();
- void init_punteros();
- void Leer_Buffer_debug ();
  
 /*******************************************************************************/    
 /************************* INTERFACE FUNCTIONS *********************************/    
@@ -60,21 +56,15 @@
         init_punteros ();
         punteros_inicializados = true;
     }
-    else
-    {   
+    else{   
         switch (POWER_KEY){
             case 0:
-                if (UT_delayDs (ptimer2,11) == true ){
+                if (UT_delayDs (ptimer2,12) == true ){
                      PWR_KEY_SetDigitalInput();
                      POWER_KEY = 1;   
                 }
                 break;
             case 1:
-                if (UT_delayDs (ptimer3,21) == true ){
-                     POWER_KEY = 2;   
-                }
-                break;
-            case 2:
                 if (STATUS_GetValue() == 1) {
                     if (espero_OK()==true){
                         return true;
@@ -84,7 +74,7 @@
                 {
                     POWER_KEY = 0;
                 }
-                break; 
+                break;
         }
     }
     return false;
@@ -93,6 +83,7 @@
 bool espero_OK (){ //funcion que espera a que el SIM me mande OK
     static st_inicializacion_SIM808 st_Espero_OK = INITi;
     static bool espero = false;
+    
     if (espero == false){
         UART1_Write ('A');
         espero = true;

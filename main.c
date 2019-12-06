@@ -65,6 +65,10 @@ int main(void)
 {   
     static uint8_t ini[16];
     bool ini_SIM808=false;
+    bool ini_GPS=false;
+    bool get_trama_f=false;
+    bool hour_set_up=false;
+    uint8_t trama[128];
     
     SYSTEM_Initialize();
     
@@ -72,21 +76,29 @@ int main(void)
     LEDB_SetLow();
     RGBs_SetDown();
     threshold__default_SetUp();  //define los umbrales por defecto, definida en sensor.c
-    hour_SetUp();
     plant_init();
     
     PWR_KEY_SetDigitalInput();
     STATUS_SetDigitalInput();
-    RESET_SetDigitalOutput();
     RESET_SetHigh();
+    RESET_SetDigitalOutput();
     
-    //RESET_SetLow();
     
     while(1){
         if(ini_SIM808==false){
             ini_SIM808=Initialize_SIM808();
         }
+        else{
+            if(ini_GPS==false){            
+                ini_GPS=Initialize_GPS();
+            }
+            else{
+                if(hour_set_up==false);
+                hour_set_up=hour_SetUp();
+            }
+        }
         led_sequence();
+        data_save();
         interface_IS();
         system_control_menu();
         UI_tasks();

@@ -41,6 +41,7 @@ typedef struct{
     bcdTime_t hour_and_date;
     SENSOR_STATE status;
     GPSPosition_t position;
+    uint8_t event_number;
 } historic_data;
 
 typedef enum{
@@ -49,16 +50,11 @@ typedef enum{
     SAVE,        
 }REGISTER_SYSTEM_STATE;
 
-typedef enum{
-    INIT_DATA,
-    EMPTY,
-    DATA_PENDING,
-}SENDING_DATA_STATE;
-
+bool get_empty_buffer_value();
 void data_save(void);
 void save_register(void);
 uint8_t get_register_number();
-bool get_register(char*);
+bool get_register(historic_data*);
 
 #endif /* _EXAMPLE_FILE_NAME_H */
 

@@ -46,6 +46,7 @@ typedef enum{
 
 
 bool threshold_SetUp_tasks(uint8_t);
+bool threshold_SetUp();
 void threshold__default_SetUp();
 uint16_t analog_conversion_to_cb(); //funcion que linealiza los valores de 0-1024 a 0-60. Debuelve un int entre 0 y 60
 void analog_scale_to_cb_array(char*);

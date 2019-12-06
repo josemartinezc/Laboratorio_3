@@ -122,7 +122,63 @@ bool threshold_SetUp_tasks(uint8_t limit_state){
     }
 }
 
-       
+bool threshold_SetUp(){
+    static TASKS_STATE state_config=INTERFACE;
+    static threshold_limits limit_state=RY_max;
+    bool valid_data;
+    
+    switch (state_config){
+        case INTERFACE:
+            threshold_SetUp_interface(limit_state);
+            state_config=WAIT;
+            return false;
+            break;
+        case WAIT:
+            UI_int_lecture=read_USB_int();
+            if(UI_int_lecture>=0){
+                state_config=DO_TASKS;
+            }
+            return false;
+            break;
+        case DO_TASKS:
+            valid_data=threshold_SetUp_tasks(limit_state);
+            if(valid_data==true){
+                if(limit_state==RY_max){
+                    state_config=INTERFACE;
+                    limit_state=YG_max;
+                    return false;
+                }
+                else if(limit_state==YG_max){
+                    state_config=INTERFACE;
+                    limit_state=YG_min;
+                    return false;
+                }
+                else if(limit_state==YG_min){
+                    state_config=INTERFACE;
+                    limit_state=RY_min;
+                    return false;
+                }
+                else{
+                    state_config=END;
+                    return false;
+                }
+            }
+            else{
+                state_config=WAIT;
+                return false;
+            }
+            break;
+        case END:
+            state_config=INTERFACE;
+            limit_state=RY_max;
+            return true;
+            break;
+        default:
+            return false;
+            break;
+    }
+}
+
 int humidity_state_function(void){//funcion que me devuelva RED_LOW, RED_HIGH, YELLOW_LOW, YELLOW_HIGH, GREEN   
     uint16_t humidity_value;
     

@@ -18,4 +18,5 @@ Irrigation_system/UI_IS.c  \
  Irrigation_system/../periferics/../utils/utils.h  \
  Irrigation_system/UI_IS.h  \
 Irrigation_system/data_register.h  \
- Irrigation_system/../SIM_TEMP/GPS.h 
+ Irrigation_system/../SIM_TEMP/GPS.h  \
+ Irrigation_system/../SIM_TEMP/../utils/utils.h 

@@ -35,6 +35,7 @@
 #include "../periferics/UI.h"
 #include "UI_IS.h"
 #include "data_register.h"
+#include "../SIM_TEMP/GPS.h"
 
 
 //variables
@@ -54,7 +55,7 @@ void interface_IS(){
             }
             break;
         case MENU:
-                UI_send_text("\n\nIngrese una opcion del 1-3\n1.Configurar UMBRALES\n2.Configurar ID\n3.\n4.Consultar hora\n5.Ver mensaje critico\n\n>>>");
+                UI_send_text("\n\nIngrese una opcion del 1-6\n1.Configurar UMBRALES\n2.Configurar ID\n3.Configurar telefono\n4.Consultar hora\n5.Ver mensaje critico\n6.Mostrar registros guardados\n>>>");
                 state_UI=ESPERA;
             break;
         case ESPERA:
@@ -68,17 +69,23 @@ void interface_IS(){
             break;
         case CONFIGURAR_ID:
             if(ID_SetUp()==true){
+                UI_send_text("\n\nEl ID de su planta a sido configurado con exito!");
                 state_UI=MENU;
             }
             break;
         case CONFIGURAR_TELEFONO:
-            //if(Telephone_SetUp()==true){
+            if(Telephone_SetUp()==true){
+                UI_send_text("\n\nEl numero de telefono ha sido configurado con exito.\n");
                 state_UI=MENU;
-            //}
+            }
             break;
         case DAR_HORA:
-            get_real_time_IS(&real_time);
-            dar_hora(real_time);
+            if(hour_SetUp()==true){
+                dar_hora(get_real_time_IS ());
+            }
+            else{
+                UI_send_text("\nLa hora aún no ha podido ser configurada\n");
+            }
             state_UI=MENU;
             break;
         case CHECK_CRITIC_MESSAGE:
@@ -86,38 +93,15 @@ void interface_IS(){
             state_UI=MENU;
             break;
         case SHOW_REGISTERS:
-            show_data_registers();
-            state_UI=MENU;
+            if(show_data_registers()==true){
+                state_UI=MENU;
+            }
             break;
         default:
             state_UI=MENU;
             break;
     }
 }
-
-void show_data_registers(){
-    char data_register[150];
-    while(get_register(data_register)==true){
-        UI_send_text(data_register);
-    }
-}
-
-void show_critic_message(void){
-    char message[120];
-    int humidity_local_state;
-    
-    humidity_local_state=humidity_state_function();
-    if (humidity_local_state==RED_HIGH || humidity_local_state==RED_LOW){
-        UI_send_text("\n\n");
-        memset(message, 0, sizeof(message));
-        send_critic_message(humidity_local_state, message);
-        UI_send_text(message);
-    }
-    else{
-        UI_send_text("\n\nNo hay mensaje critico para enviar");
-    }
-}
-
 
 IS_INTERFACE_STATE seleccionar_opcion(void){
     int8_t opcion_int;
@@ -151,61 +135,65 @@ IS_INTERFACE_STATE seleccionar_opcion(void){
     }
 } 
 
-bool threshold_SetUp(){
-    static TASKS_STATE state_config=INTERFACE;
-    static threshold_limits limit_state=RY_max;
-    bool valid_data;
+bool show_data_registers(){
+    historic_data data_register[REGISTER_CAPACITY];
+    static uint8_t i=0;
+    static bool all_data_sent=true;
+    uint8_t hora[16];
+    uint8_t numero_de_registro[8];
+    uint8_t google_link[128];
+    uint8_t status_str[64];
+    uint8_t register_info[256];
     
-    switch (state_config){
-        case INTERFACE:
-            threshold_SetUp_interface(limit_state);
-            state_config=WAIT;
+    if (get_empty_buffer_value()==false){
+        all_data_sent=get_register(&data_register[i]);
+        memset(register_info,0,sizeof(register_info));
+        memset(hora,0,sizeof(hora));
+        memset(numero_de_registro, 0, sizeof(numero_de_registro));
+        memset(google_link, 0, sizeof(google_link));
+        memset(status_str, 0, sizeof(status_str));
+
+        strftime(hora, sizeof(hora), "%X", &data_register[i].hour_and_date);
+        sprintf(numero_de_registro, "%i", (data_register[i].event_number));
+        get_google_link(data_register[i].position, google_link);
+        get_humidity_state_string(data_register[i].status, status_str);
+
+        strcat(register_info, "\n\nREGISTRO NUMERO ");
+        strcat(register_info, numero_de_registro);
+        strcat(register_info, " estado ");
+        strcat(register_info, status_str);
+        strcat(register_info, "\nGuardado a la hora ");
+        strcat(register_info, hora);
+        strcat(register_info, "\nUbicacion ");
+        strcat(register_info, google_link);
+        UI_send_text(register_info);
+        i++;
+        if(all_data_sent==false){
             return false;
-            break;
-        case WAIT:
-            UI_int_lecture=read_USB_int();
-            if(UI_int_lecture>=0){
-                state_config=DO_TASKS;
-            }
-            return false;
-            break;
-        case DO_TASKS:
-            valid_data=threshold_SetUp_tasks(limit_state);
-            if(valid_data==true){
-                if(limit_state==RY_max){
-                    state_config=INTERFACE;
-                    limit_state=YG_max;
-                    return false;
-                }
-                else if(limit_state==YG_max){
-                    state_config=INTERFACE;
-                    limit_state=YG_min;
-                    return false;
-                }
-                else if(limit_state==YG_min){
-                    state_config=INTERFACE;
-                    limit_state=RY_min;
-                    return false;
-                }
-                else{
-                    state_config=END;
-                }
-            }
-            else{
-                state_config=WAIT;
-                return false;
-            }
-            break;
-        case END:
-            state_config=INTERFACE;
-            limit_state=RY_max;
-            return true;
-            break;
-        default:
-            return false;
-            break;
+        }
+    }
+    else{
+        UI_send_text("\n\nNo hay datos para mostrar");
+    }
+    return true;
+}
+
+void show_critic_message(void){
+    char message[256];
+    int humidity_local_state;
+    
+    humidity_local_state=humidity_state_function();
+    if (humidity_local_state==RED_HIGH || humidity_local_state==RED_LOW){
+        UI_send_text("\n\n");
+        memset(message, 0, sizeof(message));
+        send_critic_message(humidity_local_state, message);
+        UI_send_text(message);
+    }
+    else{
+        UI_send_text("\n\nNo hay mensaje critico para enviar");
     }
 }
+
 
 void threshold_SetUp_interface(int limit){    
     switch(limit){

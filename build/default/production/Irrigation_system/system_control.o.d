@@ -9,4 +9,5 @@ build/default/production/Irrigation_system/system_control.o:  \
  Irrigation_system/../periferics/../LEDs_RGB/RGB_leds.h  \
  Irrigation_system/../periferics/../utils/utils.h  \
  Irrigation_system/../LEDs_RGB/RGB_leds.h  \
- Irrigation_system/../SIM_TEMP/GPS.h 
+ Irrigation_system/../SIM_TEMP/GPS.h  \
+ Irrigation_system/../SIM_TEMP/../utils/utils.h 

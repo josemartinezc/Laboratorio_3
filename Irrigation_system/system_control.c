@@ -49,21 +49,36 @@
 static bcdTime_t real_time_IS;
 plant_t plant;
 bool critic_message_pending;
+static uint8_t telephone_number[9]; 
 
 void plant_init(){
     plant.status=GREEN_;
     plant.ID=0;
 }
 
-void hour_SetUp(){
+bool hour_SetUp(){
     char trama[120];   
-    false_frame_maker(trama);
-    GPS_getUTC(&real_time_IS, trama);
-    RTCC_TimeSet(&real_time_IS);
+    bool time_is_set=false;
+    
+    if(time_is_set==true){
+        return true;
+    }
+    
+    memset(trama, 0, sizeof(trama));
+    if (get_trama(trama)==true){
+        GPS_getUTC(&real_time_IS, trama);
+        RTCC_TimeSet(&real_time_IS);
+        time_is_set=true;
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
-void get_real_time_IS (bcdTime_t *real_time){
-    *real_time=real_time_IS;
+bcdTime_t get_real_time_IS (){
+    RTCC_TimeGet(&real_time_IS);
+    return real_time_IS;
 }
 
 
@@ -144,41 +159,76 @@ uint8_t get_irrigation_high_threshold(){
     return ((get_red_yellow_max()+get_yellow_green_max())/2);
 }
 
-
 bool ID_SetUp(){
     static TASKS_STATE state_config;
     switch (state_config){
         case INTERFACE:
             UI_send_text("\nIngrese el ID de su planta (max 99999)\n\n>>>");
             state_config=WAIT;
-            return false;
             break;
         case WAIT:
             UI_int_lecture=read_USB_int();
             if(UI_int_lecture>=0){
                 state_config=DO_TASKS;
             }
-            return false;
             break;
         case DO_TASKS:
             if(UI_int_lecture<=99999){
                 plant.ID=UI_int_lecture;
-                UI_send_text("\n\nEl ID de su planta a sido configurado con exito!");
                 return true;
             }
             else{
                 state_config=INTERFACE;
-                return false;
             }
             break;
         default:
-            return false;
             break;
     }
+    return false;
 }
 
 bool Telephone_SetUp(){
+    static TASKS_STATE state_config;
+    static uint8_t aux_telephone_number[7];
     
+    switch (state_config){
+        case INTERFACE:
+            UI_send_text("\nIngrese el numero de telefono para recibir alertas\nComplete los 9 digitos:\n>>>09");
+            state_config=WAIT;
+            break;
+        case WAIT:
+            UI_int_lecture=read_USB_int();
+            if(UI_int_lecture>=0){
+                state_config=DO_TASKS;
+            }
+            break;
+        case DO_TASKS:
+            memset(aux_telephone_number,0,sizeof(aux_telephone_number));
+            sprintf(aux_telephone_number, "%i", UI_int_lecture);
+            if(save_telephone_number(aux_telephone_number)==true){
+                return true;
+            }
+            else{
+                UI_send_text("\n\nIngrese un numero de telefono valido\n>>09");
+                state_config=WAIT;
+            }   
+            break;
+        default:
+            break;
+    }
+    return false;
+}
+
+bool save_telephone_number(uint8_t* p_aux_number){
+    if(strlen(p_aux_number)==7 && p_aux_number[0]>0){
+        memset(telephone_number,0,sizeof(telephone_number));
+        strcat(telephone_number, "09");
+        strcat(telephone_number, p_aux_number);
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 void send_critic_message(SENSOR_STATE critic_state, char* p_message){
@@ -187,6 +237,7 @@ void send_critic_message(SENSOR_STATE critic_state, char* p_message){
     char coord_posicion_str[50];
     char ID[32];
     char message[120];
+    uint8_t gps_link[100];
     
     
     memset(message,0,sizeof(message));
@@ -212,15 +263,8 @@ void send_critic_message(SENSOR_STATE critic_state, char* p_message){
     }
     
     if(coord_posicion.latitude!=0 && coord_posicion.longitude!=0){
-        strcat(message, "http://maps.google.com/maps?q=");
-
-        memset(coord_posicion_str,0,sizeof(coord_posicion_str));
-        sprintf(coord_posicion_str, "%lf,", coord_posicion.latitude);
-        strcat(message, coord_posicion_str);
-
-        memset(coord_posicion_str,0,sizeof(coord_posicion_str));
-        sprintf(coord_posicion_str, "%lf", coord_posicion.longitude);
-        strcat(message, coord_posicion_str);
+        get_google_link(coord_posicion, gps_link);
+        strcat(message, gps_link);
     }
     else{
         strcat(message, "Conexion con GPS debil");
@@ -241,3 +285,22 @@ void irrigation(SENSOR_STATE state_irrigation){
     }
 }
 
+void get_humidity_state_string(SENSOR_STATE status, uint8_t* status_str){
+    switch(status){
+        case RED_HIGH:
+            strcpy(status_str, "Rojo alto, suelo muy seco");
+            break;
+        case RED_LOW:
+            strcpy(status_str, "Rojo bajo, suelo muy humedo");
+            break;
+        case YELLOW_HIGH:
+            strcpy(status_str, "Amarillo alto, levemente seco");
+            break;
+        case YELLOW_LOW:
+            strcpy(status_str, "Amarillo bajo, levemente humedo");
+            break;
+        case GREEN_:
+            strcpy(status_str, "Verde, humedad optima.");
+            break;
+    }
+}

@@ -37,7 +37,8 @@
 extern "C" {
 #endif
     
-    #define TAMANO 365
+    #define TAMANO_SEND 255
+    #define TAMANO_SAVE 512
     #define MAX_EVENTOS 16
     /*
     typedef enum{
@@ -69,12 +70,12 @@ extern "C" {
     static app_event_t eventos[MAX_EVENTOS];
     static bcdTime_t event_dates[MAX_EVENTOS];
     
-    int read_USB_int(void);
-    void UI_send_text(char *text);
+    int8_t read_USB_int(void);
+    void UI_send_text(uint8_t *text);
     extern int UI_int_lecture;
     
     void Initialize_USB_delay(ut_tmrDelay_t*);
-    bool UI_tasks (void);
+    void UI_tasks (void);
     void UI_menu (void);
     void do_events(void);
     

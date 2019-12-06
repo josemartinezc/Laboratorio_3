@@ -22,6 +22,8 @@
 #include <time.h>
 #include <stdbool.h>
 
+#include "../utils/utils.h"
+
 /*******************************************************************************/    
 /************************* CONSTANTS *******************************************/    
 /*******************************************************************************/       
@@ -123,10 +125,13 @@ double GPS_getGroundDistance( GPSPosition_t *a, GPSPosition_t *b );
     
 */
 
+void get_google_link(GPSPosition_t position, uint8_t* p_gps_link ); 
+
+void order_trama(uint8_t* p_full_trama);
 
 bool false_frame_maker(char *p_frame);
 
-bool Recibo_OK (void);
+TRI_STATUS Recibo_OK (void);
 
 bool get_trama (char*);
 

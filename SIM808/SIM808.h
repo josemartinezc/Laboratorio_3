@@ -38,24 +38,14 @@ typedef enum {
 } st_inicializacion_SIM808;
 
 /*******************************************************************************/    
-/******************************* MACROS ****************************************/    
+/******************************* FUNCTIONS ****************************************/    
 /*******************************************************************************/ 
+ bool espero_OK ();
+ void init_punteros();
+ void Leer_Buffer_debug ();
 
-/*#define PWR_KEY_in() (TRISAbits.TRISA0 = 1)
-#define PWR_KEY_out() (TRISAbits.TRISA0 = 0)
-#define STATUS_in() (TRISAbits.TRISA11 = 1)
-#define STATUS_out () (TRISAbits.TRISA11 = 0)
-#define RESET_in() (TRISAbits.TRISA1 = 1)
-#define RESET_out() (TRISAbits.TRISA1 = 0)
-
-#define STATUS_st() (PORTAbits.RA11) //estado de STATUS
-#define PWR_KEY_0() (LATAbits.LATA0 = 0)
-#define RESET_1() (LATAbits.LATA1 = 1)
-*/
-#ifdef __cplusplus
-}
-#endif
-
+ 
+ 
 #endif /* _EXAMPLE_FILE_NAME_H */
 
 /* *****************************************************************************

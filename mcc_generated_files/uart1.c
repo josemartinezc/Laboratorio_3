@@ -73,8 +73,8 @@ static bool volatile rxOverflowed;
 
 */
 
-#define UART1_CONFIG_TX_BYTEQ_LENGTH (255+1)
-#define UART1_CONFIG_RX_BYTEQ_LENGTH (8+1)
+#define UART1_CONFIG_TX_BYTEQ_LENGTH (8+1)
+#define UART1_CONFIG_RX_BYTEQ_LENGTH (256+1)
 
 /** UART Driver Queue
 
@@ -343,7 +343,7 @@ static uint8_t UART1_TxDataAvailable(void)
     return size;
 }
 
-unsigned int UART1_ReadBuffer( uint8_t *buffer ,  unsigned int numbytes)
+unsigned int __attribute__((deprecated)) UART1_ReadBuffer( uint8_t *buffer ,  unsigned int numbytes)
 {
     unsigned int rx_count = UART1_RxDataAvailable();
     unsigned int i;
@@ -361,7 +361,7 @@ unsigned int UART1_ReadBuffer( uint8_t *buffer ,  unsigned int numbytes)
     return rx_count;    
 }
 
-unsigned int UART1_WriteBuffer( uint8_t *buffer , unsigned int numbytes )
+unsigned int __attribute__((deprecated)) UART1_WriteBuffer( uint8_t *buffer , unsigned int numbytes )
 {
     unsigned int tx_count = UART1_TxDataAvailable();
     unsigned int i;
@@ -379,12 +379,23 @@ unsigned int UART1_WriteBuffer( uint8_t *buffer , unsigned int numbytes )
     return tx_count;  
 }
 
-UART1_TRANSFER_STATUS __attribute__((deprecated)) UART1_TransferStatusGet (void )
+UART1_TRANSFER_STATUS UART1_TransferStatusGet (void )
 {
     UART1_TRANSFER_STATUS status = 0;
     uint8_t rx_count = UART1_RxDataAvailable();
     uint8_t tx_count = UART1_TxDataAvailable();
     
+    if(rx_count==0){
+        status |= UART1_TRANSFER_STATUS_RX_EMPTY;
+    }
+    else if(rx_count==UART1_CONFIG_RX_BYTEQ_LENGTH){
+        status |= UART1_TRANSFER_STATUS_RX_FULL;
+    }
+    else{
+        status |= UART1_TRANSFER_STATUS_RX_DATA_PRESENT;
+    }
+    
+    /*
     switch(rx_count)
     {
         case 0:
@@ -397,7 +408,16 @@ UART1_TRANSFER_STATUS __attribute__((deprecated)) UART1_TransferStatusGet (void 
             status |= UART1_TRANSFER_STATUS_RX_DATA_PRESENT;
             break;
     }
+    */
     
+    if(tx_count==0){
+        status |= UART1_TRANSFER_STATUS_TX_FULL;
+    }
+    else if(tx_count==UART1_CONFIG_RX_BYTEQ_LENGTH){
+        status |= UART1_TRANSFER_STATUS_TX_EMPTY;
+    }
+    
+    /*
     switch(tx_count)
     {
         case 0:
@@ -409,7 +429,7 @@ UART1_TRANSFER_STATUS __attribute__((deprecated)) UART1_TransferStatusGet (void 
         default:
             break;
     }
-
+*/
     return status;    
 }
 
@@ -425,7 +445,7 @@ uint8_t __attribute__((deprecated)) UART1_Peek(uint16_t offset)
     return *peek;
 }
 
-bool UART1_ReceiveBufferIsEmpty (void)
+bool __attribute__((deprecated)) UART1_ReceiveBufferIsEmpty (void)
 {
     return (UART1_RxDataAvailable() == 0);
 }

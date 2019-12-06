@@ -44,6 +44,6 @@
     bool threshold_SetUp();
     void threshold_SetUp_interface(int);
     void show_critic_message(void);
-    void show_data_registers();
+    bool show_data_registers();
     
 #endif

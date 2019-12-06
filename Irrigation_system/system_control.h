@@ -41,15 +41,17 @@ extern plant_t plant;
 void plant_init();
 uint8_t get_irrigation_low_threshold();
 uint8_t get_irrigation_high_threshold(); 
-void get_real_time_IS (bcdTime_t*);
+bcdTime_t get_real_time_IS ();
 
 void system_control_menu(void);
 
-void hour_SetUp();
+bool hour_SetUp();
 bool ID_SetUp();
 bool Telephone_SetUp();
+bool save_telephone_number(uint8_t* p_aux_number);
 
 void RGB_humidity_state(uint8_t);
+void get_humidity_state_string(SENSOR_STATE status, uint8_t* status_str);
 void irrigation(SENSOR_STATE);
 void send_critic_message(SENSOR_STATE, char*);
 

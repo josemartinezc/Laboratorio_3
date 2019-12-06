@@ -26,9 +26,11 @@
 /************************* LOCAL VARIABLES *************************************/    
 /*******************************************************************************/     
 
-char RxBuffer[105];
+char RxBuffer[128];
 ut_tmrDelay_t timer4;
 ut_tmrDelay_t timer5;
+ut_tmrDelay_t timer6; 
+
 ut_tmrDelay_t *ptimer4;
 ut_tmrDelay_t *ptimer5;
 
@@ -72,7 +74,7 @@ void GPS_getUTC( struct tm *p_newtime, uint8_t *p_sentence ){
     uint8_t offset;
     uint8_t temp_str[5];
 
-    offset=GPS_RMC_RUN_LEN+GPS_RMC_COMMA_LEN+GPS_RMC_FIX_LEN+GPS_RMC_COMMA_LEN;
+    offset=strlen("+CGNSINF:")+GPS_RMC_RUN_LEN+GPS_RMC_COMMA_LEN+GPS_RMC_FIX_LEN+GPS_RMC_COMMA_LEN;
     // Copy Year YYYY
     memset( temp_str, 0, 5 );
     strncpy( temp_str, (p_sentence+offset), 4 );
@@ -131,63 +133,110 @@ double GPS_getGroundDistance( GPSPosition_t *a, GPSPosition_t *b ){
 
 
 bool Initialize_GPS (){
-    static bool AT = false;
-    if (AT == false)
-    {       
-        UART1_WriteBuffer ("AT+CGNSPWR=1\r", strlen ("AT+CGNSPWR=1\r"));
-        AT = true;
-    }
-    else{
-        if (Recibo_OK() == true) {
-            memset (RxBuffer, 0, sizeof(RxBuffer));
-            UART1_WriteBuffer ("AT+CGNSSEQ=\"RMC\"\r", strlen ("AT+CGNSSEQ=\"RMC\"\r"));
-            if ( Recibo_OK() == true){
-                //GPS inicializado
+    static uint8_t ini_GPS_com=0;
+    TRI_STATUS recibo_ok;
+
+    switch(ini_GPS_com)
+    {
+        case 0:
+            UART1_WriteBuffer ("AT+CGNSPWR=1\r", strlen ("AT+CGNSPWR=1\r"));
+            ini_GPS_com = 1;
+            break;
+        case 1:
+            recibo_ok=Recibo_OK();
+            if (recibo_ok == DONE) {
+                memset (RxBuffer, 0, sizeof(RxBuffer));
+                UART1_WriteBuffer ("AT+CGNSSEQ=RMC\r", strlen ("AT+CGNSSEQ=RMC\r"));
+                ini_GPS_com = 2;
+            }
+            else if(recibo_ok==ERROR){
+                memset (RxBuffer, 0, sizeof(RxBuffer));
+                ini_GPS_com=0;
+            }
+            break;
+        case 2:
+            recibo_ok=Recibo_OK();
+            if ( recibo_ok == DONE){
+                memset (RxBuffer, 0, sizeof(RxBuffer));
+                UART1_WriteBuffer ("ATE0\r", strlen ("ATE0\r"));
+                ini_GPS_com = 3;
+            }
+            else if (recibo_ok==ERROR){
+                memset (RxBuffer, 0, sizeof(RxBuffer));
+                ini_GPS_com=1;
+            }
+            break;        
+        case 3:
+            recibo_ok=Recibo_OK();
+            if ( recibo_ok == DONE){
                 memset (RxBuffer, 0, sizeof(RxBuffer));
                 return true;
-            } 
-        }
-        else
-            return false;
+            }
+            else if (recibo_ok==ERROR){
+                memset (RxBuffer, 0, sizeof(RxBuffer));
+                ini_GPS_com=2;
+            }
+            break;
+            
     }
+    return false;
 }
 
-bool Recibo_OK (void){
+TRI_STATUS Recibo_OK (void){
     static bool puntero_no_init = true;
-    if (puntero_no_init)
+    
+    if (puntero_no_init==true)
     {
         ptimer4 = &timer4;
         ptimer4->state = 0;
         puntero_no_init = false;
+        return WORKING;
     }
-    if (UT_delayDs (ptimer4,10)== true)
-    {
-        UART1_ReadBuffer ( RxBuffer , sizeof(RxBuffer));
+    UART1_ReadBuffer ( RxBuffer , sizeof(RxBuffer));
+    if (UT_delayDs (ptimer4,20)== true){
         if (strstr(RxBuffer,"OK")!= NULL) //es OK lo que mandó?
         { 
-            LEDA_SetHigh();
-            return true;
+            puntero_no_init = true;
+            return DONE;
         }
         else
-            return false;
+            puntero_no_init = true;
+            return ERROR;
+    }
+    else{
+        return WORKING;
     }
 }
 
 bool get_trama (char *p_trama){
-    UART1_WriteBuffer ("AT+CGNSINF", strlen ("AT+CGNSINF"));
-    if(UART1_ReceiveBufferIsEmpty()==false)
-    {
-        UART1_ReadBuffer (RxBuffer , sizeof(RxBuffer)); 
-        if (strstr(RxBuffer,"OK")!= NULL) // hay OK en lo que mandó?
-        {
-            strcpy(p_trama, RxBuffer);
+    static bool waiting_trama=false;
+    
+    if(waiting_trama==false){
+        timer6.state=0;
+        waiting_trama=true;
+    }
+    
+    UART1_WriteBuffer ("AT+CGNSINF\r", strlen ("AT+CGNSINF\r"));
+    if(UART1_ReceiveBufferIsEmpty()==false){
+        if(UT_delayDs (&timer6,2)== true){
             memset (RxBuffer, 0, sizeof(RxBuffer));
-            return true;
+            UART1_ReadBuffer (RxBuffer , sizeof(RxBuffer)); 
+            if (strstr(RxBuffer,"+CGNSINF: 1,1,")!= NULL){
+                //order_trama(RxBuffer);
+                memset(p_trama,0, sizeof(p_trama));
+                strcpy(p_trama, RxBuffer);
+                memset (RxBuffer, 0, sizeof(RxBuffer));
+                return true;
+            }
+            else{
+                memset (RxBuffer, 0, sizeof(RxBuffer));
+                waiting_trama=false;
+            }
         }
-        else
-            return false;
-    }       
+    }
+    return false;
 }
+
 
 bool send_message (char *message)
 {
@@ -200,7 +249,7 @@ bool send_message (char *message)
             UART1_Write(0x0D);
             if (check_envio() == true)
             {
-                UART1_WriteBuffer (*message, strlen (*message)); //mensaje guardado en el puntero
+                UART1_WriteBuffer (message, strlen (message)); //mensaje guardado en el puntero
                 if (check_envio() == true)
                     UART1_Write(0x1A);
             }
@@ -222,6 +271,24 @@ bool check_envio (void)
         else
             return false; 
     }
+}
+
+void get_google_link(GPSPosition_t position, uint8_t* p_gps_link ){
+    uint8_t gps_link[100];
+    uint8_t coord_posicion_str[100];
+    
+    memset (gps_link, 0, sizeof(gps_link));
+    strcat(gps_link, "http://maps.google.com/maps?q=");
+
+    memset(coord_posicion_str,0,sizeof(coord_posicion_str));
+    sprintf(coord_posicion_str, "%lf", position.latitude);
+    strcat(gps_link, coord_posicion_str);
+
+    memset(coord_posicion_str,0,sizeof(coord_posicion_str));
+    sprintf(coord_posicion_str, "%lf", position.longitude);
+    strcat(gps_link, coord_posicion_str);
+    
+    strcpy(p_gps_link, gps_link);
 }
 
 
