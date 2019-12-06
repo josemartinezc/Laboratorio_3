@@ -171,6 +171,7 @@ bool threshold_SetUp(){
         case END:
             state_config=INTERFACE;
             limit_state=RY_max;
+            UI_send_text("\n\nSus umbrales fueron configurados con exito.\n");
             return true;
             break;
         default:

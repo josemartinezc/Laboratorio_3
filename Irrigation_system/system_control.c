@@ -175,6 +175,7 @@ bool ID_SetUp(){
         case DO_TASKS:
             if(UI_int_lecture<=99999){
                 plant.ID=UI_int_lecture;
+                UI_send_text("\n\nEl ID de su planta a sido configurado con exito!");
                 return true;
             }
             else{
@@ -189,7 +190,7 @@ bool ID_SetUp(){
 
 bool Telephone_SetUp(){
     static TASKS_STATE state_config;
-    static uint8_t aux_telephone_number[7];
+    static uint8_t aux_telephone_number[8];
     
     switch (state_config){
         case INTERFACE:
@@ -206,6 +207,10 @@ bool Telephone_SetUp(){
             memset(aux_telephone_number,0,sizeof(aux_telephone_number));
             sprintf(aux_telephone_number, "%i", UI_int_lecture);
             if(save_telephone_number(aux_telephone_number)==true){
+                UI_send_text("\n\nEl numero ");
+                UI_send_text(telephone_number);
+                UI_send_text(" ha sido configurado con exito.\n");
+                state_config=INTERFACE;
                 return true;
             }
             else{
@@ -220,15 +225,28 @@ bool Telephone_SetUp(){
 }
 
 bool save_telephone_number(uint8_t* p_aux_number){
-    if(strlen(p_aux_number)==7 && p_aux_number[0]>0){
+    uint8_t telephone_strlen;
+    uint8_t i;
+    
+    if(UI_int_lecture<=9999999 && p_aux_number[0]>0){
+        telephone_strlen=strlen(p_aux_number);
         memset(telephone_number,0,sizeof(telephone_number));
         strcat(telephone_number, "09");
-        strcat(telephone_number, p_aux_number);
-        return true;
+        if(telephone_strlen==7){
+            strcat(telephone_number, p_aux_number);
+            return true;
+        }
+        else{
+            if(p_aux_number[7]==0){
+                strcat(telephone_number, p_aux_number);
+                for(i=(telephone_strlen+1); i<=7; i++){
+                    strcat(0,p_aux_number);
+                    return true;
+                }
+            }
+        }
     }
-    else{
-        return false;
-    }
+    return false;
 }
 
 void send_critic_message(SENSOR_STATE critic_state, char* p_message){

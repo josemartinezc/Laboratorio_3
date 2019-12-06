@@ -40,7 +40,7 @@ static bool all_sent=true;
 static bool sending = false;
 static bool undone_events=false;
 char date_time_representation[32];
-int UI_int_lecture;
+int32_t UI_int_lecture;
 
 
 void UI_tasks(){
@@ -83,9 +83,9 @@ void UI_send_text( uint8_t *p_text ){
 }
 
 //funcion que devuelve lo que hay en el usb, transformando el ascii a decimales
-int8_t read_USB_int(void){
-    uint8_t datos[8];
-    int8_t dato_int;
+int32_t read_USB_int(void){
+    uint8_t datos[64];
+    int32_t dato_int;
     
     memset(datos,0,sizeof(datos));
     

@@ -64,18 +64,16 @@ void interface_IS(){
         case CONFIGURAR_UMBRALES:    
             if(threshold_SetUp()==true){
                 state_UI=MENU;
-                UI_send_text("\n\nSus umbrales fueron configurados con exito.\n");
             }
             break;
         case CONFIGURAR_ID:
             if(ID_SetUp()==true){
-                UI_send_text("\n\nEl ID de su planta a sido configurado con exito!");
+                
                 state_UI=MENU;
             }
             break;
         case CONFIGURAR_TELEFONO:
             if(Telephone_SetUp()==true){
-                UI_send_text("\n\nEl numero de telefono ha sido configurado con exito.\n");
                 state_UI=MENU;
             }
             break;

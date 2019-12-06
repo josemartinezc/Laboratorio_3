@@ -73,8 +73,8 @@ static bool volatile rxOverflowed;
 
 */
 
-#define UART1_CONFIG_TX_BYTEQ_LENGTH (8+1)
-#define UART1_CONFIG_RX_BYTEQ_LENGTH (256+1)
+#define UART1_CONFIG_TX_BYTEQ_LENGTH (254+1)
+#define UART1_CONFIG_RX_BYTEQ_LENGTH (254+1)
 
 /** UART Driver Queue
 
@@ -384,7 +384,7 @@ UART1_TRANSFER_STATUS UART1_TransferStatusGet (void )
     UART1_TRANSFER_STATUS status = 0;
     uint8_t rx_count = UART1_RxDataAvailable();
     uint8_t tx_count = UART1_TxDataAvailable();
-    
+/*    
     if(rx_count==0){
         status |= UART1_TRANSFER_STATUS_RX_EMPTY;
     }
@@ -394,8 +394,8 @@ UART1_TRANSFER_STATUS UART1_TransferStatusGet (void )
     else{
         status |= UART1_TRANSFER_STATUS_RX_DATA_PRESENT;
     }
+  */  
     
-    /*
     switch(rx_count)
     {
         case 0:
@@ -408,16 +408,16 @@ UART1_TRANSFER_STATUS UART1_TransferStatusGet (void )
             status |= UART1_TRANSFER_STATUS_RX_DATA_PRESENT;
             break;
     }
-    */
     
+    /*
     if(tx_count==0){
         status |= UART1_TRANSFER_STATUS_TX_FULL;
     }
     else if(tx_count==UART1_CONFIG_RX_BYTEQ_LENGTH){
         status |= UART1_TRANSFER_STATUS_TX_EMPTY;
     }
+    */
     
-    /*
     switch(tx_count)
     {
         case 0:
@@ -429,7 +429,7 @@ UART1_TRANSFER_STATUS UART1_TransferStatusGet (void )
         default:
             break;
     }
-*/
+
     return status;    
 }
 

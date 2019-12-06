@@ -70,9 +70,9 @@ extern "C" {
     static app_event_t eventos[MAX_EVENTOS];
     static bcdTime_t event_dates[MAX_EVENTOS];
     
-    int8_t read_USB_int(void);
+    int32_t read_USB_int(void);
     void UI_send_text(uint8_t *text);
-    extern int UI_int_lecture;
+    extern int32_t UI_int_lecture;
     
     void Initialize_USB_delay(ut_tmrDelay_t*);
     void UI_tasks (void);
