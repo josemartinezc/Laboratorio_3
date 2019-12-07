@@ -28,6 +28,24 @@
 #include <stdbool.h>
 #include <stdint.h>
     
+
+typedef enum{
+    NET,
+    PIN,
+    COMPANY,
+}sim_card_state_t;
+
+typedef enum{
+   STG0,
+   STG1,
+   STG2,
+   STG3,
+   STG4,
+   STG5,
+}msg_stage_state_t;
+
+
+bool Init_SIMCard (void);
 bool send_text_message(char *p_message)
 
 

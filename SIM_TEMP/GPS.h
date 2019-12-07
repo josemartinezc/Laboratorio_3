@@ -131,7 +131,7 @@ void order_trama(uint8_t* p_full_trama);
 
 bool false_frame_maker(char *p_frame);
 
-TRI_STATUS Recibo_OK (void);
+TRI_STATUS Recibo_OK (uint8_t wait_delay);
 
 bool get_trama (char*);
 
