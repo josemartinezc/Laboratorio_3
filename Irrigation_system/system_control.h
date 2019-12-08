@@ -22,12 +22,16 @@
 #include "../mcc_generated_files/rtcc.h"
 #include "../periferics/sensor.h"
 #include <stdio.h>
+#include "../utils/utils.h"
 
 /* ************************************************************************** */
 /* ************************************************************************** */
 /* Section: Included Files                                                    */
 /* ************************************************************************** */
 /* ************************************************************************** */
+
+#define TRAMAIsSaved()      (saved_trama == DONE)
+
 
 typedef struct{
     uint32_t ID;
@@ -36,16 +40,25 @@ typedef struct{
     SENSOR_STATE status;
 } plant_t ;
 
+typedef enum{
+    SAVE_DATA,
+    WAIT_DATA,
+    END_DATA,
+}data_tasks_state;
+
 extern plant_t plant;
+extern TRI_STATUS saved_trama;
 
 void plant_init();
 uint8_t get_irrigation_low_threshold();
 uint8_t get_irrigation_high_threshold(); 
 bcdTime_t get_real_time_IS ();
+bool get_saved_trama(uint8_t* p_trama);
 
 void system_control_menu(void);
 
 bool hour_SetUp();
+void save_trama();
 bool ID_SetUp();
 bool Telephone_SetUp();
 bool save_telephone_number(uint8_t* p_aux_number);

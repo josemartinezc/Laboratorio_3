@@ -179,12 +179,13 @@ bool show_data_registers(){
 void show_critic_message(void){
     char message[256];
     int humidity_local_state;
+    bool critic_message_state;
     
     humidity_local_state=humidity_state_function();
     if (humidity_local_state==RED_HIGH || humidity_local_state==RED_LOW){
-        UI_send_text("\n\n");
         memset(message, 0, sizeof(message));
         send_critic_message(humidity_local_state, message);
+        UI_send_text("\n\n");
         UI_send_text(message);
     }
     else{

@@ -445,7 +445,7 @@ uint8_t __attribute__((deprecated)) UART1_Peek(uint16_t offset)
     return *peek;
 }
 
-bool __attribute__((deprecated)) UART1_ReceiveBufferIsEmpty (void)
+bool UART1_ReceiveBufferIsEmpty (void)
 {
     return (UART1_RxDataAvailable() == 0);
 }

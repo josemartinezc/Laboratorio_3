@@ -66,9 +66,9 @@ int main(void)
     static uint8_t ini[16];
     bool ini_SIM808=false;
     bool ini_GPS=false;
-    bool get_trama_f=false;
     bool hour_set_up=false;
     uint8_t trama[128];
+    saved_trama=WORKING;
     
     SYSTEM_Initialize();
     
@@ -93,8 +93,13 @@ int main(void)
                 ini_GPS=Initialize_GPS();
             }
             else{
-                if(hour_set_up==false);
-                hour_set_up=hour_SetUp();
+                if(!TRAMAIsSaved()){
+                    save_trama();
+                }
+                else{
+                    if(hour_set_up==false)
+                        hour_set_up=hour_SetUp();
+                }
             }
         }
         led_sequence();

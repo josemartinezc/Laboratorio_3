@@ -3,6 +3,7 @@ Irrigation_system/UI_IS.c  \
  Irrigation_system/system_control.h  \
  Irrigation_system/../mcc_generated_files/rtcc.h  \
  Irrigation_system/../periferics/sensor.h  \
+ Irrigation_system/../utils/utils.h  \
  Irrigation_system/../mcc_generated_files/usb/usb.h  \
  Irrigation_system/../mcc_generated_files/usb/usb_device_config.h  \
  Irrigation_system/../mcc_generated_files/usb/usb_common.h  \

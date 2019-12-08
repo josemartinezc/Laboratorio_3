@@ -29,10 +29,12 @@
 #include <xc.h>
 #include <stdbool.h>
 #include <stdint.h>
-/*
-#include "telephone.h"
-//#include "GPS.h"
 
+#include "telephone.h"
+#include "GPS.h"
+
+
+/*
 bool Init_SIMCard(void){
     static sim_card_state_t state = NET;
     switch (state)

@@ -32,5 +32,6 @@ LEDs_RGB/RGB_leds.h  \
 Irrigation_system/system_control.h  \
  Irrigation_system/../mcc_generated_files/rtcc.h  \
  Irrigation_system/../periferics/sensor.h  \
+ Irrigation_system/../utils/utils.h  \
 Periferics/sensor.h  \
  mcc_generated_files/mcc.h 

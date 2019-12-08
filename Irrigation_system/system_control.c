@@ -45,11 +45,17 @@
 #include "../LEDs_RGB/RGB_leds.h"
 #include "../SIM_TEMP/GPS.h"
 
+ //**********************  VARIABLES  *****************************//
 
 static bcdTime_t real_time_IS;
 plant_t plant;
 bool critic_message_pending;
 static uint8_t telephone_number[9]; 
+static uint8_t real_trama[120];
+TRI_STATUS saved_trama;
+
+//*****************************************************************//
+
 
 void plant_init(){
     plant.status=GREEN_;
@@ -64,16 +70,19 @@ bool hour_SetUp(){
         return true;
     }
     
-    memset(trama, 0, sizeof(trama));
-    if (get_trama(trama)==true){
-        GPS_getUTC(&real_time_IS, trama);
+    false_frame_maker(trama);
+    time_is_set=true;
+    
+    /*memset(real_trama, 0, sizeof(real_trama));
+    if (get_trama(real_trama)==DONE){
+        GPS_getUTC(&real_time_IS, real_trama);
         RTCC_TimeSet(&real_time_IS);
         time_is_set=true;
         return true;
     }
     else{
         return false;
-    }
+    }*/
 }
 
 bcdTime_t get_real_time_IS (){
@@ -81,19 +90,49 @@ bcdTime_t get_real_time_IS (){
     return real_time_IS;
 }
 
+void save_trama(){ 
+    memset(real_trama, 0, sizeof(real_trama));
+    saved_trama=get_trama(real_trama);
+}
+
+bool get_saved_trama(uint8_t* p_trama){
+    if (TRAMAIsSaved()){
+        memset(p_trama, 0, sizeof(p_trama));
+        strcpy(p_trama, real_trama);
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
 void system_control_menu(void){
+    static uint16_t previous_humidity_value=0;
     char message[120];
+    
     memset(message,0,sizeof(message));
     
-    if (plant.status!=humidity_state_function()){
-        if(humidity_state_function()==RED_LOW || humidity_state_function()==RED_HIGH){
-            critic_message_pending=true;
+    
+    if(previous_humidity_value==analog_conversion_to_cb()){
+        if(plant.status!=RED_LOW && plant.status!=RED_HIGH){ 
+            return;
+        }
+        else{
+            if(critic_message_pending==false){
+                return;
+            }
         }
     }
-
-        plant.status=humidity_state_function();
-
+    else{
+        previous_humidity_value=analog_conversion_to_cb();
+        if(plant.status != humidity_state_function()){
+            plant.status=humidity_state_function();
+            if((humidity_state_function()==RED_LOW || humidity_state_function()== RED_HIGH)){
+                critic_message_pending=true;
+            }
+        }
+    }
+    
         switch(plant.status){
             case RED_HIGH:
             case RED_LOW:
@@ -250,18 +289,21 @@ bool save_telephone_number(uint8_t* p_aux_number){
 }
 
 void send_critic_message(SENSOR_STATE critic_state, char* p_message){
-    uint8_t trama[110];
+    uint8_t trama[128];
     GPSPosition_t coord_posicion;
     char coord_posicion_str[50];
     char ID[32];
     char message[120];
     uint8_t gps_link[100];
-    
+    TRI_STATUS trama_state;
     
     memset(message,0,sizeof(message));
-     
-    //hay que cambiar esta funcion por la de la trama de verdad
-    if (false_frame_maker(trama)==true){
+    memset(trama,0,sizeof(trama));
+    trama_state=get_saved_trama(trama);
+    
+    if (TRAMAIsSaved()){
+    //if (false_frame_maker(trama)==true){
+        get_saved_trama(trama);
         GPS_getPosition(&coord_posicion, trama);
     }
     else{
@@ -285,13 +327,14 @@ void send_critic_message(SENSOR_STATE critic_state, char* p_message){
         strcat(message, gps_link);
     }
     else{
-        strcat(message, "Conexion con GPS debil");
+        strcat(message, "No se pudo obtener ubicacion de GPS");
     }
     
-    if(send_text_message(message)==true){
-        critic_message_pending==false;
-    }
     strcpy(p_message, message);
+    
+    if(send_text_message(message)==true){
+        critic_message_pending=false;
+    }
 }
 
 void irrigation(SENSOR_STATE state_irrigation){

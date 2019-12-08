@@ -33,8 +33,8 @@
 #include "../SIM_TEMP/GPS.h"
 
 #define REGISTER_CAPACITY 30
-#define PERIOD_DATA_SAVING_HOURS 12 //in hours
-#define PERIOD_DATA_SAVING_MIN 0 //in minutes
+#define PERIOD_DATA_SAVING_HOURS 0 //in hours
+#define PERIOD_DATA_SAVING_MIN 1 //in minutes
 
 
 typedef struct{
@@ -52,7 +52,7 @@ typedef enum{
 
 bool get_empty_buffer_value();
 void data_save(void);
-void save_register(void);
+bool save_register(void);
 uint8_t get_register_number();
 bool get_register(historic_data*);
 

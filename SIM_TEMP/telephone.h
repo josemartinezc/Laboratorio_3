@@ -46,7 +46,7 @@ typedef enum{
 
 
 bool Init_SIMCard (void);
-bool send_text_message(char *p_message)
+bool send_text_message(char *p_message);
 
 
 #endif /* _EXAMPLE_FILE_NAME_H */

@@ -53,7 +53,7 @@ void GPS_getPosition( GPSPosition_t *p_pos, uint8_t *p_sentence ){
     uint8_t offset;
     uint8_t *ptr;
 
-    offset=strlen("\r\n+CGNSINF:")+GPS_RMC_RUN_LEN+GPS_RMC_COMMA_LEN+GPS_RMC_FIX_LEN+GPS_RMC_COMMA_LEN+GPS_RMC_UTC_LEN+GPS_RMC_COMMA_LEN;
+    offset=strlen("\r\n+CGNSINF: ")+GPS_RMC_RUN_LEN+GPS_RMC_COMMA_LEN+GPS_RMC_FIX_LEN+GPS_RMC_COMMA_LEN+GPS_RMC_UTC_LEN+GPS_RMC_COMMA_LEN;
     p_pos->latitude=strtod( (p_sentence+offset), (char**)&ptr );
     p_pos->longitude=strtod( (ptr+GPS_RMC_COMMA_LEN), (char**)&ptr );
     Nop();
@@ -143,7 +143,7 @@ bool Initialize_GPS (){
             ini_GPS_com = 1;
             break;
         case 1:
-            recibo_ok=Recibo_OK(20);
+            recibo_ok=Recibo_OK();
             if (recibo_ok == DONE) {
                 memset (RxBuffer, 0, sizeof(RxBuffer));
                 UART1_WriteBuffer ("AT+CGNSSEQ=RMC\r", strlen ("AT+CGNSSEQ=RMC\r"));
@@ -155,7 +155,7 @@ bool Initialize_GPS (){
             }
             break;
         case 2:
-            recibo_ok=Recibo_OK(20);
+            recibo_ok=Recibo_OK();
             if ( recibo_ok == DONE){
                 memset (RxBuffer, 0, sizeof(RxBuffer));
                 UART1_WriteBuffer ("ATE0\r", strlen ("ATE0\r"));
@@ -167,7 +167,7 @@ bool Initialize_GPS (){
             }
             break;        
         case 3:
-            recibo_ok=Recibo_OK(20);
+            recibo_ok=Recibo_OK();
             if ( recibo_ok == DONE){
                 memset (RxBuffer, 0, sizeof(RxBuffer));
                 return true;
@@ -182,7 +182,7 @@ bool Initialize_GPS (){
     return false;
 }
 
-TRI_STATUS Recibo_OK (uint8_t wait_delay){
+TRI_STATUS Recibo_OK (){
     static bool puntero_no_init = true;
     
     if (puntero_no_init==true)
@@ -192,9 +192,9 @@ TRI_STATUS Recibo_OK (uint8_t wait_delay){
         puntero_no_init = false;
         return WORKING;
     }
-    memset (RxBuffer, 0, sizeof(RxBuffer));
+
     UART1_ReadBuffer ( RxBuffer , sizeof(RxBuffer));
-    if (UT_delayDs (ptimer4,wait_delay)== true){
+    if (UT_delayDs (ptimer4,20)== true){
         if (strstr(RxBuffer,"OK")!= NULL) //es OK lo que mandó?
         { 
             puntero_no_init = true;
@@ -209,7 +209,7 @@ TRI_STATUS Recibo_OK (uint8_t wait_delay){
     }
 }
 
-bool get_trama (char *p_trama){
+TRI_STATUS get_trama (char *p_trama){
     static bool waiting_trama=false;
     
     if(waiting_trama==false){
@@ -219,20 +219,32 @@ bool get_trama (char *p_trama){
     
     UART1_WriteBuffer ("AT+CGNSINF\r", strlen ("AT+CGNSINF\r"));
     if(UART1_ReceiveBufferIsEmpty()==false){
-        if(UT_delayDs (&timer6,2)== true){
+        if(UT_delayDs (&timer6,1)== true){
             memset (RxBuffer, 0, sizeof(RxBuffer));
             UART1_ReadBuffer (RxBuffer , sizeof(RxBuffer)); 
-            if (strstr(RxBuffer,"+CGNSINF: 1,1,")!= NULL){
+            if (check_correct_trama(RxBuffer)==true){
                 //order_trama(RxBuffer);
                 memset(p_trama,0, sizeof(p_trama));
                 strcpy(p_trama, RxBuffer);
                 memset (RxBuffer, 0, sizeof(RxBuffer));
-                return true;
+                return DONE;
             }
             else{
                 memset (RxBuffer, 0, sizeof(RxBuffer));
-                waiting_trama=false;
+                waiting_trama=ERROR;
             }
+        }
+    }
+    return WORKING;
+}
+
+bool check_correct_trama(uint8_t* p_trama){
+    uint8_t aux_trama[10];
+    
+    if (strstr(p_trama,"+CGNSINF: 1,1,")!=NULL){
+        strncpy(aux_trama, p_trama, 10);
+        if(strcmp(aux_trama, "\r\n+CGNSINF")==0){
+            return true;
         }
     }
     return false;

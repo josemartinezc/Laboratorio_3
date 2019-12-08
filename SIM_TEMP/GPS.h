@@ -125,15 +125,15 @@ double GPS_getGroundDistance( GPSPosition_t *a, GPSPosition_t *b );
     
 */
 
-void get_google_link(GPSPosition_t position, uint8_t* p_gps_link ); 
+void get_google_link(GPSPosition_t, uint8_t*); 
 
-void order_trama(uint8_t* p_full_trama);
+bool check_correct_trama(uint8_t* p_trama);
 
 bool false_frame_maker(char *p_frame);
 
-TRI_STATUS Recibo_OK (uint8_t wait_delay);
+TRI_STATUS Recibo_OK ();
 
-bool get_trama (char*);
+TRI_STATUS get_trama (char*);
 
 bool check_envio (void);
 
