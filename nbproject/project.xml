@@ -19,6 +19,10 @@
                 <sourceRootElem>LEDs_RGB</sourceRootElem>
                 <sourceRootElem>User Interface</sourceRootElem>
                 <sourceRootElem>Periferics</sourceRootElem>
+                <sourceRootElem>SIM_TEMP</sourceRootElem>
+                <sourceRootElem>GPS</sourceRootElem>
+                <sourceRootElem>Irrigation_system</sourceRootElem>
+                <sourceRootElem>SIM808</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

@@ -30,6 +30,12 @@ extern "C" {
 
 volatile bool button2On;
 volatile bool button3On;
+    
+    typedef enum{
+        WORKING,
+        ERROR,
+        DONE,
+    }TRI_STATUS;
 
     typedef enum
     {

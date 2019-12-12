@@ -28,13 +28,20 @@
         <itemPath>mcc_generated_files/tmr2.h</itemPath>
         <itemPath>mcc_generated_files/rtcc.h</itemPath>
         <itemPath>mcc_generated_files/adc1.h</itemPath>
+        <itemPath>mcc_generated_files/uart1.h</itemPath>
+        <itemPath>mcc_generated_files/tmr1.h</itemPath>
       </logicalFolder>
       <itemPath>utils/utils.h</itemPath>
       <itemPath>Periferics/UI.h</itemPath>
       <itemPath>Periferics/leds.h</itemPath>
       <itemPath>LEDs_RGB/RGB_leds.h</itemPath>
       <itemPath>Periferics/sensor.h</itemPath>
-      <itemPath>Periferics/system_control.h</itemPath>
+      <itemPath>Irrigation_system/UI_IS.h</itemPath>
+      <itemPath>Irrigation_system/system_control.h</itemPath>
+      <itemPath>SIM_TEMP/GPS.h</itemPath>
+      <itemPath>Irrigation_system/data_register.h</itemPath>
+      <itemPath>SIM_TEMP/telephone.h</itemPath>
+      <itemPath>SIM808/SIM808.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -43,6 +50,12 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f2" displayName="irrigation_system" projectFiles="true">
+        <itemPath>Irrigation_system/system_control.c</itemPath>
+        <itemPath>Irrigation_system/UI_IS.c</itemPath>
+        <itemPath>Irrigation_system/data_register.c</itemPath>
+        <itemPath>Periferics/sensor.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
                      projectFiles="true">
@@ -62,14 +75,21 @@
         <itemPath>mcc_generated_files/tmr2.c</itemPath>
         <itemPath>mcc_generated_files/rtcc.c</itemPath>
         <itemPath>mcc_generated_files/adc1.c</itemPath>
+        <itemPath>mcc_generated_files/tmr1.c</itemPath>
+        <itemPath>mcc_generated_files/uart1.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="periferics" projectFiles="true">
+        <itemPath>Periferics/UI.c</itemPath>
+        <itemPath>Periferics/leds.c</itemPath>
+        <itemPath>LEDs_RGB/RGB_leds.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="SIM808" projectFiles="true">
+        <itemPath>SIM_TEMP/GPS.c</itemPath>
+        <itemPath>SIM_TEMP/telephone.c</itemPath>
+        <itemPath>SIM808/SIM808.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>utils/utils.c</itemPath>
-      <itemPath>LEDs_RGB/RGB_leds.c</itemPath>
-      <itemPath>Periferics/UI.c</itemPath>
-      <itemPath>Periferics/leds.c</itemPath>
-      <itemPath>Periferics/sensor.c</itemPath>
-      <itemPath>Periferics/system_control.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -85,6 +105,10 @@
     <Elem>LEDs_RGB</Elem>
     <Elem>User Interface</Elem>
     <Elem>Periferics</Elem>
+    <Elem>SIM_TEMP</Elem>
+    <Elem>GPS</Elem>
+    <Elem>Irrigation_system</Elem>
+    <Elem>SIM808</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

@@ -4,12 +4,12 @@ utils/utils.h  \
 Periferics/UI.h  \
  Periferics/../mcc_generated_files/rtcc.h  \
  Periferics/../LEDs_RGB/RGB_leds.h  \
-Periferics/leds.h  \
- Periferics/../mcc_generated_files/mcc.h  \
+Periferics/../utils/utils.h  \
+ Periferics/leds.h  \
+Periferics/../mcc_generated_files/mcc.h  \
  Periferics/../mcc_generated_files/system.h  \
  Periferics/../mcc_generated_files/clock.h  \
  Periferics/../mcc_generated_files/pin_manager.h  \
- Periferics/../mcc_generated_files/adc1.h  \
  Periferics/../mcc_generated_files/usb/usb.h  \
  Periferics/../mcc_generated_files/usb/usb_device_config.h  \
  Periferics/../mcc_generated_files/usb/usb_common.h  \
@@ -19,14 +19,19 @@ Periferics/leds.h  \
  Periferics/../mcc_generated_files/usb/usb_hal_pic32mm.h  \
  Periferics/../mcc_generated_files/usb/usb_device_cdc.h  \
  Periferics/../mcc_generated_files/usb/usb.h  \
- Periferics/../mcc_generated_files/watchdog.h  \
+ Periferics/../mcc_generated_files/uart1.h  \
+ Periferics/../mcc_generated_files/rtcc.h  \
+ Periferics/../mcc_generated_files/adc1.h  \
  Periferics/../mcc_generated_files/interrupt_manager.h  \
  Periferics/../mcc_generated_files/exceptions.h  \
+ Periferics/../mcc_generated_files/watchdog.h  \
+ Periferics/../mcc_generated_files/tmr1.h  \
  Periferics/../mcc_generated_files/tmr2.h  \
- Periferics/../mcc_generated_files/rtcc.h  \
-Periferics/../utils/utils.h  \
- LEDs_RGB/RGB_leds.h  \
-Periferics/UI_IS.h  \
-Periferics/system_control.h  \
- Periferics/sensor.h  \
-mcc_generated_files/mcc.h 
+LEDs_RGB/RGB_leds.h  \
+ Irrigation_system/UI_IS.h  \
+Irrigation_system/system_control.h  \
+ Irrigation_system/../mcc_generated_files/rtcc.h  \
+ Irrigation_system/../periferics/sensor.h  \
+ Irrigation_system/../utils/utils.h  \
+Periferics/sensor.h  \
+ mcc_generated_files/mcc.h 

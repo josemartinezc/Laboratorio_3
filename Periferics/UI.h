@@ -30,25 +30,15 @@
 #include <stdint.h>
 #include "../mcc_generated_files/rtcc.h"
 #include "../LEDs_RGB/RGB_leds.h"
+#include "../utils/utils.h"
 
 /* Provide C++ Compatibility */
 #ifdef __cplusplus
 extern "C" {
 #endif
     
-    #define TAMANO 256
-    #define MAX_EVENTOS 16
-    
-    typedef enum{
-        INIT,
-        MENU,        
-        ESPERA,
-        CONFIGURAR,
-        DAR_HORA,
-        AGREGAR_EVENTO,
-        CONSULTAR_EVENTOS,
-        DEBUG,
-    }UI_STATE;
+    #define TAMANO_SEND 255
+    #define TAMANO_SAVE 511
     
     typedef enum{
         INTERFACE,
@@ -64,22 +54,21 @@ extern "C" {
         uint32_t time;
     } app_event_t ;
     
-    static app_event_t eventos[MAX_EVENTOS];
-    static bcdTime_t event_dates[MAX_EVENTOS];
     
-    int read_USB_int(void);
-    void UI_send_text(const char *text);
+    int32_t read_USB_int(void);
+    void UI_send_text(uint8_t *text);
+    extern int32_t UI_int_lecture;
     
-    bool UI_tasks (void);
+    void Initialize_USB_delay(ut_tmrDelay_t*);
+    void UI_tasks (void);
     void UI_menu (void);
     void do_events(void);
     
-    void seleccionar_opcion();
     bool configurar_hora();
     void configurar_hora_interface();
     bool config_hora_function();
 
-    void dar_hora();
+    void dar_hora(bcdTime_t);
 
     bool agregar_evento();
     void configurar_evento_interface();

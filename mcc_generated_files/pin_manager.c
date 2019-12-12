@@ -52,7 +52,7 @@
 #include <xc.h>
 #include "pin_manager.h"
 #include "system.h"
-#include "../utils/utils.h"
+
 /**
  Section: Driver Interface Function Definitions
 */
@@ -61,7 +61,7 @@ void PIN_MANAGER_Initialize (void)
     /****************************************************************************
      * Setting the Output Latch SFR(s)
      ***************************************************************************/
-    LATA = 0x0000;
+    LATA = 0x0002;
     LATB = 0x0000;
     LATC = 0x0000;
     LATD = 0x0000;
@@ -69,15 +69,15 @@ void PIN_MANAGER_Initialize (void)
     /****************************************************************************
      * Setting the GPIO Direction SFR(s)
      ***************************************************************************/
-    TRISA = 0xFB77;
+    TRISA = 0xFB75;
     TRISB = 0xAFFF;
-    TRISC = 0xFFFF;
+    TRISC = 0xEFFF;
     TRISD = 0x001F;
 
     /****************************************************************************
      * Setting the Weak Pull Up and Weak Pull Down SFR(s)
      ***************************************************************************/
-    CNPDA = 0x2400;
+    CNPDA = 0x2C03;
     CNPDB = 0x8000;
     CNPDC = 0x0000;
     CNPDD = 0x0000;
@@ -97,7 +97,7 @@ void PIN_MANAGER_Initialize (void)
     /****************************************************************************
      * Setting the Analog/Digital Configuration SFR(s)
      ***************************************************************************/
-    ANSELA = 0x1843;
+    ANSELA = 0x1002;
     ANSELB = 0x201C;
     ANSELC = 0x0123;
 
@@ -140,28 +140,28 @@ void PIN_MANAGER_Initialize (void)
 /* Interrupt service routine for the CNAI interrupt. */
 void __attribute__ ((vector(_CHANGE_NOTICE_A_VECTOR), interrupt(IPL2SOFT))) _CHANGE_NOTICE_A( void )
 {
-    if(IFS0bits.CNAIF==1){
-        IFS0bits.CNAIF = 0;
-        //IFS0CLR=1<<_IFS0_CNAIF_POSITION; //NO LO ENTENDI
-        
-        if (CNFAbits.CNFA13==1) {
-            CNFAbits.CNFA13=0;
-            if (button3On==false){
-                button3On=BTN3_GetValue();
-            }      
+    if(IFS0bits.CNAIF == 1)
+    {
+        // Clear the flag
+        IFS0CLR= 1 << _IFS0_CNAIF_POSITION; // Clear IFS0bits.CNAIF
+        if(CNFAbits.CNFA13 == 1)
+        {
+            CNFACLR = 0x2000;  //Clear CNFAbits.CNFA13
+            // Add handler code here for Pin - RA13
         }
     }
 }
 /* Interrupt service routine for the CNBI interrupt. */
 void __attribute__ ((vector(_CHANGE_NOTICE_B_VECTOR), interrupt(IPL2SOFT))) _CHANGE_NOTICE_B( void )
 {
-    if(IFS0bits.CNBIF==1){
-        IFS0bits.CNBIF = 0;
-        //IFS0CLR=1<<_IFS0_CNBIF_POSITION; //NO LO ENTENDI
-        
-        if (CNFBbits.CNFB15==1) {
-            CNFBbits.CNFB15=0;
-            button2On=BTN2_GetValue();
+    if(IFS0bits.CNBIF == 1)
+    {
+        // Clear the flag
+        IFS0CLR= 1 << _IFS0_CNBIF_POSITION; // Clear IFS0bits.CNBIF
+        if(CNFBbits.CNFB15 == 1)
+        {
+            CNFBCLR = 0x8000;  //Clear CNFBbits.CNFB15
+            // Add handler code here for Pin - RB15
+        }
     }
-}
 }

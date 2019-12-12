@@ -67,10 +67,10 @@ static ws2812_t tira_leds[CANTIDAD_LEDS];
 
 extern const ws2812_t WHITE;
 extern const ws2812_t RED;
+extern const ws2812_t YELLOW;
 extern const ws2812_t GREEN;
 extern const ws2812_t BLUE;
 extern const ws2812_t BLACK;
-extern const ws2812_t YELLOW;
 
 // *****************************************************************************
 // *****************************************************************************
