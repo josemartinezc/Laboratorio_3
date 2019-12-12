@@ -44,12 +44,55 @@
 #include "../periferics/sensor.h"
 #include "../LEDs_RGB/RGB_leds.h"
 #include "../SIM_TEMP/GPS.h"
+#include "../SIM_TEMP/telephone.h"
 
+ //**********************  VARIABLES  *****************************//
 
 static bcdTime_t real_time_IS;
 plant_t plant;
 bool critic_message_pending;
-static uint8_t telephone_number[9]; 
+bool telephone_number_set;
+static uint8_t telephone_number[18]; 
+static uint8_t real_trama[120];
+TRI_STATUS saved_trama;
+bool ini_GSM=false;
+bool ini_GPS=false;
+
+//*****************************************************************//
+
+bool SIM808_IS_Initialize(){
+    static bool ini_SIM808=false;
+    static bool hour_set_up=false;
+    static uint8_t trama[128];
+    
+    if(ini_SIM808==false){
+            ini_SIM808=Initialize_SIM808();
+        }
+        else{
+            if(!GPSIsReady()){            
+                ini_GPS=Initialize_GPS();
+            }
+            else{
+                if(!SIMIsReady()){
+                    ini_GSM = Init_SIMCard();
+                }
+                else{
+                    if(!TRAMAIsSaved()){
+                        save_trama();
+                    }
+                    else{
+                        if(hour_set_up==false)
+                            hour_set_up=hour_SetUp();
+                        else{
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    return false;
+}
+
 
 void plant_init(){
     plant.status=GREEN_;
@@ -64,9 +107,12 @@ bool hour_SetUp(){
         return true;
     }
     
-    memset(trama, 0, sizeof(trama));
-    if (get_trama(trama)==true){
-        GPS_getUTC(&real_time_IS, trama);
+    /*false_frame_maker(trama);
+    time_is_set=true;
+    */
+    
+    if (TRAMAIsSaved()){
+        GPS_getUTC(&real_time_IS, real_trama);
         RTCC_TimeSet(&real_time_IS);
         time_is_set=true;
         return true;
@@ -81,43 +127,104 @@ bcdTime_t get_real_time_IS (){
     return real_time_IS;
 }
 
+void save_trama(){ 
+    memset(real_trama, 0, sizeof(real_trama));
+    saved_trama=get_trama(real_trama);
+}
+
+bool get_saved_trama(uint8_t* p_trama){
+    if (TRAMAIsSaved()){
+        memset(p_trama, 0, sizeof(p_trama));
+        strcpy(p_trama, real_trama);
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
 void system_control_menu(void){
+    static uint16_t previous_humidity_value=100;
     char message[120];
+    
     memset(message,0,sizeof(message));
     
-    if (plant.status!=humidity_state_function()){
-        if(humidity_state_function()==RED_LOW || humidity_state_function()==RED_HIGH){
-            critic_message_pending=true;
+    
+    if(previous_humidity_value==analog_conversion_to_cb()){
+        if(plant.status!=RED_LOW && plant.status!=RED_HIGH){ 
+            return;
+        }
+        else{
+            if(critic_message_pending==false){
+                return;
+            }
         }
     }
-
-        plant.status=humidity_state_function();
-
-        switch(plant.status){
-            case RED_HIGH:
-            case RED_LOW:
-                if(critic_message_pending==true){
-                    send_critic_message(plant.status, message);
-                }
-                irrigation(plant.status);
-                break;
-            case YELLOW_HIGH:
-                if(analog_conversion_to_cb()>=get_irrigation_high_threshold()){
-                    irrigation(plant.status);
-                }
-                break;
-            case GREEN_:
-                if(analog_conversion_to_cb()<=get_irrigation_low_threshold()){
-                    irrigation(plant.status);
-                }
-                break;
-            case YELLOW_LOW:
-                irrigation(plant.status);
-                break;
+    else{
+        previous_humidity_value=analog_conversion_to_cb();
+        if(plant.status != humidity_state_function()){
+            plant.status=humidity_state_function();
+            if((humidity_state_function()==RED_LOW || humidity_state_function()== RED_HIGH)){//simplificae
+                critic_message_pending=true;
+            }
         }
-        RGB_humidity_state(plant.status);
+    }
+    switch(plant.status){
+        case RED_HIGH:
+        case RED_LOW:
+            if(critic_message_pending==true){
+                send_critic_message(plant.status);
+            }
+            irrigation(plant.status);
+            break;
+        case YELLOW_HIGH:
+            if(analog_conversion_to_cb()>=get_irrigation_high_threshold()){
+                irrigation(plant.status);
+            }
+            break;
+        case GREEN_:
+            if(analog_conversion_to_cb()<=get_irrigation_low_threshold()){
+                irrigation(plant.status);
+            }
+            break;
+        case YELLOW_LOW:
+            irrigation(plant.status);
+            break;
+    }
+    RGB_humidity_state(plant.status);
 }
+
+// <editor-fold defaultstate="collapsed" desc="CRITICAL MESSAGE">
+
+bool send_critic_message(SENSOR_STATE plant_state){
+    static uint8_t message[256];
+    static bool sending_state=0;
+    
+    if(telephone_number_set==true && TRAMAIsSaved()){
+        if(available_SIM_card==true){
+            switch(sending_state){
+                case 0:
+                    get_critic_message(plant_state, message);
+                    sending_state=1;
+                    break;
+                case 1:
+                    if(send_text_message (message, telephone_number)==true){
+                        sending_state=0;
+                        critic_message_pending=false;
+                        return true;
+                    }
+                    break;
+            }
+        }
+        else{
+            UI_send_text("Ingrese una tarjeta SIM si desea que se envien alertas SMS (Revise OPCION 7)");
+            return true;
+        }
+    }
+    return false;
+}
+
+// </editor-fold>
 
 void RGB_humidity_state(uint8_t estado_de_humedad){
     uint8_t i;
@@ -190,7 +297,7 @@ bool ID_SetUp(){
 
 bool Telephone_SetUp(){
     static TASKS_STATE state_config;
-    static uint8_t aux_telephone_number[8];
+    static uint8_t aux_telephone_number[32];
     
     switch (state_config){
         case INTERFACE:
@@ -210,6 +317,7 @@ bool Telephone_SetUp(){
                 UI_send_text("\n\nEl numero ");
                 UI_send_text(telephone_number);
                 UI_send_text(" ha sido configurado con exito.\n");
+                telephone_number_set=true;
                 state_config=INTERFACE;
                 return true;
             }
@@ -231,7 +339,7 @@ bool save_telephone_number(uint8_t* p_aux_number){
     if(UI_int_lecture<=9999999 && p_aux_number[0]>0){
         telephone_strlen=strlen(p_aux_number);
         memset(telephone_number,0,sizeof(telephone_number));
-        strcat(telephone_number, "09");
+        strcat(telephone_number, "+5989");
         if(telephone_strlen==7){
             strcat(telephone_number, p_aux_number);
             return true;
@@ -249,19 +357,32 @@ bool save_telephone_number(uint8_t* p_aux_number){
     return false;
 }
 
-void send_critic_message(SENSOR_STATE critic_state, char* p_message){
-    uint8_t trama[110];
+bool get_telephone_number(uint8_t *p_telephone_num){
+   if(telephone_number_set==true){
+        memset(p_telephone_num, 0, sizeof(p_telephone_num));
+        strcpy(p_telephone_num, telephone_number);
+        return true;
+    }
+    return false;
+}
+
+void get_critic_message(SENSOR_STATE critic_state, char* p_message){
+    uint8_t trama[128];
     GPSPosition_t coord_posicion;
     char coord_posicion_str[50];
     char ID[32];
-    char message[120];
+    char message[256];
+    uint8_t telephone[9];
     uint8_t gps_link[100];
-    
+    TRI_STATUS trama_state;
     
     memset(message,0,sizeof(message));
-     
-    //hay que cambiar esta funcion por la de la trama de verdad
-    if (false_frame_maker(trama)==true){
+    memset(trama,0,sizeof(trama));
+    trama_state=get_saved_trama(trama);
+    
+    if (TRAMAIsSaved()){
+    //if (false_frame_maker(trama)==true){
+        get_saved_trama(trama);
         GPS_getPosition(&coord_posicion, trama);
     }
     else{
@@ -285,12 +406,18 @@ void send_critic_message(SENSOR_STATE critic_state, char* p_message){
         strcat(message, gps_link);
     }
     else{
-        strcat(message, "Conexion con GPS debil");
+        strcat(message, "No se pudo obtener ubicacion de GPS");
     }
     
-    if(send_text_message(message)==true){
-        critic_message_pending==false;
+    
+    if(get_telephone_number(telephone)==false){
+       strcat(message, "\nIngrese su numero de telefono para enviar el mensaje SMS");
     }
+    
+    if(available_SIM_card == false){
+        strcat(message, "\nIngrese una tarjeta SIM para enviar el mensaje.");
+    }
+    
     strcpy(p_message, message);
 }
 

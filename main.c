@@ -64,11 +64,10 @@
 int main(void)
 {   
     static uint8_t ini[16];
-    bool ini_SIM808=false;
-    bool ini_GPS=false;
-    bool get_trama_f=false;
-    bool hour_set_up=false;
-    uint8_t trama[128];
+    bool ini_SIM_IS=false;
+    saved_trama=WORKING;
+    ini_GSM=false;
+    //telephone_number_set=false;
     
     SYSTEM_Initialize();
     
@@ -85,17 +84,8 @@ int main(void)
     
     
     while(1){
-        if(ini_SIM808==false){
-            ini_SIM808=Initialize_SIM808();
-        }
-        else{
-            if(ini_GPS==false){            
-                ini_GPS=Initialize_GPS();
-            }
-            else{
-                if(hour_set_up==false);
-                hour_set_up=hour_SetUp();
-            }
+        if(ini_SIM_IS==false){
+            ini_SIM_IS=SIM808_IS_Initialize();
         }
         led_sequence();
         data_save();

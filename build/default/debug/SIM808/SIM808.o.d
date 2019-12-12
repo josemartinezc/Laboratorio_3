@@ -3,7 +3,8 @@ SIM808/SIM808.c  \
  SIM808/../SIM_TEMP/GPS.h  \
 SIM808/../SIM_TEMP/../utils/utils.h  \
  SIM808/SIM808.h  \
-SIM808/../mcc_generated_files/mcc.h  \
+SIM808/../utils/utils.h  \
+ SIM808/../mcc_generated_files/mcc.h  \
  SIM808/../mcc_generated_files/system.h  \
  SIM808/../mcc_generated_files/clock.h  \
  SIM808/../mcc_generated_files/pin_manager.h  \

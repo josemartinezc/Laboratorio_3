@@ -19,6 +19,7 @@
 #include <string.h>
 #include <math.h>
 #include <stdbool.h>
+#include "../SIM808/SIM808.h"
 #include "../mcc_generated_files/pin_manager.h"
 #include "../utils/utils.h"
 
@@ -31,10 +32,9 @@ ut_tmrDelay_t timer4;
 ut_tmrDelay_t timer5;
 ut_tmrDelay_t timer6; 
 
-ut_tmrDelay_t *ptimer4;
 ut_tmrDelay_t *ptimer5;
 
-
+uint8_t pepe2[128];
 /*******************************************************************************/    
 /************************* INTERFACE FUNCTIONS *********************************/    
 /*******************************************************************************/
@@ -83,7 +83,7 @@ void GPS_getUTC( struct tm *p_newtime, uint8_t *p_sentence ){
     // Copy Month MM
     memset( temp_str, 0, 5 );
     strncpy( temp_str, (p_sentence+offset), 2 );
-    p_newtime->tm_mon = atoi(temp_str);
+    p_newtime->tm_mon = atoi(temp_str)-1;
     offset+=2;
     // Copy Day DD
     memset( temp_str, 0, 5 );
@@ -136,8 +136,7 @@ bool Initialize_GPS (){
     static uint8_t ini_GPS_com=0;
     TRI_STATUS recibo_ok;
 
-    switch(ini_GPS_com)
-    {
+    switch(ini_GPS_com){
         case 0:
             UART1_WriteBuffer ("AT+CGNSPWR=1\r", strlen ("AT+CGNSPWR=1\r"));
             ini_GPS_com = 1;
@@ -145,7 +144,7 @@ bool Initialize_GPS (){
         case 1:
             recibo_ok=Recibo_OK();
             if (recibo_ok == DONE) {
-                memset (RxBuffer, 0, sizeof(RxBuffer));
+                
                 UART1_WriteBuffer ("AT+CGNSSEQ=RMC\r", strlen ("AT+CGNSSEQ=RMC\r"));
                 ini_GPS_com = 2;
             }
@@ -182,80 +181,93 @@ bool Initialize_GPS (){
     return false;
 }
 
-TRI_STATUS Recibo_OK (void){
+TRI_STATUS Recibo_OK (){
     static bool puntero_no_init = true;
+    TRI_STATUS answer_status;
+
+    if(answer_status=wait_usart_answer("OK", 10)==DONE){
+        return DONE;
+    }
+    else if(answer_status==ERROR){
+        puntero_no_init = true;
+        return ERROR;
+    }
     
-    if (puntero_no_init==true)
-    {
-        ptimer4 = &timer4;
-        ptimer4->state = 0;
-        puntero_no_init = false;
-        return WORKING;
-    }
-    UART1_ReadBuffer ( RxBuffer , sizeof(RxBuffer));
-    if (UT_delayDs (ptimer4,20)== true){
-        if (strstr(RxBuffer,"OK")!= NULL) //es OK lo que mandó?
-        { 
-            puntero_no_init = true;
-            return DONE;
-        }
-        else
-            puntero_no_init = true;
-            return ERROR;
-    }
-    else{
-        return WORKING;
-    }
+    return WORKING;
 }
 
-bool get_trama (char *p_trama){
+TRI_STATUS get_trama (char *p_trama){
+    static stage_state_t stage = STG0;
     static bool waiting_trama=false;
+    TRI_STATUS answer_status;
     
-    if(waiting_trama==false){
-        timer6.state=0;
-        waiting_trama=true;
-    }
-    
-    UART1_WriteBuffer ("AT+CGNSINF\r", strlen ("AT+CGNSINF\r"));
-    if(UART1_ReceiveBufferIsEmpty()==false){
-        if(UT_delayDs (&timer6,2)== true){
-            memset (RxBuffer, 0, sizeof(RxBuffer));
-            UART1_ReadBuffer (RxBuffer , sizeof(RxBuffer)); 
-            if (strstr(RxBuffer,"+CGNSINF: 1,1,")!= NULL){
-                //order_trama(RxBuffer);
-                memset(p_trama,0, sizeof(p_trama));
-                strcpy(p_trama, RxBuffer);
-                memset (RxBuffer, 0, sizeof(RxBuffer));
-                return true;
+    switch(stage){
+        case STG0:
+        if(waiting_trama==false){
+            timer6.state=0;
+            UART1_WriteBuffer ("AT+CGNSINF\r", strlen ("AT+CGNSINF\r"));
+                      //  UI_send_text( "4>" ); //check USART
+                      //  UI_send_text( "AT+CGNSINF\r" ); //check USART
+            waiting_trama=true;
+            stage=STG1;
+        }
+        case STG1:
+            if(UT_delayDs (&timer6,1)== true){
+                if(UART1_ReceiveBufferIsEmpty()==false){
+                    memset (RxBuffer, 0, sizeof(RxBuffer));
+                    UART1_ReadBuffer (RxBuffer , sizeof(RxBuffer)); 
+                    if (check_correct_trama(RxBuffer)==true){
+                        memset(p_trama,0, sizeof(p_trama));
+                        strcpy(p_trama, RxBuffer);
+                        //UI_send_text( "4<" ); //check USART
+                        //UI_send_text( RxBuffer ); //check USART
+                        memset (RxBuffer, 0, sizeof(RxBuffer));
+                        stage = STG0;
+                        return DONE;
+                    }
+                    else{
+                        memset (RxBuffer, 0, sizeof(RxBuffer));
+                        stage=STG0;
+                        waiting_trama=false;
+                        
+                    }
+                }
             }
-            else{
-                memset (RxBuffer, 0, sizeof(RxBuffer));
+            break;
+        case STG2:
+            if(UART1_IsTxReady()==true){
+                UART1_WriteBuffer ("AT+CGNSURC=0\r", strlen ("AT+CGNSURC=0\r"));
+                stage=STG3;
+            }
+            break;
+        case STG3:
+            answer_status=wait_usart_answer("OK", 1);
+            if(answer_status==DONE){   
+                stage=STG0;
                 waiting_trama=false;
+                return DONE;
             }
+            else if(answer_status==ERROR){
+                stage=STG2;
+            }
+            break;
+    }
+    return WORKING;
+}
+
+bool check_correct_trama(uint8_t* p_trama){
+    uint8_t aux_trama[11];
+    
+    memset(aux_trama, 0, sizeof(aux_trama));
+    if (strstr(p_trama,"+CGNSINF: 1,1,")!=NULL){
+        strncpy(aux_trama, p_trama, 10);
+        if(strcmp(aux_trama, "\r\n+CGNSINF")==0){
+            return true;
         }
     }
     return false;
 }
 
-
-bool send_message (char *message)
-{
-    UART1_WriteBuffer ("AT+CMGF=1", strlen ("AT+CMGF=1")); //seleccionar modo texto
-    if( check_envio() == true)
-    {
-        UART1_WriteBuffer ("AT+CMGS=\"095769097\"", strlen ("AT+CMGS=\"095769097\""));
-        if (check_envio() == true)
-        {
-            UART1_Write(0x0D);
-            if (check_envio() == true)
-            {
-                UART1_WriteBuffer (message, strlen (message)); //mensaje guardado en el puntero
-                if (check_envio() == true)
-                    UART1_Write(0x1A);
-            }
-        }
-    }  
-}
 
 bool check_envio (void)
 {

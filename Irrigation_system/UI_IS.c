@@ -36,6 +36,7 @@
 #include "UI_IS.h"
 #include "data_register.h"
 #include "../SIM_TEMP/GPS.h"
+#include "../SIM_TEMP/telephone.h"
 
 
 //variables
@@ -55,7 +56,7 @@ void interface_IS(){
             }
             break;
         case MENU:
-                UI_send_text("\n\nIngrese una opcion del 1-6\n1.Configurar UMBRALES\n2.Configurar ID\n3.Configurar telefono\n4.Consultar hora\n5.Ver mensaje critico\n6.Mostrar registros guardados\n>>>");
+                UI_send_text("\n\nIngrese una opcion del 1-6\n1.Configurar UMBRALES\n2.Configurar ID\n3.Configurar telefono\n4.Consultar hora\n5.Ver mensaje critico\n6.Mostrar registros guardados\n7.Configurar SIM\n>>>");
                 state_UI=ESPERA;
             break;
         case ESPERA:
@@ -68,7 +69,6 @@ void interface_IS(){
             break;
         case CONFIGURAR_ID:
             if(ID_SetUp()==true){
-                
                 state_UI=MENU;
             }
             break;
@@ -79,7 +79,7 @@ void interface_IS(){
             break;
         case DAR_HORA:
             if(hour_SetUp()==true){
-                dar_hora(get_real_time_IS ());
+                dar_hora(get_real_time_IS());
             }
             else{
                 UI_send_text("\nLa hora aún no ha podido ser configurada\n");
@@ -92,6 +92,17 @@ void interface_IS(){
             break;
         case SHOW_REGISTERS:
             if(show_data_registers()==true){
+                state_UI=MENU;
+            }
+            break;
+        case CONFIG_SIM:
+            if(Init_SIMCard()==true){
+                if(available_SIM_card==false){
+                    UI_send_text("\nNo se pudo identificar ninguna tarjeta SIM.");
+                }
+                else{
+                    UI_send_text("Su SIM a sido configurada con exito");
+                }
                 state_UI=MENU;
             }
             break;
@@ -126,6 +137,8 @@ IS_INTERFACE_STATE seleccionar_opcion(void){
             case 6:
                 state_UI=SHOW_REGISTERS;
                 break;
+            case 7:
+                state_UI=CONFIG_SIM;
             default:
                 state_UI=MENU;
                 break;
@@ -179,12 +192,13 @@ bool show_data_registers(){
 void show_critic_message(void){
     char message[256];
     int humidity_local_state;
+    bool critic_message_state;
     
     humidity_local_state=humidity_state_function();
     if (humidity_local_state==RED_HIGH || humidity_local_state==RED_LOW){
-        UI_send_text("\n\n");
         memset(message, 0, sizeof(message));
-        send_critic_message(humidity_local_state, message);
+        get_critic_message(humidity_local_state, message);
+        UI_send_text("\n\n");
         UI_send_text(message);
     }
     else{

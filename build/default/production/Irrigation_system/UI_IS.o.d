@@ -3,6 +3,7 @@ build/default/production/Irrigation_system/UI_IS.o:  \
 Irrigation_system/system_control.h  \
  Irrigation_system/../mcc_generated_files/rtcc.h  \
  Irrigation_system/../periferics/sensor.h  \
+ Irrigation_system/../utils/utils.h  \
  Irrigation_system/../mcc_generated_files/usb/usb.h  \
  Irrigation_system/../mcc_generated_files/usb/usb_device_config.h  \
  Irrigation_system/../mcc_generated_files/usb/usb_common.h  \
@@ -19,4 +20,5 @@ Irrigation_system/system_control.h  \
  Irrigation_system/UI_IS.h  \
 Irrigation_system/data_register.h  \
  Irrigation_system/../SIM_TEMP/GPS.h  \
- Irrigation_system/../SIM_TEMP/../utils/utils.h 
+ Irrigation_system/../SIM_TEMP/../utils/utils.h  \
+ Irrigation_system/../SIM_TEMP/telephone.h 

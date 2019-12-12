@@ -239,7 +239,7 @@ void dar_hora(bcdTime_t time){
     UI_send_text("\n\n");
 }
 
-
+/*
 ws2812_t interpret_event_color (uint8_t evento){
    if (eventos[evento].command==1){
         return BLACK;
@@ -263,7 +263,7 @@ ws2812_t interpret_event_color (uint8_t evento){
         }
     }
 }
-
+*/
 /* ************************************************************************** */
 /* ************************************************************************** */
 /* Section: Included Files                                                    */

@@ -38,20 +38,7 @@ extern "C" {
 #endif
     
     #define TAMANO_SEND 255
-    #define TAMANO_SAVE 512
-    #define MAX_EVENTOS 16
-    /*
-    typedef enum{
-        INIT,
-        MENU,        
-        ESPERA,
-        CONFIGURAR,
-        DAR_HORA,
-        AGREGAR_EVENTO,
-        CONSULTAR_EVENTOS,
-        DEBUG,
-    }UI_STATE;
-    */
+    #define TAMANO_SAVE 511
     
     typedef enum{
         INTERFACE,
@@ -67,8 +54,6 @@ extern "C" {
         uint32_t time;
     } app_event_t ;
     
-    static app_event_t eventos[MAX_EVENTOS];
-    static bcdTime_t event_dates[MAX_EVENTOS];
     
     int32_t read_USB_int(void);
     void UI_send_text(uint8_t *text);

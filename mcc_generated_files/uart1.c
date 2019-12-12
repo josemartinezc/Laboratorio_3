@@ -49,7 +49,6 @@
 #include <stdint.h>
 #include "xc.h"
 #include "uart1.h"
-
 /**
   Section: Data Type Definitions
 */
@@ -73,8 +72,8 @@ static bool volatile rxOverflowed;
 
 */
 
-#define UART1_CONFIG_TX_BYTEQ_LENGTH (254+1)
-#define UART1_CONFIG_RX_BYTEQ_LENGTH (254+1)
+#define UART1_CONFIG_TX_BYTEQ_LENGTH (127+1)
+#define UART1_CONFIG_RX_BYTEQ_LENGTH (127+1)
 
 /** UART Driver Queue
 
@@ -358,6 +357,8 @@ unsigned int __attribute__((deprecated)) UART1_ReadBuffer( uint8_t *buffer ,  un
         *buffer++ = UART1_Read();
     }
     
+    
+    
     return rx_count;    
 }
 
@@ -445,7 +446,7 @@ uint8_t __attribute__((deprecated)) UART1_Peek(uint16_t offset)
     return *peek;
 }
 
-bool __attribute__((deprecated)) UART1_ReceiveBufferIsEmpty (void)
+bool UART1_ReceiveBufferIsEmpty (void)
 {
     return (UART1_RxDataAvailable() == 0);
 }

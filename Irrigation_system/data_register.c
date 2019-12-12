@@ -28,6 +28,7 @@
 #include <string.h>
 
 #include "data_register.h"
+#include "system_control.h"
 #include "../utils/utils.h"
 
 
@@ -54,7 +55,7 @@ void data_save(void){
             break;
 
         case WAIT_:
-            if(UT_delayDs(&timer, 60)==true){
+            if(UT_delayDs(&timer, 600)==true){
                 i++;
                 if(i>=PERIOD_DATA_SAVING_MIN){
                     j++;
@@ -72,11 +73,12 @@ void data_save(void){
             break;
             
         case SAVE:
-            save_register();
-            if(empty_buffer==true){
-                empty_buffer=false;
+            if(save_register()==true){
+                if(empty_buffer==true){
+                    empty_buffer=false;
+                }
+                state_register_system=INITIALIZE;
             }
-            state_register_system=INITIALIZE;
             break;
     }   
 }
@@ -102,26 +104,42 @@ bool get_register(historic_data* p_data_register){
     }
 }
 
-void save_register(void) {
+bool save_register(void) {
+    static data_tasks_state saving_state=SAVE_DATA;
     uint8_t trama[128];
+    TRI_STATUS trama_status;
     
-    data_buffer[register_number].event_number=register_number;
-    RTCC_TimeGet(&(data_buffer[register_number].hour_and_date)); 
-    data_buffer[register_number].status=humidity_state_function();
-    if(false_frame_maker(trama)==true){
-        GPS_getPosition(&data_buffer[register_number].position, trama);
+    switch(saving_state){
+        case SAVE_DATA:
+            data_buffer[register_number].event_number=register_number;
+            RTCC_TimeGet(&(data_buffer[register_number].hour_and_date)); 
+            data_buffer[register_number].status=humidity_state_function();
+            saving_state=WAIT_DATA;
+        case WAIT_DATA:
+            trama_status=get_trama(trama);
+            //if(false_frame_maker(trama)==true){
+            if(trama_status==DONE){
+                GPS_getPosition(&data_buffer[register_number].position, trama);
+                saving_state=END_DATA;
+            }
+            else if(trama_status==ERROR){
+                data_buffer[register_number].position.latitude=0;
+                data_buffer[register_number].position.longitude=0;
+                saving_state=END_DATA;
+            }
+            return false;
+            break;
+        case END_DATA:
+            if(register_number<REGISTER_CAPACITY){
+                register_number++;
+            }
+            else{
+                register_number=0;
+            }
+            saving_state=SAVE_DATA;
+            return true;
+            break;
     }
-    else{
-        data_buffer[register_number].position.latitude=0;
-        data_buffer[register_number].position.longitude=0;
-    }
-    if(register_number<REGISTER_CAPACITY){
-        register_number++;
-    }
-    else{
-        register_number=0;
-    }
-}
-
+}       
 
 

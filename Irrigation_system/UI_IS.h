@@ -36,6 +36,7 @@
         DAR_HORA,
         CHECK_CRITIC_MESSAGE,
         SHOW_REGISTERS,
+        CONFIG_SIM,
     }IS_INTERFACE_STATE;
     
     void interface_IS();
