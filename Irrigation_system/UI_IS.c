@@ -35,8 +35,8 @@
 #include "../periferics/UI.h"
 #include "UI_IS.h"
 #include "data_register.h"
-#include "../SIM_TEMP/GPS.h"
-#include "../SIM_TEMP/telephone.h"
+#include "../SIM808/GPS.h"
+#include "../SIM808/telephone.h"
 
 
 //variables
@@ -82,7 +82,7 @@ void interface_IS(){
                 dar_hora(get_real_time_IS());
             }
             else{
-                UI_send_text("\nLa hora aún no ha podido ser configurada\n");
+                UI_send_text("\n\nLa hora aún no ha podido ser configurada\n");
             }
             state_UI=MENU;
             break;
@@ -96,13 +96,7 @@ void interface_IS(){
             }
             break;
         case CONFIG_SIM:
-            if(Init_SIMCard()==true){
-                if(available_SIM_card==false){
-                    UI_send_text("\nNo se pudo identificar ninguna tarjeta SIM.");
-                }
-                else{
-                    UI_send_text("Su SIM a sido configurada con exito");
-                }
+            if(config_SIM_UI()==true){
                 state_UI=MENU;
             }
             break;
@@ -139,6 +133,7 @@ IS_INTERFACE_STATE seleccionar_opcion(void){
                 break;
             case 7:
                 state_UI=CONFIG_SIM;
+                break;
             default:
                 state_UI=MENU;
                 break;
@@ -147,7 +142,7 @@ IS_INTERFACE_STATE seleccionar_opcion(void){
 } 
 
 bool show_data_registers(){
-    historic_data data_register[REGISTER_CAPACITY];
+    historic_data data_register;
     static uint8_t i=0;
     static bool all_data_sent=true;
     uint8_t hora[16];
@@ -157,17 +152,27 @@ bool show_data_registers(){
     uint8_t register_info[256];
     
     if (get_empty_buffer_value()==false){
-        all_data_sent=get_register(&data_register[i]);
+        all_data_sent=get_register(&data_register);
         memset(register_info,0,sizeof(register_info));
         memset(hora,0,sizeof(hora));
         memset(numero_de_registro, 0, sizeof(numero_de_registro));
         memset(google_link, 0, sizeof(google_link));
         memset(status_str, 0, sizeof(status_str));
 
-        strftime(hora, sizeof(hora), "%X", &data_register[i].hour_and_date);
-        sprintf(numero_de_registro, "%i", (data_register[i].event_number));
-        get_google_link(data_register[i].position, google_link);
-        get_humidity_state_string(data_register[i].status, status_str);
+        sprintf(numero_de_registro, "%i", (data_register.event_number));
+        get_humidity_state_string(data_register.status, status_str);
+        if(data_register.hour_and_date.tm_mday!=0){
+            strftime(hora, sizeof(hora), "%X", &data_register.hour_and_date);
+        }
+        else{
+            strcpy(hora, "-");
+        }
+        if(data_register.position.latitude!=0 && data_register.position.longitude!=0){
+            get_google_link(data_register.position, google_link);
+        }
+        else{
+            strcpy(google_link, "no se pudo obtener, conexion a GPS debil.");
+        }
 
         strcat(register_info, "\n\nREGISTRO NUMERO ");
         strcat(register_info, numero_de_registro);
@@ -178,7 +183,6 @@ bool show_data_registers(){
         strcat(register_info, "\nUbicacion ");
         strcat(register_info, google_link);
         UI_send_text(register_info);
-        i++;
         if(all_data_sent==false){
             return false;
         }

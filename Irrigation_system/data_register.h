@@ -30,7 +30,7 @@
 
 #include "../mcc_generated_files/rtcc.h"
 #include "../periferics/sensor.h"
-#include "../SIM_TEMP/GPS.h"
+#include "../SIM808/GPS.h"
 
 #define REGISTER_CAPACITY 60
 #define PERIOD_DATA_SAVING_HOURS 12 //in hours
@@ -45,6 +45,7 @@ typedef struct{
 } historic_data;
 
 typedef enum{
+    INIT_SYS,
     INITIALIZE,
     WAIT_,
     SAVE,        

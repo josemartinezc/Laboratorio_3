@@ -98,6 +98,20 @@ int32_t read_USB_int(void){
     }
 }
 
+
+void dar_hora(bcdTime_t time){
+    bcdTime_t real_time;
+    
+    RTCC_TimeGet(&real_time);
+
+    strftime(date_time_representation, 32, "%c", &real_time);
+    UI_send_text("\n\n");
+    UI_send_text(date_time_representation); 
+    UI_send_text("\n\n");
+}
+
+
+/*
 bool configurar_hora(void){
     static TASKS_STATE state_config=INTERFACE;
     static int p_config_hora_state;
@@ -227,42 +241,6 @@ bool config_hora_function(int config_hora_state){
     }
 }      
 
-
-void dar_hora(bcdTime_t time){
-    bcdTime_t real_time;
-    
-    RTCC_TimeGet(&real_time);
-
-    strftime(date_time_representation, 32, "%c", &real_time);
-    UI_send_text("\n\n");
-    UI_send_text(date_time_representation); 
-    UI_send_text("\n\n");
-}
-
-/*
-ws2812_t interpret_event_color (uint8_t evento){
-   if (eventos[evento].command==1){
-        return BLACK;
-    }
-    else{
-        switch(eventos[evento].color){
-            case 0:
-                return WHITE;
-                break;
-            case 1:
-                return RED;
-                break;
-            case 2:
-                return BLUE;
-                break;
-            case 3:
-                return GREEN;
-                break;
-            default:
-                break;
-        }
-    }
-}
 */
 /* ************************************************************************** */
 /* ************************************************************************** */

@@ -23,7 +23,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <proc/p32mm0256gpm064.h>
-#include "../SIM_TEMP/GPS.h"
+#include "GPS.h"
 #include "SIM808.h"
 #include "../mcc_generated_files/mcc.h"
 #include "../mcc_generated_files/../Periferics/UI.h"
@@ -48,7 +48,13 @@
 /************************* INTERFACE FUNCTIONS *********************************/    
 /*******************************************************************************/
  
-
+ void SIM808_ini_tasks(){
+    PWR_KEY_SetDigitalInput();
+    STATUS_SetDigitalInput();
+    RESET_SetHigh();
+    RESET_SetDigitalOutput();
+ }
+ 
 TRI_STATUS wait_usart_answer(uint8_t *p_answer, uint8_t delay){
     static bool waiting=false;
     uint8_t answer_aux[128];
@@ -60,18 +66,16 @@ TRI_STATUS wait_usart_answer(uint8_t *p_answer, uint8_t delay){
 
     memset(answer_aux, 0, sizeof(answer_aux));
     if (UT_delayDs (&timer8, delay)== true ){
-        //if(UART1_ReceiveBufferIsEmpty()==false){
-            UART1_ReadBuffer ( answer_aux , sizeof(answer_aux));
-            //sprintf(pepe,"1<%s",answer_aux);//check USART
-            //UI_send_text(pepe); //check USART
-            waiting=false;
-            if (strstr(answer_aux,p_answer)!= NULL) //es p_answer lo que mandó?
-            { 
-                return DONE;
-            }
-            else{
-                return ERROR;
-          //  }
+        UART1_ReadBuffer ( answer_aux , sizeof(answer_aux));
+        //sprintf(pepe,"1<%s",answer_aux);//check USART
+        //UI_send_text(pepe); //check USART
+        waiting=false;
+        if (strstr(answer_aux,p_answer)!= NULL) //es p_answer lo que mandó?
+        { 
+            return DONE;
+        }
+        else{
+            return ERROR;
         }
     }
     else{

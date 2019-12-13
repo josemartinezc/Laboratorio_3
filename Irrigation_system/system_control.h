@@ -52,7 +52,9 @@ extern TRI_STATUS saved_trama;
 extern bool telephone_number_set;
 extern bool ini_GSM;
 extern bool ini_GPS;
+extern bool ini_SIM_IS;
 
+void IS_ini_tasks();
 void plant_init();
 uint8_t get_irrigation_low_threshold();
 uint8_t get_irrigation_high_threshold(); 

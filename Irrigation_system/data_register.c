@@ -33,7 +33,8 @@
 
 
 //VARIABLES
-static bool empty_buffer=true;
+static bool empty_buffer;
+static bool buffer_full;
 static uint8_t register_number=0;
 historic_data data_buffer[REGISTER_CAPACITY];
 
@@ -42,11 +43,15 @@ bool get_empty_buffer_value(){
 }
 
 void data_save(void){
-    static REGISTER_SYSTEM_STATE state_register_system=INITIALIZE;
+    static REGISTER_SYSTEM_STATE state_register_system=INIT_SYS;
     static uint8_t i, j;         
     static ut_tmrDelay_t timer;
     
     switch(state_register_system){
+        case INIT_SYS:
+            empty_buffer=true;
+            buffer_full=false;
+            state_register_system=INITIALIZE;
         case INITIALIZE:
             i=0;
             j=0;
@@ -91,15 +96,26 @@ bool get_register(historic_data* p_data_register){
     if(empty_buffer==true){
         return true;
     }
-    else{ 
+    else{
         memcpy(p_data_register, &data_buffer[data_to_send],sizeof(data_buffer[data_to_send]));
         data_to_send++;
-        if(data_to_send<(register_number-1)){
-            return false;
+        if(buffer_full==false){
+            if(data_to_send<(register_number-1)){
+                return false;
+            }
+            else{
+                data_to_send=0;
+                return true;
+            }
         }
         else{
-            data_to_send=0;
-            return true;
+            if(data_to_send<(REGISTER_CAPACITY)){
+                return false;
+            }
+            else{
+                data_to_send=0;
+                return true;
+            }
         }
     }
 }
@@ -112,21 +128,22 @@ bool save_register(void) {
     switch(saving_state){
         case SAVE_DATA:
             data_buffer[register_number].event_number=register_number;
-            RTCC_TimeGet(&(data_buffer[register_number].hour_and_date)); 
             data_buffer[register_number].status=humidity_state_function();
             saving_state=WAIT_DATA;
         case WAIT_DATA:
-            trama_status=get_trama(trama);
+            //trama_status=get_saved_trama(trama);
             //if(false_frame_maker(trama)==true){
-            if(trama_status==DONE){
+            if(TRAMAIsSaved()){
+                get_saved_trama(trama);
                 GPS_getPosition(&data_buffer[register_number].position, trama);
-                saving_state=END_DATA;
+                RTCC_TimeGet(&(data_buffer[register_number].hour_and_date)); 
             }
-            else if(trama_status==ERROR){
+            else{
+                data_buffer[register_number].hour_and_date.tm_mday=0;
                 data_buffer[register_number].position.latitude=0;
                 data_buffer[register_number].position.longitude=0;
-                saving_state=END_DATA;
             }
+            saving_state=END_DATA;
             return false;
             break;
         case END_DATA:
@@ -134,6 +151,7 @@ bool save_register(void) {
                 register_number++;
             }
             else{
+                buffer_full=true;
                 register_number=0;
             }
             saving_state=SAVE_DATA;

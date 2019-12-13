@@ -63,25 +63,14 @@
 
 int main(void)
 {   
-    static uint8_t ini[16];
-    bool ini_SIM_IS=false;
-    saved_trama=WORKING;
-    ini_GSM=false;
-    //telephone_number_set=false;
-    
     SYSTEM_Initialize();
     
     LEDA_SetLow();
     LEDB_SetLow();
     RGBs_SetDown();
-    threshold__default_SetUp();  //define los umbrales por defecto, definida en sensor.c
-    plant_init();
     
-    PWR_KEY_SetDigitalInput();
-    STATUS_SetDigitalInput();
-    RESET_SetHigh();
-    RESET_SetDigitalOutput();
-    
+    SIM808_ini_tasks();
+    IS_ini_tasks();
     
     while(1){
         if(ini_SIM_IS==false){

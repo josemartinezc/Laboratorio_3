@@ -112,7 +112,6 @@ bool Init_SIMCard(void){
         }
     }
     else{
-        UI_send_text("\nAguarde un momento a que el modem sea configurado y vuelva a intentar.");
         return true;
     }
     return false;
@@ -209,11 +208,58 @@ bool send_text_message (uint8_t *p_message, uint8_t *p_telephone_num){
 }
     
 
-/*
-bool send_text_message(char *p_message){
+bool config_SIM_UI(){
+    static uint8_t SIM_card_state=0;
+    
+    switch (SIM_card_state){
+        case 0:
+            if(GPSIsReady() && SIMIsReady()){
+                SIM_card_state=1;
+            }
+            else{
+                SIM_card_state=2;
+            }
+            break;
+        case 1:
+            if(available_SIM_card==false){
+                SIM_card_state=3;
+            }
+            else{
+                UI_send_text("\n\nSu SIM a sido configurada con exito");
+                SIM_card_state=0;
+                return true;
+            }
+            break;
+        case 2:
+            if(GPSIsReady()){
+                SIM_card_state=3;
+            }
+            else{
+                UI_send_text("\n\nAguarde un momento a que el modem sea configurado");
+                SIM_card_state=0;
+                return true;
+            }
+            break;
+        case 3:
+            if(TRAMAIsSaved() && Init_SIMCard()==true){
+                if(available_SIM_card==false){
+                    UI_send_text("\n\nNo se pudo identificar ninguna tarjeta SIM.");
+                    SIM_card_state=0;
+                    return true;
+                }
+                else{
+                    SIM_card_state=1;
+                }
+            }
+            else if(!TRAMAIsSaved()){
+                UI_send_text("\n\nIntentelo de nuevo en un momento.");                    
+                SIM_card_state=0;
+                return true;
+            }
+            break;
+    }
     return false;
 }
-*/
 
 
  

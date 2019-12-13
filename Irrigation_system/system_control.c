@@ -43,8 +43,8 @@
 #include "../periferics/UI.h"
 #include "../periferics/sensor.h"
 #include "../LEDs_RGB/RGB_leds.h"
-#include "../SIM_TEMP/GPS.h"
-#include "../SIM_TEMP/telephone.h"
+#include "../SIM808/GPS.h"
+#include "../SIM808/telephone.h"
 
  //**********************  VARIABLES  *****************************//
 
@@ -55,10 +55,21 @@ bool telephone_number_set;
 static uint8_t telephone_number[18]; 
 static uint8_t real_trama[120];
 TRI_STATUS saved_trama;
-bool ini_GSM=false;
-bool ini_GPS=false;
+bool ini_GSM;
+bool ini_GPS;
+bool ini_SIM_IS;
 
 //*****************************************************************//
+
+void IS_ini_tasks(){
+    ini_SIM_IS=false;
+    ini_GSM=false;
+    ini_GPS=false;
+    saved_trama=WORKING;
+    
+    threshold__default_SetUp();  //define los umbrales por defecto, definida en sensor.c
+    plant_init();
+}
 
 bool SIM808_IS_Initialize(){
     static bool ini_SIM808=false;
@@ -100,7 +111,7 @@ void plant_init(){
 }
 
 bool hour_SetUp(){
-    char trama[120];   
+    char trama[128];   
     bool time_is_set=false;
     
     if(time_is_set==true){
@@ -164,7 +175,7 @@ void system_control_menu(void){
         previous_humidity_value=analog_conversion_to_cb();
         if(plant.status != humidity_state_function()){
             plant.status=humidity_state_function();
-            if((humidity_state_function()==RED_LOW || humidity_state_function()== RED_HIGH)){//simplificae
+            if((plant.status==RED_LOW || plant.status == RED_HIGH)){//simplificae
                 critic_message_pending=true;
             }
         }
@@ -199,6 +210,7 @@ void system_control_menu(void){
 bool send_critic_message(SENSOR_STATE plant_state){
     static uint8_t message[256];
     static bool sending_state=0;
+    static bool alert_sent=false;
     
     if(telephone_number_set==true && TRAMAIsSaved()){
         if(available_SIM_card==true){
@@ -217,7 +229,10 @@ bool send_critic_message(SENSOR_STATE plant_state){
             }
         }
         else{
-            UI_send_text("Ingrese una tarjeta SIM si desea que se envien alertas SMS (Revise OPCION 7)");
+            if(alert_sent==false){
+                UI_send_text("Ingrese una tarjeta SIM si desea que se envien alertas SMS (Revise OPCION 7)");
+                alert_sent=true;
+            }
             return true;
         }
     }

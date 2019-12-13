@@ -44,7 +44,7 @@ typedef enum{
     RY_min,
 }threshold_limits;
 
-
+void SIM808_ini_tasks();
 bool threshold_SetUp_tasks(uint8_t);
 bool threshold_SetUp();
 void threshold__default_SetUp();

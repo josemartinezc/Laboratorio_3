@@ -43,6 +43,7 @@ extern bool available_SIM_card;
 
 bool Init_SIMCard(void);
 bool send_text_message(uint8_t *p_message, uint8_t *p_telephone_num);
+bool config_SIM_UI();
 
 
 #endif /* _EXAMPLE_FILE_NAME_H */

@@ -38,7 +38,7 @@ extern "C" {
 #endif
     
     #define TAMANO_SEND 255
-    #define TAMANO_SAVE 511
+    #define TAMANO_SAVE 1023
     
     typedef enum{
         INTERFACE,

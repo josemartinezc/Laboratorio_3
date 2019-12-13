@@ -38,10 +38,10 @@
       <itemPath>Periferics/sensor.h</itemPath>
       <itemPath>Irrigation_system/UI_IS.h</itemPath>
       <itemPath>Irrigation_system/system_control.h</itemPath>
-      <itemPath>SIM_TEMP/GPS.h</itemPath>
       <itemPath>Irrigation_system/data_register.h</itemPath>
-      <itemPath>SIM_TEMP/telephone.h</itemPath>
       <itemPath>SIM808/SIM808.h</itemPath>
+      <itemPath>SIM808/GPS.h</itemPath>
+      <itemPath>SIM808/telephone.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -84,9 +84,9 @@
         <itemPath>LEDs_RGB/RGB_leds.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="SIM808" projectFiles="true">
-        <itemPath>SIM_TEMP/GPS.c</itemPath>
-        <itemPath>SIM_TEMP/telephone.c</itemPath>
         <itemPath>SIM808/SIM808.c</itemPath>
+        <itemPath>SIM808/GPS.c</itemPath>
+        <itemPath>SIM808/telephone.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>utils/utils.c</itemPath>

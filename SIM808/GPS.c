@@ -206,31 +206,29 @@ TRI_STATUS get_trama (char *p_trama){
         if(waiting_trama==false){
             timer6.state=0;
             UART1_WriteBuffer ("AT+CGNSINF\r", strlen ("AT+CGNSINF\r"));
-                      //  UI_send_text( "4>" ); //check USART
-                      //  UI_send_text( "AT+CGNSINF\r" ); //check USART
+                      //UI_send_text( "4>" ); //check USART
+                      //UI_send_text( "AT+CGNSINF\r" ); //check USART
             waiting_trama=true;
             stage=STG1;
         }
         case STG1:
             if(UT_delayDs (&timer6,1)== true){
-                if(UART1_ReceiveBufferIsEmpty()==false){
+                memset (RxBuffer, 0, sizeof(RxBuffer));
+                UART1_ReadBuffer (RxBuffer , sizeof(RxBuffer)); 
+                 //   UI_send_text( "4<" ); //check USART
+                 //   UI_send_text( RxBuffer ); //check USART
+                if (check_correct_trama(RxBuffer)==true){
+                    memset(p_trama,0, sizeof(p_trama));
+                    strcpy(p_trama, RxBuffer);
                     memset (RxBuffer, 0, sizeof(RxBuffer));
-                    UART1_ReadBuffer (RxBuffer , sizeof(RxBuffer)); 
-                    if (check_correct_trama(RxBuffer)==true){
-                        memset(p_trama,0, sizeof(p_trama));
-                        strcpy(p_trama, RxBuffer);
-                        //UI_send_text( "4<" ); //check USART
-                        //UI_send_text( RxBuffer ); //check USART
-                        memset (RxBuffer, 0, sizeof(RxBuffer));
-                        stage = STG0;
-                        return DONE;
-                    }
-                    else{
-                        memset (RxBuffer, 0, sizeof(RxBuffer));
-                        stage=STG0;
-                        waiting_trama=false;
-                        
-                    }
+                    stage = STG0;
+                    return DONE;
+                }
+                else{
+                    memset (RxBuffer, 0, sizeof(RxBuffer));
+                    stage=STG0;
+                    waiting_trama=false;
+
                 }
             }
             break;
