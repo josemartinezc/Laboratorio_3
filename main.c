@@ -53,7 +53,7 @@
 #include "LEDs_RGB/RGB_leds.h"
 #include "Irrigation_system/UI_IS.h"
 #include "Irrigation_system/system_control.h"
-#include "Periferics/sensor.h"
+#include "Irrigation_system/sensor.h"
 #include "mcc_generated_files/mcc.h"
 
 

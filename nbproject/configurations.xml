@@ -35,13 +35,13 @@
       <itemPath>Periferics/UI.h</itemPath>
       <itemPath>Periferics/leds.h</itemPath>
       <itemPath>LEDs_RGB/RGB_leds.h</itemPath>
-      <itemPath>Periferics/sensor.h</itemPath>
       <itemPath>Irrigation_system/UI_IS.h</itemPath>
       <itemPath>Irrigation_system/system_control.h</itemPath>
       <itemPath>Irrigation_system/data_register.h</itemPath>
       <itemPath>SIM808/SIM808.h</itemPath>
       <itemPath>SIM808/GPS.h</itemPath>
       <itemPath>SIM808/GSM.h</itemPath>
+      <itemPath>Irrigation_system/sensor.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -54,7 +54,7 @@
         <itemPath>Irrigation_system/system_control.c</itemPath>
         <itemPath>Irrigation_system/UI_IS.c</itemPath>
         <itemPath>Irrigation_system/data_register.c</itemPath>
-        <itemPath>Periferics/sensor.c</itemPath>
+        <itemPath>Irrigation_system/sensor.c</itemPath>
       </logicalFolder>
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"

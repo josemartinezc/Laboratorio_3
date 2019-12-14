@@ -20,7 +20,7 @@
 
 
 #include "../mcc_generated_files/rtcc.h"
-#include "../periferics/sensor.h"
+#include "sensor.h"
 #include <stdio.h>
 #include "../utils/utils.h"
 

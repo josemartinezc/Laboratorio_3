@@ -3,7 +3,7 @@ build/default/production/Irrigation_system/system_control.o:  \
  Irrigation_system/../mcc_generated_files/rtcc.h  \
  Irrigation_system/../mcc_generated_files/pin_manager.h  \
  Irrigation_system/system_control.h  \
- Irrigation_system/../periferics/sensor.h  \
+Irrigation_system/sensor.h  \
  Irrigation_system/../utils/utils.h  \
 Irrigation_system/../periferics/UI.h  \
  Irrigation_system/../periferics/../mcc_generated_files/rtcc.h  \

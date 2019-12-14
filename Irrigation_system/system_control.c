@@ -40,8 +40,8 @@
 #include "../mcc_generated_files/rtcc.h"
 #include "../mcc_generated_files/pin_manager.h"
 #include "system_control.h"
+#include "sensor.h"
 #include "../periferics/UI.h"
-#include "../periferics/sensor.h"
 #include "../LEDs_RGB/RGB_leds.h"
 #include "../SIM808/GPS.h"
 #include "../SIM808/GSM.h"
@@ -271,8 +271,7 @@ void RGB_humidity_state(uint8_t estado_de_humedad){
     WS2812_send(tira_leds, CANTIDAD_LEDS);
 }
 
-//void SMS_tasks(void);
-//void irrigation(void); //funcion q
+
 uint8_t get_irrigation_low_threshold(){
     return ((get_yellow_green_max()+get_yellow_green_min())/2);
 }

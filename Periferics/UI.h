@@ -74,9 +74,6 @@ extern "C" {
     void configurar_evento_interface();
     bool configurar_evento();
 
-    ws2812_t interpret_event_color(uint8_t);
-
-    void consultar_eventos();
     
 /* *****************************************************************************
  End of File

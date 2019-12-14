@@ -28,8 +28,8 @@
 #include <time.h>
 #include <stdint.h>
 
+#include "sensor.h"
 #include "../mcc_generated_files/rtcc.h"
-#include "../periferics/sensor.h"
 #include "../SIM808/GPS.h"
 
 #define REGISTER_CAPACITY 60
