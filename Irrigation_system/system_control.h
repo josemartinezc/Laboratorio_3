@@ -58,7 +58,7 @@ void IS_ini_tasks();
 void plant_init();
 uint8_t get_irrigation_low_threshold();
 uint8_t get_irrigation_high_threshold(); 
-bcdTime_t get_real_time_IS ();
+bcdTime_t* get_real_time_IS ();
 bool get_saved_trama(uint8_t* p_trama);
 
 void system_control_menu(void);

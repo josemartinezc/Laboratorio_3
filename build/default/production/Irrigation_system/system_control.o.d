@@ -12,4 +12,4 @@ Irrigation_system/../periferics/UI.h  \
  Irrigation_system/../LEDs_RGB/RGB_leds.h  \
  Irrigation_system/../SIM808/GPS.h  \
  Irrigation_system/../SIM808/../utils/utils.h  \
- Irrigation_system/../SIM808/telephone.h 
+ Irrigation_system/../SIM808/GSM.h 

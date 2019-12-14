@@ -68,7 +68,7 @@ extern "C" {
     void configurar_hora_interface();
     bool config_hora_function();
 
-    void dar_hora(bcdTime_t);
+    void dar_hora(bcdTime_t*);
 
     bool agregar_evento();
     void configurar_evento_interface();

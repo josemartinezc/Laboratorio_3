@@ -31,7 +31,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "telephone.h"
+#include "GSM.h"
 #include "../SIM808/SIM808.h"
 #include "../Irrigation_system/system_control.h"
 #include "GPS.h"
@@ -241,14 +241,16 @@ bool config_SIM_UI(){
             }
             break;
         case 3:
-            if(TRAMAIsSaved() && Init_SIMCard()==true){
-                if(available_SIM_card==false){
-                    UI_send_text("\n\nNo se pudo identificar ninguna tarjeta SIM.");
-                    SIM_card_state=0;
-                    return true;
-                }
-                else{
-                    SIM_card_state=1;
+            if(TRAMAIsSaved()){
+                if(Init_SIMCard()==true){
+                    if(available_SIM_card==false){
+                        UI_send_text("\n\nNo se pudo identificar ninguna tarjeta SIM.");
+                        SIM_card_state=0;
+                        return true;
+                    }
+                    else{
+                        SIM_card_state=1;
+                    }
                 }
             }
             else if(!TRAMAIsSaved()){

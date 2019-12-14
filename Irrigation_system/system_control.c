@@ -44,7 +44,7 @@
 #include "../periferics/sensor.h"
 #include "../LEDs_RGB/RGB_leds.h"
 #include "../SIM808/GPS.h"
-#include "../SIM808/telephone.h"
+#include "../SIM808/GSM.h"
 
  //**********************  VARIABLES  *****************************//
 
@@ -133,9 +133,9 @@ bool hour_SetUp(){
     }
 }
 
-bcdTime_t get_real_time_IS (){
+bcdTime_t* get_real_time_IS (){
     RTCC_TimeGet(&real_time_IS);
-    return real_time_IS;
+    return &real_time_IS;
 }
 
 void save_trama(){ 
@@ -155,7 +155,7 @@ bool get_saved_trama(uint8_t* p_trama){
 }
 
 void system_control_menu(void){
-    static uint16_t previous_humidity_value=100;
+    static uint16_t previous_humidity_value=100; //100 siempre va a ser distinto al primer valor de conversion que se tome
     char message[120];
     
     memset(message,0,sizeof(message));

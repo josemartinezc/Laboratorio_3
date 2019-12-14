@@ -99,12 +99,8 @@ int32_t read_USB_int(void){
 }
 
 
-void dar_hora(bcdTime_t time){
-    bcdTime_t real_time;
-    
-    RTCC_TimeGet(&real_time);
-
-    strftime(date_time_representation, 32, "%c", &real_time);
+void dar_hora(bcdTime_t* time){
+    strftime(date_time_representation, 32, "%c", time);
     UI_send_text("\n\n");
     UI_send_text(date_time_representation); 
     UI_send_text("\n\n");

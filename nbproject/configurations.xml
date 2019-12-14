@@ -41,7 +41,7 @@
       <itemPath>Irrigation_system/data_register.h</itemPath>
       <itemPath>SIM808/SIM808.h</itemPath>
       <itemPath>SIM808/GPS.h</itemPath>
-      <itemPath>SIM808/telephone.h</itemPath>
+      <itemPath>SIM808/GSM.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -86,7 +86,7 @@
       <logicalFolder name="f3" displayName="SIM808" projectFiles="true">
         <itemPath>SIM808/SIM808.c</itemPath>
         <itemPath>SIM808/GPS.c</itemPath>
-        <itemPath>SIM808/telephone.c</itemPath>
+        <itemPath>SIM808/GSM.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>utils/utils.c</itemPath>

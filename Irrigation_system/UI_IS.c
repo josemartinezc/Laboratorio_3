@@ -30,13 +30,13 @@
 #include <stdio.h>
 
 #include "system_control.h"
+#include "UI_IS.h"
+#include "data_register.h"
 #include "../mcc_generated_files/usb/usb.h"
 #include "../periferics/sensor.h"
 #include "../periferics/UI.h"
-#include "UI_IS.h"
-#include "data_register.h"
 #include "../SIM808/GPS.h"
-#include "../SIM808/telephone.h"
+#include "../SIM808/GSM.h"
 
 
 //variables
@@ -56,7 +56,7 @@ void interface_IS(){
             }
             break;
         case MENU:
-                UI_send_text("\n\nIngrese una opcion del 1-6\n1.Configurar UMBRALES\n2.Configurar ID\n3.Configurar telefono\n4.Consultar hora\n5.Ver mensaje critico\n6.Mostrar registros guardados\n7.Configurar SIM\n>>>");
+                UI_send_text("\n\nIngrese una opcion del 1-7\n1.Configurar UMBRALES\n2.Configurar ID\n3.Configurar telefono\n4.Consultar hora\n5.Ver mensaje critico\n6.Mostrar registros guardados\n7.Configurar SIM\n>>>");
                 state_UI=ESPERA;
             break;
         case ESPERA:
